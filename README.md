@@ -15,19 +15,19 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+Metal as a Service – MAAS – lets you treat physical servers
+like virtual machines in the cloud. Rather than having to
+manage each server individually, MAAS turns your bare metal
+into an elastic cloud-like resource.
+More information can be found here:
+  https://maas.ubuntu.com/docs/
+
+This Puppet module deploys the MAAS packages and provides puppetized
+Administration of the MAAS Server/Cluster
 
 ## Module Description
-
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+This Puppet module deploys the MAAS packages and provides puppetized
+Administration of the MAAS Server/Cluster
 
 ## Setup
 
@@ -53,8 +53,7 @@ for upgrading, you may wish to include an additional section here: Upgrading
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
+  class{'maas':}
 
 ## Reference
 

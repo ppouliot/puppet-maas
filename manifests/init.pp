@@ -1,4 +1,13 @@
 # == Class: maas
+#  Metal as a Service – MAAS – lets you treat physical servers
+#  like virtual machines in the cloud. Rather than having to 
+#  manage each server individually, MAAS turns your bare metal 
+#  into an elastic cloud-like resource.
+#  More information can be found here:
+#  https://maas.ubuntu.com/docs/
+#
+#  This Puppet module deploys the MAAS packages and provides puppetized
+#  Administration of the MAAS Server/Cluster
 #
 # Full description of class maas here.
 #

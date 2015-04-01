@@ -57,13 +57,21 @@ class maas (
   $maas_root_user        = $maas::params::maas_root_user,
   $maas_root_passwd      = $maas::params::maas_root_passwd,
   $maas_root_email       = $maas::params::maas_root_email,
+  $maas_root_directories = $maas::params::maas_root_directories,
 
 ) inherits maas::params {
 
   include apt
-  apt::ppa{"cloud-archive:${cloud_archive_release}":}
+
+  apt::ppa{"cloud-archive:${cloud_archive_release}":} -> 
+
   package { $maas_packages:
     ensure => latest,
     require => Apt::Ppa["cloud-archive:${cloud_archive_release}"],
+  } -> 
+
+  file { $maas_root_directories:
+    ensure  => present,
   }
+
 }

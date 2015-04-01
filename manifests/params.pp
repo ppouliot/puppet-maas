@@ -165,6 +165,9 @@ class maas::params {
           $maas_api_key                  = undef
           $maas_cluster_uuid             = undef
 
+          $maas_root_directories   = ['/etc/maas',
+                                      '/usr/share/maas',
+                                      '/var/lib/maas']
           # Default Settings
           $maas_debug_mode         = 'False' 
           $maas_media_root         = '/var/lib/maas/media/'

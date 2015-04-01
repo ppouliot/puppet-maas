@@ -51,6 +51,7 @@ class maas (
 
 ) inherits maas::params {
 
+  include apt
   apt::ppa{"cloud-archive:${cloud_archive_release}":}
   package { $maas_packages:
     ensure => latest,

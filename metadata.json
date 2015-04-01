@@ -1,0 +1,15 @@
+{
+  "name": "puppet-maas",
+  "version": "0.1.0",
+  "author": "Peter J. Pouliot <peter@pouliot.net>",
+  "summary": "A puppet module to install and configure Ubuntu MAAS (Metal-As-A-Service)",
+  "license": "Apache 2.0",
+  "source": "https://github.com/ppouliot/puppet-maas",
+  "project_page": "https://github.com/ppouliot/puppet-maas",
+  "issues_url": "https://github.com/ppouliot/puppet-maas/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
+    {"name":"puppetlabs-apt","version_requirement":">= 1.0.0"}
+  ]
+}
+

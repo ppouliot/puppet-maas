@@ -52,6 +52,10 @@
 #
 class maas (
 
+  $version               = $maas::params::version,
+  $ensure                = $maas::params::ensure,
+  $prerequired_packages  = $maas::params::prerequired_packages,
+
   $cloud_archive_release = $maas::params::cloud_archive_release,
   $maas_packages         = $maas::params::maas_packages,
   $maas_root_user        = $maas::params::maas_root_user,
@@ -65,13 +69,13 @@ class maas (
 
   apt::ppa{"cloud-archive:${cloud_archive_release}":} -> 
 
-  package { $maas_packages:
-    ensure => latest,
-    require => Apt::Ppa["cloud-archive:${cloud_archive_release}"],
-  } -> 
+#  package { $maas_packages:
+#    ensure => latest,
+#    require => Apt::Ppa["cloud-archive:${cloud_archive_release}"],
+#  } -> 
 
-  file { $maas_root_directories:
-    ensure  => present,
-  }
+#  file { $maas_root_directories:
+#    ensure  => present,
+#  }
 
 }

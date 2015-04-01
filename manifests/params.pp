@@ -154,6 +154,9 @@ class maas::params {
     'Ubuntu':{
       case $operatingsystemrelease {
         '14.04':{
+          $version                       = undef
+          $ensure                        = present 
+          $prerequired_packages          = undef
           $cloud_archive_release         = 'juno'
           $maas_root_user                = 'root'
           $maas_root_password            = 'maas'

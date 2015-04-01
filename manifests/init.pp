@@ -72,7 +72,7 @@ class maas (
     validate_string($cloud_archive_release, '^(icehouse|juno|kilo)$', 'This module only supports the IceHouse, Juno and Kilo Releases')
     include apt
     apt::ppa{"cloud-archive:${cloud_archive_release}":}
-  } -> 
+  }
 
 #  package { $maas_packages:
 #    ensure => latest,

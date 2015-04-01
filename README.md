@@ -20,8 +20,10 @@ like virtual machines in the cloud. Rather than having to
 manage each server individually, MAAS turns your bare metal
 into an elastic cloud-like resource.
 More information can be found here:
+  ```
   https://maas.ubuntu.com/docs/
 
+  ```
 This Puppet module deploys the MAAS packages and provides puppetized
 Administration of the MAAS Server/Cluster
 
@@ -46,25 +48,27 @@ etc.), mention it here.
 ### Beginning with maas
 
 The very basic steps needed for a user to get the module up and running.
-
+include maas
 If your most recent release breaks compatibility or requires particular steps
 for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+(For documentation on MAAS, see https://maas.ubuntu.com/docs).
 
 ## Usage
 
+  ```
   class{'maas':}
+  ```
 
 ## Reference
-- maas: Main Class
-- maas::params: Sets the defaults for the maas module parameters
-- maas::admin: Creates the admin user
-- maas::import_resources: Imports default image resources
-
+### Classes
+* `maas`: Main Class
+* `maas::params`: Sets the defaults for the maas module parameters
+* `maas::admin`: Creates the admin user
+* `maas::import_resources`: Imports default image resources
 
 ## Limitations
 
-  Ubuntu 14.04
+* Ubuntu 14.04
 
 ## Development
 

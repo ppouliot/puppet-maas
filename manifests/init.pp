@@ -66,9 +66,4 @@ class maas (
     ensure => latest,
     require => Apt::Ppa["cloud-archive:${cloud_archive_release}"],
   }
-  exec{'maas-import-boot-resources':
-    command => "/usr/sbin/maas my-maas-session boot-resources import",
-    require => Exec['create-maas-admin-account'],
-    logoutput => true,
-  }
 }

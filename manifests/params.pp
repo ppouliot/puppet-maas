@@ -8,6 +8,7 @@
 # [*cloud_archive_release*]
 #   Release of the Cloud-archive:tools to use for maas packages
 #   Default is currently the OpenStack Juno release
+#   Valid options are 'icehouse','juno', and 'kilo'.
 #
 # [*maas_packages*]
 #   Default MAAS Packages to install
@@ -157,7 +158,7 @@ class maas::params {
           $version                       = undef
           $ensure                        = present 
           $prerequired_packages          = undef
-          $cloud_archive_release         = 'juno'
+          $cloud_archive_release         = undef
           $maas_root_user                = 'root'
           $maas_root_password            = 'maas'
           $maas_root_user_email          = "root@${::fqdn}"

@@ -60,4 +60,8 @@ class maas (
      command => "/usr/sbin/maas-region-admin createadmin --username=${maas_root_user} --email=${maas_root_user_email} --password=${maas_root_passwd}",
      require => Package[$maas_packages],
   }
+  exec{'maas-import-boot-resources':
+     command => "/usr/sbin/maas my-maas-session boot-resources import",
+     require => Exec['create-maas-admin-account'],
+  }
 }

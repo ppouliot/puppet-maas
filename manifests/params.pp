@@ -32,6 +32,18 @@
 # [*maas_api_version*]
 #   Version of the MAAS API to use.   Default is 1.0.
 #
+# [*maas_db_name*]
+#   Default maas database name: maasdb
+#
+# [*maas_db_user*]
+#   Default maas db username: maas
+#
+# [*maas_db_passwd*]
+#   Maas database password
+#
+# [*maas_db_host*]
+#   MAAS db Host address
+#
 # [*maas_api_key*]
 #   The credentials, also known as the API key, for the remote
 #   MAAS server. These can be found in the user preferences page
@@ -115,6 +127,11 @@
 #
 # [*maas_default_cloudimage_keyring*]
 #
+# [*maas_media_root*]
+#   Where to store the user uploaded files.
+#   Default MEDIA_ROOT = '/var/lib/maas/media/'
+#
+#
 # === Authors
 #
 # Peter J. Pouliot <peter@pouliot.net>
@@ -131,15 +148,27 @@ class maas::params {
           $cloud_archive_release         = 'juno'
           $maas_root_user                = 'root'
           $maas_root_password            = 'maas'
-          $maas_root_user_email          = 'ppouliot@microsoft.com'
+          $maas_root_user_email          = "root@${::fqdn}"
 
-          $maas_profile_name             = "${fqdn}"
-          $maas_server_url               = "http://$ipaddress/MAAS"
+          $maas_profile_name             = "${::fqdn}"
+          $maas_server_url               = "http://${::ipaddress}/MAAS"
           $maas_api_version              = '1.0'
           $maas_api_key                  = undef
           $maas_cluster_uuid             = undef
 
+          # Default Settings
+          $maas_debug_mode         = 'False' 
+          $maas_media_root         = '/var/lib/maas/media/'
+          $maas_db_engine          = 'django.db.backends.postgresql_psycopg2'
+          $maas_db_name            = 'maasdb'
+          $maas_db_user            = 'maas'
+          $maas_db_passwd          = 'ky460LTuLfIl'
+          $maas_db_host            = 'localhost'
+
+
           # MAAS TXLONGPOLL 
+          $maas_txlongpoll_config_file   = '/etc/maas/txlongpoll.yaml'
+          $maas_txlongpoll_initi_file    = '/etc/init/maas-txlongpoll.conf'
           $maas_txlongpoll_frontend_port = '5242'
           $maas_txlongpoll_prefix        = undef
           $maas_txlongpoll_oops_dir      = '/var/log/maas/oops'
@@ -152,6 +181,8 @@ class maas::params {
           $maas_txlongpoll_logfile       = '/var/log/maas/txlongpoll.log'
 
           # MAAS Provisioning Server
+          $maas_pserv_config_file     = '/etc/maas/pserv.yaml'
+          $maas_pserv_initi_file      = '/etc/init/maas-pserv.conf'
           $maas_pserv_oops_dir        = '/var/log/maas/oops'
           $maas_pserv_oops_reporter   = 'maas-pserv'
           $maas_pserv_broker_host     = 'localhost'
@@ -165,6 +196,7 @@ class maas::params {
           $maas_boot_resource_storage = '/var/lib/maas/boot-resources/' 
           $maas_boot_resource_url     = 'http://maas.ubuntu.com/images/ephemeral-v2/releases/' 
           $maas_default_cloudimage_keyring = '/usr/share/keyrings/ubuntu-cloudimage-keyring.gpg'
+ 
 
 
 

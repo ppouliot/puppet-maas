@@ -234,16 +234,16 @@ class maas::params {
           # A python-maas-provisioningserver  - MAAS server provisioning libraries
 
           $maas_packages  = [
-            'maas',
-            'maas-cli',
-            'maas-cluster-controller',
-            'maas-common',
+            'python-maas-provisioningserver',
             'maas-dhcp',
             'maas-dns',
+            'maas-common',
+            'maas-cli',
+            'maas',
             'maas-region-controller',
-            'maas-region-controller-min',
+            'maas-cluster-controller',
             'python-django-maas',
-            'python-maas-provisioningserver']
+            'maas-region-controller-min']
 
         }
         default:{

@@ -29,11 +29,91 @@
 #   The URL of the remote API, e.g. http://example.com/MAAS/
 #   or http://example.com/MAAS/api/1.0/ if you wish to specify the API version.
 #
+# [*maas_api_version*]
+#   Version of the MAAS API to use.   Default is 1.0.
+#
 # [*maas_api_key*]
 #   The credentials, also known as the API key, for the remote
 #   MAAS server. These can be found in the user preferences page
 #   in the web UI; they take the form of a long random-looking
 #   string composed of three parts, separated by colons.
+#
+# [*maas_cluster_uuid*]
+#   The UUID of for the  MAAS Cluster
+#
+# [*maas_txlongpoll_frontend_port*]
+#   Default Port used for the MAAS txlongpoll frontend service
+#   The default Uses 5242
+#
+# [*maas_txlongpoll_prefix*]
+#   If specified, queue names requested must have the given prefix.
+#
+# [*maas_txlongpoll_oops_dir*]
+#   Directory in which to place OOPS reports.  Must not contain any files
+#   or directories other than what the oops machinery creates there.
+#   default directory: "/var/log/maas/oops"
+#
+# [*maas_txlongpoll_oops_reporter*]
+#   The reporter used when generating OOPS reports.
+#   Default reporter: "maas-txlongpoll"
+#
+# [*maas_txlongpoll_broker_host*]
+#   Default Broker host: "localhost"
+#
+# [*maas_txlongpoll_broker_port*]
+#   Default broker port: 5672
+#
+# [*maas_txlongpoll_broker_user*]
+#   Default broker username: "maas_longpoll"
+#
+# [*maas_txlongpoll_broker_passwd*]
+#   Default broker password: "w0hAKHs8ZGUhHuAyOzge"
+#
+# [*maas_txlongpoll_broker_vhost*]
+#   Default broker vhost: "/maas_longpoll"
+#
+# [*maas_txlongpoll_logfile*]
+#   Where to log the txlongpoll server to. This log can be rotated by sending SIGUSR1 to the
+#   running server.
+#   Default logfile: "/var/log/maas/txlongpoll.log"
+#
+# [*maas_pserv_logfile*]
+#    Where to log the provisioning server to. This log can be rotated by sending SIGUSR1 to the
+#    running server.
+#    Default provisioning server logfile: "/var/log/maas/pserv.log"
+#
+# [*maas_pserv_oops_reporter*]
+#   The reporter used when generating provisioning server OOPS reports.
+#   Default reporter: "maas-pserv"
+#
+# [*maas_pserv_oops_dir*]
+#   Directory in which to place OOPS reports.  Must not contain any files
+#   or directories other than what the oops machinery creates there.
+#   default directory: "/var/log/maas/oops"
+#
+# [*maas_pserv_broker_host*]
+#   Default Broker host: "localhost"
+#
+# [*maas_pserv_broker_port*]
+#   Default broker port: 5673
+#
+# [*maas_pserv_broker_user*]
+#   Default broker username: "maas_pserv"
+#
+# [*maas_pserv_resource_root*]
+#   The tftp "root" setting has been replaced by "resource_root".  The old setting
+#   is used one final time when upgrading a pre-14.04 cluster controller to a
+#   14.04 version.  After that upgrade, it can be removed.
+#   Default resource_root: /var/lib/maas/boot-resources/current/
+#
+# [*maas_pserv_tftp_port*]
+#   Default TFTP port 69
+#
+# [*maas_boot_resource_storage*]
+#
+# [*maas_boot_resource_url*]
+#
+# [*maas_default_cloudimage_keyring*]
 #
 # === Authors
 #
@@ -48,14 +128,46 @@ class maas::params {
     'Ubuntu':{
       case $operatingsystemrelease {
         '14.04':{
-          $cloud_archive_release = 'juno'
-          $maas_root_user        = 'root'
-          $maas_root_password    = 'maas'
-          $maas_root_user_email  = 'ppouliot@microsoft.com'
+          $cloud_archive_release         = 'juno'
+          $maas_root_user                = 'root'
+          $maas_root_password            = 'maas'
+          $maas_root_user_email          = 'ppouliot@microsoft.com'
 
-          $maas_profile_name     = "${fqdn}"
-          $maas_server_url       = "http://$ipaddress/MAAS"
-          $maas_api_key          = undef
+          $maas_profile_name             = "${fqdn}"
+          $maas_server_url               = "http://$ipaddress/MAAS"
+          $maas_api_version              = '1.0'
+          $maas_api_key                  = undef
+          $maas_cluster_uuid             = undef
+
+          # MAAS TXLONGPOLL 
+          $maas_txlongpoll_frontend_port = '5242'
+          $maas_txlongpoll_prefix        = undef
+          $maas_txlongpoll_oops_dir      = '/var/log/maas/oops'
+          $maas_txlongpoll_oops_reporter = 'maas-txlongpoll'
+          $maas_txlongpoll_broker_host   = 'localhost'
+          $maas_txlongpoll_broker_port   = '5672'
+          $maas_txlongpoll_broker_user   = 'maas_longpoll'
+          $maas_txlongpoll_broker_passwd = 'w0hAKHs8ZGUhHuAyOzge' 
+          $maas_txlongpoll_broker_vhost  = '/maas_longpoll'
+          $maas_txlongpoll_logfile       = '/var/log/maas/txlongpoll.log'
+
+          # MAAS Provisioning Server
+          $maas_pserv_oops_dir        = '/var/log/maas/oops'
+          $maas_pserv_oops_reporter   = 'maas-pserv'
+          $maas_pserv_broker_host     = 'localhost'
+          $maas_pserv_broker_port     = '5673'
+          $maas_pserv_broker_user     = '<current_user>'
+          $maas_pserv_broker_passwd   = 'test' 
+          $maas_pserv_broker_vhost    = '/'
+          $maas_pserv_logfile         = '/var/log/maas/pserv.log'
+          $maas_pserv_resource_root   = '/var/lib/maas/boot-resources/current'
+          $maas_pserv_tftp_port       = '69'
+          $maas_boot_resource_storage = '/var/lib/maas/boot-resources/' 
+          $maas_boot_resource_url     = 'http://maas.ubuntu.com/images/ephemeral-v2/releases/' 
+          $maas_default_cloudimage_keyring = '/usr/share/keyrings/ubuntu-cloudimage-keyring.gpg'
+
+
+
 
           # Installed MAAS Packages
           #   maas                            - MAAS server all-in-one metapackage

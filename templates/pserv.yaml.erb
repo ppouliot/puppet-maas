@@ -1,0 +1,44 @@
+##
+## Provisioning Server (pserv) configuration.
+##
+
+## Where to log. This log can be rotated by sending SIGUSR1 to the
+## running server.
+#
+# logfile: "pserv.log"
+logfile: <%= @maas_pserv_logfile %>
+
+## OOPS configuration (optional).
+#
+oops:
+  ## Directory in which to place OOPS reports.  Must not contain any files
+  # or directories other than what the oops machinery creates there.
+  #
+  # directory:
+  directory: <%= @maas_pserv_oops_dir %>
+  # reporter:
+  reporter: <%= @maas_pserv_oops_reporter %>
+
+## Message broker configuration (optional, not currently used).
+#
+broker:
+  # host: <%= @maas_pserv_broker_host %>
+  # port: <%= @maas_pserv_broker_port %>
+  # username: <%= @maas_pserv_broker_user %>
+  # password: <%= @maas_pserv_broker_passwd %>
+  # vhost: <%= @maas_pserv_broker_vhost %>
+
+## TFTP configuration.
+#
+tftp:
+  # The "root" setting has been replaced by "resource_root".  The old setting
+  # is used one final time when upgrading a pre-14.04 cluster controller to a
+  # 14.04 version.  After that upgrade, it can be removed.
+  #
+  # resource_root: <%= @maas_pserv_resource_root %>
+
+  # port: <%= @maas_pserv_tftp_port %>
+  ## The URL to be contacted to generate PXE configurations.
+  #generator: http://10.5.1.39/MAAS/api/1.0/pxeconfig/
+  generator: <%= @maas_server_url %>/api/<%= @maas_api_version %>/pxeconfig/
+

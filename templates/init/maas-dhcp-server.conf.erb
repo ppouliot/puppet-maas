@@ -1,0 +1,65 @@
+description "MAAS instance of ISC DHCP server"
+author "Jeroen Vermeulen <jtv@canonical.com>"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+env CONFIG_FILE=/etc/maas/dhcpd.conf
+env PID_DIR=/run/maas/dhcp
+env PID_FILE=/run/maas/dhcp/dhcpd.pid
+env LEASES_DIR=/var/lib/maas/dhcp
+env LEASES_FILE=/var/lib/maas/dhcp/dhcpd.leases
+
+# This is where we write what interfaces dhcpd should listen on.
+env INTERFACES_FILE=/var/lib/maas/dhcpd-interfaces
+
+pre-start script
+    if [ ! -f $CONFIG_FILE ]; then
+        echo "$CONFIG_FILE does not exist.  Aborting."
+        stop
+        exit 0
+    fi
+
+    if [ ! -f $INTERFACES_FILE ]; then
+        echo "$INTERFACES_FILE does not exist.  Aborting."
+        stop
+        exit 0
+    fi
+
+    if ! /usr/sbin/dhcpd -t -q -4 -cf $CONFIG_FILE > /dev/null 2>&1; then
+        echo "dhcpd self-test failed.  Please fix the config file."
+        echo "The error was: "
+        /usr/sbin/dhcpd -t -4 -cf $CONFIG_FILE
+        stop
+        exit 0
+    fi
+end script
+
+respawn
+script
+    INTERFACES=`cat "${INTERFACES_FILE}"`
+
+    # Allow dhcp server to write lease and pid file.
+    mkdir -p $PID_DIR
+    chown dhcpd:dhcpd $PID_DIR
+
+    # As of Quantal, the leases file must be owned by root:root (even though
+    # the daemon will run under an unprivileged user).
+    # In Precise, ownership was supposed to be dhcpd:dhcpd.
+    #
+    # maas packages on saucy are only supported with newer isc-dhcp via
+    # the cloud-archive.  See bug 1231693 for more information, including
+    # a patch that would actually work to support all, but is complex.
+    
+    mkdir -p $LEASES_DIR
+    chown root:root $LEASES_DIR
+    [ -e $LEASES_FILE ] || touch $LEASES_FILE
+    for LFILE in $LEASES_FILE $LEASES_FILE~; do
+        if [ -e $LFILE ]; then
+            chown root:root $LFILE
+            chmod a+r $LFILE
+        fi
+    done
+
+    exec /usr/sbin/dhcpd -user dhcpd -group dhcpd -f -q -4 -pf $PID_FILE -cf $CONFIG_FILE -lf $LEASES_FILE $INTERFACES
+end script

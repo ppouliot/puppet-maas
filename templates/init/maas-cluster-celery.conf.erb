@@ -1,0 +1,30 @@
+# maas-cluster-controller - provisioning service
+#
+# MAAS Cluster Controller Service
+
+description     "MAAS Cluster Controller"
+author "Julian Edwards <julian.edwards@canonical.com>"
+
+start on filesystem and net-device-up
+stop on runlevel [016]
+
+env CONFIG_FILE=/etc/maas/maas_cluster.conf
+# Use cluster config.
+env CELERY_CONFIG_MODULE="celeryconfig_cluster"
+
+pre-start script
+    if [ ! -f $CONFIG_FILE ]; then
+        echo "$CONFIG_FILE does not exist.  Aborting."
+        stop
+        exit 0
+    fi
+end script
+
+script
+    # Prepare settings.
+    . $CONFIG_FILE
+    # Allow the cluster-controller process to read CLUSTER_UUID as set
+    # in that config file.
+    export CLUSTER_UUID
+    exec /usr/bin/authbind --deep /usr/sbin/maas-provision start-cluster-controller $MAAS_URL -u maas -g maas
+end script

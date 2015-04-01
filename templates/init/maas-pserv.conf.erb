@@ -1,0 +1,32 @@
+# maas-pserv - provisioning service
+#
+# MAAS Provisioning Service
+
+description     "MAAS"
+author "Andres Rodriguez <andres.rodriguez@canonical.com>"
+
+start on filesystem and net-device-up
+stop on runlevel [016]
+
+respawn
+
+env CONFIG_FILE=/etc/maas/maas_cluster.conf
+
+pre-start script
+    if [ ! -f $CONFIG_FILE ]; then
+        echo "$CONFIG_FILE does not exist.  Aborting."
+        stop
+        exit 0
+    fi
+end script
+
+script
+    # Prepare settings.
+    . $CONFIG_FILE
+    # Allow the tftpd process to read CLUSTER_UUID as set in that config
+    # file.
+    export CLUSTER_UUID
+    export MAAS_URL
+    # To add options to your daemon, edit the line below:
+    exec /usr/bin/authbind --deep /usr/bin/twistd -n --uid=maas --gid=maas --pidfile=/run/maas-pserv.pid --logfile=/dev/null maas-pserv --config-file=/etc/maas/pserv.yaml
+end script

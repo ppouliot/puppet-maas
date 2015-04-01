@@ -43,25 +43,54 @@ class maas::admin () inherits maas::params {
 #maas-pserv.conf
 #maas-region-celery
 
-## /etc/init/maas-cluster-celery.conf
+##maas-cluster-celery
+### file: /etc/init/maas-cluster-celery.conf
+  file {'/etc/init/maas-cluster-celery.conf',
+    ensure => present,
+  }
   service {'maas-cluster-celery':
     ensure => running,
+    require => File['/etc/init/maas-cluster-celery.conf'],
   }
-## /etc/init/maas-region-celery.conf 
+
+### file: /etc/init/maas-region-celery.conf 
+
+  file{'/etc/init/maas-region-celery.conf':
+    ensure => present,
+  }
+
   service {'maas-region-celery':
     ensure => running,
+    require => File['/etc/init/maas-region-celery.conf'],
   }
-## /etc/init/maas-dhcp-server.conf
+
+##maas-dhcp-server
+### /etc/init/maas-dhcp-server.conf
+  file{'/etc/init/maas-dhcp-server.conf':
+    ensure => present,
+  }
+  
   service {'maas-dhcp-server':
     ensure => running,
+    require => File['/etc/init/maas-dhcp-server.conf'],
   }
-## /etc/init/maas-pserv.conf 
+
+## maas-pserv
+### file: /etc/init/maas-pserv.conf 
+  file{'/etc/init/maas-pserv.conf':
+    ensure => present,
+  }
   service {'maas-pserv':
-    ensure => running,
+    ensure  => running,
+    require => File['/etc/init/maas-pserv.conf']:
   }
 ## /etc/init/maas-txlongpoll.conf
+  file{'/etc/init/maas-txlongpoll.conf':
+    ensure => present,
+  }
   service {'maas-txlongpoll':
-    ensure => running,
+    ensure  => running,
+    require => File['/etc/init/maas-txlongpoll.conf'],
   }
 
 }

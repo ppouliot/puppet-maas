@@ -166,6 +166,8 @@ class maas::params {
           $maas_cluster_uuid             = undef
 
           $maas_root_directories   = ['/etc/maas',
+                                      '/etc/maas/templates',
+                                      '/etc/maas/preseeds',
                                       '/usr/share/maas',
                                       '/var/lib/maas']
           # Default Settings

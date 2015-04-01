@@ -41,6 +41,9 @@ class maas::admin (
   $maas_root_user        = $maas::params::maas_root_user,
   $maas_root_passwd      = $maas::params::maas_root_passwd,
   $maas_root_email       = $maas::params::maas_root_email,
+  $maas_profile_name     = $maas::params::maas_profile_name,
+  $maas_api_key          = $maas::params::maas_api_key,
+  $maas_server_url       = $maas::params::maas_server_url,
 
 ) inherits maas::params {
 
@@ -48,8 +51,23 @@ class maas::admin (
     command   => "/usr/sbin/maas-region-admin createadmin --username=${maas_root_user} --email=${maas_root_user_email} --password=${maas_root_passwd}",
     require   => Package[$maas_packages],
     logoutput => true,
-# TODO: NEED AN UNLESS TO UNSURE THIS GETS RUN ONLY ONCE 
-#    unless    => '',
+    unless    => "/usr/sbin/maas-region-admin apikey ${maas_profile_name} --username ${maas_root_user}",
+
   }
-# TODO: Pottentially use a an admin login to the api as the test
+
+## Command to get the MAAS User's Key
+  exec{'get-api-key-maas-admin-account':
+    command     => "/usr/sbin/maas-region-admin apikey ${maas_profile_name} --username ${maas_root_user}",
+    refreshonly => true,
+    require     => Package[$maas_packages],
+    logoutput   => true,
+  }
+
+## Command to Login to the MAAS profile using the api-key
+  exec{'get-api-key-maas-admin-account':
+    command     => "/usr/sbin/maas maas_login ${maas_profile_name} ${maas_server_url} ${maas_api_key}",
+    refreshonly => true,
+    require     => Package[$maas_packages],
+    logoutput   => true,
+  }
 }

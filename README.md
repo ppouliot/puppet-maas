@@ -56,11 +56,10 @@ for upgrading, you may wish to include an additional section here: Upgrading
   class{'maas':}
 
 ## Reference
-- maas/manifests/init.pp
-- maas/manifests/params.pp
-- maas/manifests/admin.pp
-- maas/manifests/import_resources.pp
-- maas/templates/maas_cluster.conf.erb
+- maas: Main Class
+- maas::params: Sets the defaults for the maas module parameters
+- maas::admin: Creates the admin user
+- maas::import_resources: Imports default image resources
 
 
 ## Limitations
@@ -72,7 +71,7 @@ for upgrading, you may wish to include an additional section here: Upgrading
 Since your module is awesome, other users will want to play with it. Let them
 know what the ground rules for contributing are.
 
-## Release Notes/Contributors/Etc **Optional**
+## Release Notes/Changelog
 
 If you aren't using changelog, put your release notes here (though you should
 consider using changelog). You may also add any additional sections you feel are

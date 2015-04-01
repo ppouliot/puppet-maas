@@ -56,11 +56,12 @@ for upgrading, you may wish to include an additional section here: Upgrading
   class{'maas':}
 
 ## Reference
+- maas/manifests/init.pp
+- maas/manifests/params.pp
+- maas/manifests/admin.pp
+- maas/manifests/import_resources.pp
+- maas/templates/maas_cluster.conf.erb
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
 
 ## Limitations
 

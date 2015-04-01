@@ -53,6 +53,15 @@
 # [*maas_cluster_uuid*]
 #   The UUID of for the  MAAS Cluster
 #
+# [*maas_local_celeryconfig_user*]
+#   Default setting = 'maas_workers'
+#
+# [*maas_local_celeryconfig_passwd*]
+#   Default setting = 'I2c8Fsw14gySkiT9COSx'
+#
+# [*maas_local_celeryconfig_vhost*]
+#   Default vhost setting  = '/maas_workers'
+#
 # [*maas_txlongpoll_frontend_port*]
 #   Default Port used for the MAAS txlongpoll frontend service
 #   The default Uses 5242
@@ -164,6 +173,11 @@ class maas::params {
           $maas_db_user            = 'maas'
           $maas_db_passwd          = 'ky460LTuLfIl'
           $maas_db_host            = 'localhost'
+
+
+          $maas_local_celeryconfig_user   = 'maas_workers'
+          $maas_local_celeryconfig_passwd = 'I2c8Fsw14gySkiT9COSx'
+          $maas_local_celeryconfig_vhost  = '/maas_workers'
 
 
           # MAAS TXLONGPOLL 

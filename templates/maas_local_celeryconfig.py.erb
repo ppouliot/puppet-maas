@@ -1,3 +1,5 @@
 # Broker connection information.
 # Format: transport://userid:password@hostname:port/virtual_host
-BROKER_URL = 'amqp://maas_workers:I2c8Fsw14gySkiT9COSx@10.5.1.39:5672//maas_workers'
+# EXAMPLE:
+#   BROKER_URL = 'amqp://maas_workers:I2c8Fsw14gySkiT9COSx@10.5.1.39:5672//maas_workers'
+BROKER_URL = 'amqp://<%= @maas_local_celeryconfig_user %>:<%= @maas_local_celeryconfig_passwd %>@<%= @ipaddress %>:<%= @maas_txlongpoll_broker_port %>/<%= @maas_localceleryconfig_vhost %>'

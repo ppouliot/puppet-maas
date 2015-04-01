@@ -21,6 +21,20 @@
 # [*maas_root_password*]
 #   Password for the MAAS Root Account
 #
+# [*maas_profile_name*]
+#   The name with which you will later refer to this
+#   remote server and credentials within this tool.
+#
+# [*maas_server_url*]
+#   The URL of the remote API, e.g. http://example.com/MAAS/
+#   or http://example.com/MAAS/api/1.0/ if you wish to specify the API version.
+#
+# [*maas_api_key*]
+#   The credentials, also known as the API key, for the remote
+#   MAAS server. These can be found in the user preferences page
+#   in the web UI; they take the form of a long random-looking
+#   string composed of three parts, separated by colons.
+#
 # === Authors
 #
 # Peter J. Pouliot <peter@pouliot.net>
@@ -38,6 +52,10 @@ class maas::params {
           $maas_root_user        = 'root'
           $maas_root_password    = 'maas'
           $maas_root_user_email  = 'ppouliot@microsoft.com'
+
+          $maas_profile_name     = "${fqdn}"
+          $maas_server_url       = "http://$ipaddress/MAAS"
+          $maas_api_key          = undef
 
           # Installed MAAS Packages
           #   maas                            - MAAS server all-in-one metapackage

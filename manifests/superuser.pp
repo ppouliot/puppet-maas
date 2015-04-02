@@ -24,7 +24,7 @@ define maas::superuser ( $password, $email ) {
   }
 
 ## Command to get the MAAS User's Key
-  exec{'get-api-key-maas-admin-account':
+  exec{"get-api-key-maas-admin-account-$name":
     command     => "/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name}",
     refreshonly => true,
     require     => Package[$maaspackage],
@@ -32,7 +32,7 @@ define maas::superuser ( $password, $email ) {
   }
 
 ## Command to Login to the MAAS profile using the api-key
-  exec{'get-api-key-maas-admin-account':
+  exec{"get-api-key-maas-admin-account-$name":
     command     => "/usr/sbin/maas maas_login ${maas::profile_name} ${maas_server_url} ${maas_api_key}",
     refreshonly => true,
     require     => Package[$maaspackage],

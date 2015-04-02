@@ -93,10 +93,11 @@ class maas (
   }
 
   class{'maas::install':} -> 
+
   maas::superuser{ $superuser_name:
     password => $superuser_pass,
     email    => $superuser_email,
-  } -> 
+  }
 
   class{'maas::config':}
 

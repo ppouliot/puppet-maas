@@ -74,6 +74,15 @@ class maas (
     validate_string($cloud_archive_release, '^(icehouse|juno|kilo)$', 'This module only supports the IceHouse, Juno and Kilo Releases')
   }
 
-  class{'maas::install':}
+  class{'maas::install':} -> 
+  class{'maas::config':}
+
+  contain 'maas::install'
+  contain 'maas::config'
+
+# TODO: Create a define out of admin.pp
+#  Class['maas'] -> Maas::Admin <||>
+# TODO: Create a define out of import_resources.pp
+#  Class['maas'] -> Maas::Import_resources <||>
 
 }

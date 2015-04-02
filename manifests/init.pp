@@ -70,7 +70,7 @@ class maas (
   validate_re($::operatingsystemrelease, '(^12.04|14.04)$', 'This Module only works on Ubuntu releases 12.04 and 14.04.')
   notice("MAAS on node ${::fqdn} is managed by the maas puppet module." )
 
-  if (cloud_archive_release) {
+  if ($cloud_archive_release) {
     validate_string($cloud_archive_release, '^(icehouse|juno|kilo)$', 'This module only supports the IceHouse, Juno and Kilo Releases')
   }
 

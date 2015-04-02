@@ -158,6 +158,7 @@ class maas::params {
           $version                       = undef
           $ensure                        = present 
           $prerequired_packages          = undef
+          $manage_package                = true
           $cloud_archive_release         = undef
           $maas_root_user                = 'root'
           $maas_root_password            = 'maas'
@@ -248,8 +249,8 @@ class maas::params {
             'maas-cluster-controller',
             'python-django-maas',
             'maas-region-controller-min']
-
         }
+
         default:{
           warning("This is currently untested on your ${operatingsystemrelease}")
         }

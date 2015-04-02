@@ -173,7 +173,6 @@ class maas::params {
           $maas_root_password            = 'maas'
           $maas_root_user_email          = "root@${::fqdn}"
 
-          $maas_profile_name             = "${::fqdn}"
           $maas_server_url               = "http://${::ipaddress}/MAAS"
           $maas_api_version              = '1.0'
           $maas_api_key                  = undef

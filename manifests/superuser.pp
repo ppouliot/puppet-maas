@@ -18,7 +18,6 @@ define maas::superuser ( $password, $email ) {
 
   exec{"create-maas-admin-$name":
     command   => "/usr/sbin/maas-region-admin createadmin --username=${$name} --email=${email} --password=${passwd}",
-    require   => Package[$maaspackage],
     logoutput => true,
     unless    => "/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name}",
   }
@@ -27,7 +26,6 @@ define maas::superuser ( $password, $email ) {
   exec{"get-api-key-maas-admin-account-$name":
     command     => "/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name}",
     refreshonly => true,
-    require     => Package[$maaspackage],
     logoutput   => true,
   }
 
@@ -35,7 +33,6 @@ define maas::superuser ( $password, $email ) {
   exec{"login-maas-admin-with-api-key-$name":
     command     => "/usr/sbin/maas maas_login ${maas::profile_name} ${maas_server_url} ${maas_api_key}",
     refreshonly => true,
-    require     => Package[$maaspackage],
     logoutput   => true,
   }
 }

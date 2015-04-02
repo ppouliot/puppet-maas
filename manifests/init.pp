@@ -74,6 +74,6 @@ class maas (
     validate_string($cloud_archive_release, '^(icehouse|juno|kilo)$', 'This module only supports the IceHouse, Juno and Kilo Releases')
   }
 
-  class{'maas::install'}
+  class{'maas::install':}
 
 }

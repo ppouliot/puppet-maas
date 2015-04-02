@@ -93,18 +93,12 @@ class maas (
   }
 
   class{'maas::install':} -> 
-
-  maas::superuser{ $superuser_name:
-    password => $superuser_pass,
-    email    => $superuser_email,
-  }
-
   class{'maas::config':}
 
   contain 'maas::install'
   contain 'maas::config'
 
-  Class['maas'] -> Maas::Superuser <||>
+#  Class['maas'] -> Maas::Superuser <||>
 # TODO: Create a define out of import_resources.pp
 #  Class['maas'] -> Maas::Import_resources <||>
 

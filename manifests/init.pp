@@ -21,20 +21,38 @@
 #
 # === Variables
 #
+# [*version*]
+#   Specify a version of MAAS to install
+#
+# [*ensure*]
+#   Valid options are 'present' or 'absent'
+#
 # [*cloud_archive_release*]
 #   Release of the Cloud-archive:tools to use for maas packages
 #   Default is currently the OpenStack Juno release
 #
+# [*profile_name*]
+#   The name with which you will later refer to this
+#   remote server and credentials within this tool.
+#
+# [*server_url*]
+#   The URL of the remote API, e.g. http://example.com/MAAS/
+#   or http://example.com/MAAS/api/1.0/ if you wish to specify the API version.
+#
+# [*api_version*]
+#   Version of the MAAS API to use.   Default is 1.0.
+#
+#
 # [*maas_packages*]
 #   Default MAAS Packages to install 
 #
-# [*maas_root_user*]
+# [*maas_superuser*]
 #   Default MAAS Root Username
 #
-# [*maas_root_user_email*]
+# [*maas_superuser_email*]
 #   Default MAAS Root User email address
 #
-# [*maas_root_password*]
+# [*maas_superuser_passwd*]
 #   Password for the MAAS Root Account
 #
 # === Examples
@@ -56,11 +74,11 @@ class maas (
   $ensure                = $maas::params::ensure,
   $prerequired_packages  = $maas::params::prerequired_packages,
   $cloud_archive_release = $maas::params::cloud_archive_release,
+  $profile_name          = $maas::params::profile_name,
   $maas_packages         = $maas::params::maas_packages,
-  $maas_root_user        = $maas::params::maas_root_user,
-  $maas_root_passwd      = $maas::params::maas_root_passwd,
-  $maas_root_email       = $maas::params::maas_root_email,
-  $maas_root_directories = $maas::params::maas_root_directories,
+  $superuser_name        = $maas::params::superuser_name,
+  $superuser_pass        = $maas::params::superuser_pass,
+  $superuser_email       = $maas::params::superuser_email,
   $manage_package        = $maas::params::manage_package,
 
 ) inherits maas::params {
@@ -80,8 +98,7 @@ class maas (
   contain 'maas::install'
   contain 'maas::config'
 
-# TODO: Create a define out of admin.pp
-#  Class['maas'] -> Maas::Admin <||>
+  Class['maas'] -> Maas::Superuser <||>
 # TODO: Create a define out of import_resources.pp
 #  Class['maas'] -> Maas::Import_resources <||>
 

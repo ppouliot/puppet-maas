@@ -22,15 +22,15 @@
 # [*maas_root_password*]
 #   Password for the MAAS Root Account
 #
-# [*maas_profile_name*]
+# [*profile_name*]
 #   The name with which you will later refer to this
 #   remote server and credentials within this tool.
 #
-# [*maas_server_url*]
+# [*server_url*]
 #   The URL of the remote API, e.g. http://example.com/MAAS/
 #   or http://example.com/MAAS/api/1.0/ if you wish to specify the API version.
 #
-# [*maas_api_version*]
+# [*api_version*]
 #   Version of the MAAS API to use.   Default is 1.0.
 #
 # [*maas_db_name*]
@@ -160,6 +160,15 @@ class maas::params {
           $prerequired_packages          = undef
           $manage_package                = true
           $cloud_archive_release         = undef
+          $profile_name                  = "${::fqdn}"
+          $server_url                    = "http://${::ipaddress}/MAAS"
+          $api_version                   = '1.0'
+          $superuser_name                = 'root'
+          $superuser_pass                = 'maas'
+          $superuser_email               = "root@${::fqdn}"
+
+          $maas_profile_name             = "${::fqdn}"
+          $maas_api_version              = '1.0'
           $maas_root_user                = 'root'
           $maas_root_password            = 'maas'
           $maas_root_user_email          = "root@${::fqdn}"

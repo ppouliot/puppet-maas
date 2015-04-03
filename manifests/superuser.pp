@@ -26,7 +26,7 @@ define maas::superuser ( $password, $email ) {
   }
 
   ## Command to get the MAAS User's Key
-  exec{"new_get-api-key-superuser-account-$name":
+  exec{"get-api-key-superuser-account-$name":
     command     => "/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name} > /etc/maas/.puppet/su-${name}.maas",
     creates     => "/etc/maas/.puppet/su-${name}.maas",
     cwd         => '/etc/maas/.puppet/',

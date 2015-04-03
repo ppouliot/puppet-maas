@@ -34,6 +34,7 @@ define maas::superuser ( $password, $email ) {
     refreshonly => true,
     logoutput   => true,
     notify      => Exec["login-superuser-with-api-key-$name"],
+    require     => Exec["create-superuser-$name"],
   }
 
   ## Command to Login to the MAAS profile using the api-key
@@ -44,6 +45,7 @@ define maas::superuser ( $password, $email ) {
     refreshonly => true,
     logoutput   => true,
     notify      => exec["logout-superuser-with-api-key-$name"],
+    require     => Exec["login-superuser-with-api-key-$name"],
   }
   ## Command to Log out profile and flush creds
   warning("superuser: ${name} logout and flush credentials!")
@@ -52,5 +54,6 @@ define maas::superuser ( $password, $email ) {
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,
+    require     => Exec["login-superuser-with-api-key-$name"],
   }
 }

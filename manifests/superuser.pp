@@ -19,9 +19,9 @@ define maas::superuser ( $password, $email ) {
   ## Command to Create a SuperUser in MAAS
   exec{"create-superuser-$name":
     command   => "/usr/sbin/maas-region-admin createadmin --username=${$name} --email=${email} --password=${passwd}",
-    cwd       => '/etc/maas/.puppet/'
+    cwd       => '/etc/maas/.puppet/',
     logoutput => true,
-    unless      => "/usr/sbin/maas login ${maas::profile_name} ${maas::server_url} < /etc/maas/.puppet/su-${name}.maas ",
+    unless    => "/usr/sbin/maas login ${maas::profile_name} ${maas::server_url} < /etc/maas/.puppet/su-${name}.maas ",
     notify    => Exec["get-api-key-superuser-account-$name"],
   }
 
@@ -29,7 +29,7 @@ define maas::superuser ( $password, $email ) {
   exec{"new_get-api-key-superuser-account-$name":
     command     => "/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name} > /etc/maas/.puppet/su-${name}.maas",
     creates     => "/etc/maas/.puppet/su-${name}.maas",
-    cwd         => '/etc/maas/.puppet/'
+    cwd         => '/etc/maas/.puppet/',
     unless      => "/usr/sbin/maas login ${maas::profile_name} ${maas::server_url} < /etc/maas/.puppet/su-${name}.maas ",
     refreshonly => true,
     logoutput   => true,
@@ -40,7 +40,7 @@ define maas::superuser ( $password, $email ) {
   warning("superuser: ${name} login test")
   exec{"login-superuser-with-api-key-$name":
     command     => "/usr/sbin/maas login ${maas::profile_name} ${maas::server_url} < /etc/maas/.puppet/su-${name}.maas ",
-    cwd         => '/etc/maas/.puppet'
+    cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,
     notify      => exec["logout-superuser-with-api-key-$name"],
@@ -49,7 +49,7 @@ define maas::superuser ( $password, $email ) {
   warning("superuser: ${name} logout and flush credentials!")
   exec{"logout-superuser-with-api-key-$name":
     command     => "/usr/sbin/maas refresh",
-    cwd         => '/etc/maas/.puppet'
+    cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,
   }

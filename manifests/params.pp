@@ -163,9 +163,9 @@ class maas::params {
           $profile_name                  = "${::fqdn}"
           $server_url                    = "http://${::ipaddress}/MAAS"
           $api_version                   = '1.0'
-          $superuser_name                = 'root'
+          $superuser_name                = 'maas'
           $superuser_pass                = 'maas'
-          $superuser_email               = "root@${::fqdn}"
+          $superuser_email               = "maas@${::fqdn}"
 
           $maas_profile_name             = "${::fqdn}"
           $maas_api_version              = '1.0'

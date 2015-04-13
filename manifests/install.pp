@@ -35,7 +35,8 @@ class maas::install {
         }
         ## A Directory for help with MAAS related command automation
         file {"/etc/maas/.puppet/":
-          ensure => directory,
+          ensure  => directory,
+          require => Package['maas'],
         }
         ## Create MAAS Superuser
         maas::superuser{ $maas::superuser_name:

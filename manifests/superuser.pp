@@ -23,6 +23,7 @@ define maas::superuser ( $password, $email ) {
     logoutput => true,
     unless    => "/bin/bash read APIKEY < /etc/maas/.puppet/su-${name}.maas; /usr/bin/maas login ${maas::profile_name} ${maas::server_url} $APIKEY",
     notify    => Exec["get-api-key-superuser-account-$name"],
+    require   => Package['maas'],
   }
 
   ## Command to get the MAAS User's Key
@@ -34,6 +35,7 @@ define maas::superuser ( $password, $email ) {
     refreshonly => true,
     logoutput   => true,
     notify      => Exec["login-superuser-with-api-key-$name"],
+    require     => Package['maas'],
   }
 
   ## Command to Login to the MAAS profile using the api-key
@@ -44,6 +46,7 @@ define maas::superuser ( $password, $email ) {
     refreshonly => true,
     logoutput   => true,
     notify      => exec["logout-superuser-with-api-key-$name"],
+    require     => Package['maas'],
   }
   ## Command to Log out profile and flush creds
   warning("superuser: ${name} logout and flush credentials!")
@@ -52,5 +55,6 @@ define maas::superuser ( $password, $email ) {
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,
+    require     => Package['maas'],
   }
 }

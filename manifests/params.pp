@@ -13,13 +13,13 @@
 # [*maas_packages*]
 #   Default MAAS Packages to install
 #
-# [*maas_root_user*]
-#   Default MAAS Root Username
+# [*default_superuser*]
+#   Default MAAS SuperUser Username
 #
-# [*maas_root_user_email*]
-#   Default MAAS Root User email address
+# [*default_superuser_email*]
+#   Default MAAS SuperUser email address
 #
-# [*maas_root_password*]
+# [*default_superuser_password*]
 #   Password for the MAAS Root Account
 #
 # [*profile_name*]
@@ -163,17 +163,10 @@ class maas::params {
           $profile_name                  = "${::fqdn}"
           $server_url                    = "http://${::ipaddress}/MAAS"
           $api_version                   = '1.0'
-          $superuser_name                = 'maas'
-          $superuser_pass                = 'maas'
-          $superuser_email               = "maas@${::fqdn}"
+          $default_superuser             = 'maas'
+          $default_superuser_password    = 'maas'
+          $default_superuser_email       = "maas@${::fqdn}"
 
-          $maas_profile_name             = "${::fqdn}"
-          $maas_api_version              = '1.0'
-          $maas_root_user                = 'root'
-          $maas_root_password            = 'maas'
-          $maas_root_user_email          = "root@${::fqdn}"
-
-          $maas_server_url               = "http://${::ipaddress}/MAAS"
           $maas_api_key                  = undef
           $maas_cluster_uuid             = undef
 

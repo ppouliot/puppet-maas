@@ -70,16 +70,16 @@
 #
 class maas (
 
-  $version               = $maas::params::version,
-  $ensure                = $maas::params::ensure,
-  $prerequired_packages  = $maas::params::prerequired_packages,
-  $cloud_archive_release = $maas::params::cloud_archive_release,
-  $profile_name          = $maas::params::profile_name,
-  $maas_packages         = $maas::params::maas_packages,
-  $superuser_name        = $maas::params::superuser_name,
-  $superuser_pass        = $maas::params::superuser_pass,
-  $superuser_email       = $maas::params::superuser_email,
-  $manage_package        = $maas::params::manage_package,
+  $version                    = $maas::params::version,
+  $ensure                     = $maas::params::ensure,
+  $prerequired_packages       = $maas::params::prerequired_packages,
+  $cloud_archive_release      = $maas::params::cloud_archive_release,
+  $profile_name               = $maas::params::profile_name,
+  $maas_packages              = $maas::params::maas_packages,
+  $default_superuser          = $maas::params::default_superuser,
+  $default_superuser_password = $maas::params::default_superuser_pass,
+  $default_superuser_email    = $maas::params::default_superuser_email,
+  $manage_package             = $maas::params::manage_package,
 
 ) inherits maas::params {
 

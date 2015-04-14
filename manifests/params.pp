@@ -165,6 +165,7 @@ class maas::params {
           $api_version                   = '1.0'
           $default_superuser             = 'admin'
           $default_superuser_password    = 'maas'
+          $default_superuser_email       = "admin@${fqdn}"
 
           $maas_api_key                  = undef
           $maas_cluster_uuid             = undef

@@ -1,5 +1,5 @@
-# == Class: maas::import_resources
-# A class to import boot-resources into maas
+# == Class: maas::import_boot_images
+# A class to import boot-images into maas
 #
 # === Parameters
 #
@@ -10,7 +10,7 @@
 #
 # === Examples
 #
-# class{'maas::import_resources':}
+# class{'maas::import_boot_images':}
 #
 # === Authors
 #
@@ -20,10 +20,13 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-class maas::import_resources () inherits maas::params {
-  exec{'maas-import-boot-resources':
-    command => "/usr/sbin/maas my-maas-session boot-resources import",
-    require => Exec['create-maas-admin-account'],
-    logoutput => true,
+class maas::import_boot_images () inherits maas::params {
+  exec{'maas-import-boot-images':
+    command     => "/usr/bin/maas ${maas::profile_name} node-groups import-boot-images",
+    before      => Exec["logout-superuser-with-api-key-$name"],
+    cwd         => '/etc/maas/.puppet',
+    refreshonly => true,
+    logoutput   => true,
+    require     => Package['maas'],
   }
 }

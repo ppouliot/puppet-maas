@@ -11,7 +11,7 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-define maas::superuser ( $password, $email ) { 
+define maas::superuser ( $superuser_name = $name, $password, $email ) { 
 
   validate_string($name)
   validate_string($password)
@@ -48,6 +48,18 @@ define maas::superuser ( $password, $email ) {
     notify      => exec["logout-superuser-with-api-key-$name"],
     require     => Package['maas'],
   }
+
+  if $name == $maas::default_superuser {
+    exec{'maas-import-boot-images-run-by-user-$name':
+      command     => "/usr/bin/maas ${maas::profile_name} node-groups import-boot-images",
+      cwd         => '/etc/maas/.puppet',
+      refreshonly => true,
+      logoutput   => true,
+      before      => Exec["logout-superuser-with-api-key-$name"],
+      require     => Exec["login-superuser-with-api-key-$name"],
+    }
+  }
+
   ## Command to Log out profile and flush creds
   warning("superuser: ${name} logout and flush credentials!")
   exec{"logout-superuser-with-api-key-$name":

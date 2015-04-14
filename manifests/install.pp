@@ -14,20 +14,26 @@ class maas::install {
   case $operatingsystem {
     'Ubuntu':{
 
-      if $maas::version {
-        $maaspackage = "${maas::package_name}-${maas::version}"
-      } else {
-        $maaspackage = $maas::package_name
-      }
 
       if ($maas::cloud_archive_release) {
         include apt
         notice("Node ${::fqdn} is using the cloud-archive:${maas::cloud_archive_release} package repository for MAAS installation." )
         apt::ppa{"cloud-archive:${maas::cloud_archive_release}":}
+        if ($maas::manage_package) {
+          Apt::Ppa["cloud-archive:${maas::cloud_archive_release}"] -> Package['maas']
+        }
+      } else {
+        if $maas::version and $maas::ensure != 'absent' {
+          $ensure = $docker::version
+        } else {
+          $ensure = $docker::ensure
+        }
       }
 
-      if ($maas::manage_package) and ($maas::cloud_archive_release) {
-        Apt::Ppa["cloud-archive:${maas::cloud_archive_release}"] -> Package[ $maaspackage ]
+      if $maas::version {
+        $maaspackage = "${maas::package_name}-${maas::version}"
+      } else {
+        $maaspackage = $maas::package_name
       }
 
       if $maas::manage_package {

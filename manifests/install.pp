@@ -41,7 +41,7 @@ class maas::install {
         ## Create MAAS Superuser
         maas::superuser{ $maas::default_superuser:
           password => $maas::default_superuser_password,
-          email    => $maas::default_superuser_email,
+          email    => "${default_superuser}@${fqdn}",
           require  => Package['maas'],
         }
 

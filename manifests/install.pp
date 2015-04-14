@@ -13,6 +13,13 @@ class maas::install {
 
   case $operatingsystem {
     'Ubuntu':{
+
+      if $maas::version {
+        $maaspackage = "${maas::package_name}-${maas::version}"
+      } else {
+        $maaspackage = $maas::package_name
+      }
+
       if ($maas::cloud_archive_release) {
         include apt
         notice("Node ${::fqdn} is using the cloud-archive:${maas::cloud_archive_release} package repository for MAAS installation." )
@@ -23,11 +30,6 @@ class maas::install {
         Apt::Ppa["cloud-archive:${maas::cloud_archive_release}"] -> Package[ $maaspackage ]
       }
 
-      if $maas::version {
-        $maaspackage = "${maas::package_name}-${maas::version}"
-      } else {
-        $maaspackage = $maas::package_name
-      }
       if $maas::manage_package {
         package { 'maas':
           ensure => $maas::ensure,

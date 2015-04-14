@@ -77,7 +77,7 @@ class maas (
   $profile_name               = $maas::params::profile_name,
   $maas_packages              = $maas::params::maas_packages,
   $default_superuser          = $maas::params::default_superuser,
-  $default_superuser_password = $maas::params::default_superuser_pass,
+  $default_superuser_password = $maas::params::default_superuser_password,
   $default_superuser_email    = $maas::params::default_superuser_email,
   $manage_package             = $maas::params::manage_package,
 

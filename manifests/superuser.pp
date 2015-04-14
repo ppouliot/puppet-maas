@@ -18,7 +18,7 @@ define maas::superuser ( $password, $email ) {
   validate_string($email)
   ## Command to Create a SuperUser in MAAS
   exec{"create-superuser-$name":
-    command   => "/usr/sbin/maas-region-admin createadmin --username=${$name} --email=${email} --password=${passwd}",
+    command   => "/usr/sbin/maas-region-admin createadmin --username=${$name} --email=${email} --password=${password}",
     cwd       => '/etc/maas/.puppet/',
     logoutput => true,
     onlyif    => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",

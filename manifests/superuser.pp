@@ -21,7 +21,7 @@ define maas::superuser ( $password, $email ) {
     command   => "/usr/sbin/maas-region-admin createadmin --username=${$name} --email=${email} --password=${passwd}",
     cwd       => '/etc/maas/.puppet/',
     logoutput => true,
-    unless    => "/usr/bin/test -f /etc/maas/.puppet/su-${name}.maas",
+    onlyif    => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",
     notify    => Exec["get-api-key-superuser-account-$name"],
     require   => Package['maas'],
   }
@@ -41,7 +41,7 @@ define maas::superuser ( $password, $email ) {
   ## Command to Login to the MAAS profile using the api-key
   warning("superuser: ${name} login test")
   exec{"login-superuser-with-api-key-$name":
-    command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} \`/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name}\`",
+    command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} `/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name}`",
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,

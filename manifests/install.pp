@@ -41,7 +41,7 @@ class maas::install {
         ## Create MAAS Superuser
         maas::superuser{ $maas::default_superuser:
           password => $maas::default_superuser_password,
-          email    => $maas::default_Superuser_email,
+          email    => $maas::default_superuser_email,
           require  => Package['maas'],
         }
         ## import default images

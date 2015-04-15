@@ -65,8 +65,8 @@ for upgrading, you may wish to include an additional section here: Upgrading
 * `maas::params`: Sets the defaults for the maas module parameters
 * `maas::install`: Installs the MAAS package
 * `maas::config`: A placeholder class for processing
-* `maas::admin`: Creates the admin user
-* `maas::import_resources`: Imports default image resources
+* `maas::superuser`: Creates MAAS Administrative users
+* `maas::import_boot_images`: Imports default boot images
 
 ## Limitations
 

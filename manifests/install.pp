@@ -18,9 +18,9 @@ class maas::install {
       if ($maas::maas_maintainers_release) {
         include apt
         notice("Node ${::fqdn} is using the maas-maintainers ${maas::maas_maintiners_release} package repository for MAAS installation." )
-        apt::ppa{"maas-maintainers:${maas::maas_maintainers_release}":}
+        apt::ppa{"ppa:maas-maintainers/${maas::maas_maintainers_release}":}
         if ($maas::manage_package) {
-          Apt::Ppa["maas-maintainers:${maas::maas_maintainers_release}"] -> Package['maas']
+          Apt::Ppa["ppa:maas-maintainers/${maas::maas_maintainers_release}"] -> Package['maas']
         }
       } else {
         if $maas::version and $maas::ensure != 'absent' {

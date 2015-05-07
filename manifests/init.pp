@@ -73,7 +73,6 @@ class maas (
   $version                    = $maas::params::version,
   $ensure                     = $maas::params::ensure,
   $prerequired_packages       = $maas::params::prerequired_packages,
-  $cloud_archive_release      = $maas::params::cloud_archive_release,
   $maas_maintainers_release   = $maas::params::maas_maintainers_release,
   $profile_name               = $maas::params::profile_name,
   $maas_packages              = $maas::params::maas_packages,
@@ -89,8 +88,8 @@ class maas (
   validate_re($::operatingsystemrelease, '(^12.04|14.04)$', 'This Module only works on Ubuntu releases 12.04 and 14.04.')
   notice("MAAS on node ${::fqdn} is managed by the maas puppet module." )
 
-  if ($cloud_archive_release) {
-    validate_string($cloud_archive_release, '^(icehouse|juno|kilo)$', 'This module only supports the IceHouse, Juno and Kilo Releases')
+  if ($maas_maintainers_release) {
+    validate_string($maas_maintainers_release, '^(stable)$', 'This module only supports the Stable Releases')
   }
 
   class{'maas::install':} -> 

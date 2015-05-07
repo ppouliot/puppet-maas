@@ -74,6 +74,7 @@ class maas (
   $ensure                     = $maas::params::ensure,
   $prerequired_packages       = $maas::params::prerequired_packages,
   $cloud_archive_release      = $maas::params::cloud_archive_release,
+  $maas_maintainers_release   = $maas::params::maas_maintainers_release,
   $profile_name               = $maas::params::profile_name,
   $maas_packages              = $maas::params::maas_packages,
   $default_superuser          = $maas::params::default_superuser,

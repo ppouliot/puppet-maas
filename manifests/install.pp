@@ -15,12 +15,12 @@ class maas::install {
     'Ubuntu':{
 
 
-      if ($maas::cloud_archive_release) {
+      if ($maas::maas_maintainers_release) {
         include apt
-        notice("Node ${::fqdn} is using the cloud-archive:${maas::cloud_archive_release} package repository for MAAS installation." )
-        apt::ppa{"cloud-archive:${maas::cloud_archive_release}":}
+        notice("Node ${::fqdn} is using the maas-maintainers ${maas::maas_maintiners_release} package repository for MAAS installation." )
+        apt::ppa{"maas-maintainers:${maas::maas_maintainers_release}":}
         if ($maas::manage_package) {
-          Apt::Ppa["cloud-archive:${maas::cloud_archive_release}"] -> Package['maas']
+          Apt::Ppa["maas-maintainers:${maas::maas_maintainers_release}"] -> Package['maas']
         }
       } else {
         if $maas::version and $maas::ensure != 'absent' {

@@ -160,6 +160,7 @@ class maas::params {
           $prerequired_packages          = undef
           $manage_package                = true
           $cloud_archive_release         = undef
+          $maas_maintainers_release      = undef
           $profile_name                  = "${::fqdn}"
           $server_url                    = "http://${::ipaddress}/MAAS"
           $api_version                   = '1.0'

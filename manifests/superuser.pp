@@ -57,6 +57,7 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
       before      => Exec["logout-superuser-with-api-key-$name"],
       require     => Exec["login-superuser-with-api-key-$name"],
     } ->
+
     exec{"maas-boot-resources-import-run-by-user-$name":
       command     => "/usr/bin/maas ${maas::profile_name} boot-resources import",
       cwd         => '/etc/maas/.puppet',

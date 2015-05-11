@@ -62,7 +62,7 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
       cwd         => '/etc/maas/.puppet',
       logoutput   => true,
       before      => Exec["logout-superuser-with-api-key-$name"],
-      after       => Exec["maas-import-boot-images-run-by-user-$name"],
+      require     => Exec["maas-import-boot-images-run-by-user-$name"],
     }
   }
 

@@ -57,6 +57,7 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
       before      => Exec["logout-superuser-with-api-key-$name"],
       require     => Exec["login-superuser-with-api-key-$name"],
     }
+   # NEED TO FIX 
    # exec{"maas-boot-resources-import-run-by-user-$name":
    #   command     => "/usr/bin/maas ${maas::profile_name} boot-resources import",
    #   cwd         => '/etc/maas/.puppet',
@@ -64,6 +65,17 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
    #   before      => Exec["logout-superuser-with-api-key-$name"],
    #   require     => Exec["login-superuser-with-api-key-$name"],
    # }
+   # NEED TO FIX 
+   # exec{"maas-nodes-accept-all-run-by-user-$name":
+   #   command     => "/usr/bin/maas ${maas::profile_name} nodes accept-all",
+   #   cwd         => '/etc/maas/.puppet',
+   #   logoutput   => true,
+   #   before      => Exec["logout-superuser-with-api-key-$name"],
+   #   require     => Exec["login-superuser-with-api-key-$name"],
+   # }
+  }
+
+  ## Command to Log out profile and flush creds
   }
 
   ## Command to Log out profile and flush creds

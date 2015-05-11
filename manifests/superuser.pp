@@ -54,7 +54,6 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
       command     => "/usr/bin/maas ${maas::profile_name} node-groups import-boot-images",
       cwd         => '/etc/maas/.puppet',
       logoutput   => true,
-      notify      => exec["maas-boot-resources-import-$name"],
       before      => Exec["logout-superuser-with-api-key-$name"],
       require     => Exec["login-superuser-with-api-key-$name"],
     }

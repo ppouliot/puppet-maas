@@ -24,9 +24,9 @@ class maas::install {
         }
       } else {
         if $maas::version and $maas::ensure != 'absent' {
-          $ensure = $docker::version
+          $ensure = $maas::version
         } else {
-          $ensure = $docker::ensure
+          $ensure = $maas::ensure
         }
       }
 
@@ -43,7 +43,6 @@ class maas::install {
         } ->
         package{['maas-dhcp','maas-dns']:
           ensure => $maas::ensure,
-          name   => $maaspackage
         }
         ## A Directory for help with MAAS related command automation
         file {"/etc/maas/.puppet/":

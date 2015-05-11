@@ -78,10 +78,6 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
       require     => Exec["login-superuser-with-api-key-$name"],
     }
   }
-
-  ## Command to Log out profile and flush creds
-  }
-
   ## Command to Log out profile and flush creds
   warning("superuser: ${name} logout and flush credentials!")
   exec{"logout-superuser-with-api-key-$name":

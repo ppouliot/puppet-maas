@@ -40,7 +40,7 @@ class maas::install {
         package { 'maas':
           ensure => $maas::ensure,
           name   => $maaspackage
-        }
+        } ->
         package{['maas-dhcp','maas-dns']:
           ensure => $maas::ensure,
         }

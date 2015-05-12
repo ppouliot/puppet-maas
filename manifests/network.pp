@@ -1,4 +1,38 @@
 # == Define: maas::network
+# A defined type for maas network commands
+#
+# == Parameters:
+#
+# [*maas_superuser*]
+#   The maas superuser to use.
+#
+# [*cli_command*]
+#   The maas network command to run
+#
+# [*param_ip*]
+#   The ip address of the network
+#
+# [*param_netmask*]
+#   Network netmask 
+#
+# [*param_vlan_tag*]
+#   Vlan Tag
+#
+# [*param_description*]
+#   Description of Network
+#
+# [*param_macs*]
+#   Mac address
+#
+# == Example:
+# maas::network{
+#   maas_superuser    => 'admin',
+#   cli_command       => 'update',
+#   param_ip          => '192.168.1.0',
+#   param_netmask     => '255.255.255.0',
+#   param_vlan_tag    => '255.255.255.0',
+#   param_description => 'Production Network'
+# {
 #
 define maas::network (
   $maas_superuser,

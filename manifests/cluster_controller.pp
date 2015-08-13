@@ -32,6 +32,8 @@ class maas::cluster_controller (
  # The following is essentially what I used in the node definition to create a secondary cluster controller
  # There is an additional template needed.
   include apt
+  include stdlib
+
   package{'software-properties-common':
     ensure => latest,
   } ->
@@ -40,7 +42,7 @@ class maas::cluster_controller (
     ensure => latest,
   } ->
   ## /etc/maas/maas_cluster.yaml
-  file{ '/etc/maas/maas_cluster.yaml':
+  file{ '/etc/maas/maas_cluster.conf':
     ensure => present,
 #    content => template('maas/maas_cluster.yaml.erb')
   } ->
@@ -48,7 +50,7 @@ class maas::cluster_controller (
     path   => '/etc/maas/maas_cluster.yaml',
     match  => 'MAAS_URL=http://localhost/MAAS',
     line   => "MAAS_URL=http://${maas::cluster_region_controller}/MAAS",
-  } ->
+  } 
   file{'/var/lib/maas/secret':
     ensure => file,
     owner  => 'maas',

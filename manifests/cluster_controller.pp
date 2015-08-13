@@ -31,11 +31,11 @@ class maas::cluster_controller (
 
  # The following is essentially what I used in the node definition to create a secondary cluster controller
  # There is an additional template needed.
+  include apt
   package{'software-properties-common':
     ensure => latest,
   } ->
-  include apt
-  apt::ppa{"ppa:maas-maintainers/stable":} ->
+  apt::ppa{'ppa:maas-maintainers/stable':} ->
   package{'maas-cluster-controller':
     ensure => latest,
   } ->

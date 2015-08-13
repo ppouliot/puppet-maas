@@ -47,15 +47,18 @@ class maas::cluster_controller (
     path   => '/etc/maas/maas_cluster.yaml',
     match  => 'MAAS_URL=http://localhost/MAAS',
     match  => "MAAS_URL=http://${maas::cluster_region_controller}/MAAS",
-
-
-  }
+  } ->
   file{'/var/lib/maas/secret':
     ensure => file,
     owner  => 'maas',
     group  => 'maas',
     mode   => '640',
     source => 'puppet:///extra_files/maas/secret',
+  } ->
+  service {'maas-clusterd':
+    enable => true,
+    ensure => running,
+    require => Package['maas-cluster-controller'],
   }
 #}
 ## /etc/maas/maas-cluster-http.conf

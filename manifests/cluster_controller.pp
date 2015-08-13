@@ -57,6 +57,7 @@ class maas::cluster_controller (
     group  => 'maas',
     mode   => '640',
     source => 'puppet:///extra_files/maas/secret',
+    require => Package['maas-cluster-controller'],
   } ->
   service {'maas-clusterd':
     enable => true,

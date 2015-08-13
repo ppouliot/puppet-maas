@@ -61,8 +61,19 @@
 #
 # === Examples
 #
+#  Install a maas region controller
+#  --------------------------------
+#
 #  class { 'maas':
 #  }
+#
+#  Install additional cluster controllers
+#  --------------------------------------
+#  
+#  class{'maas::cluster_controller':
+#    cluster_region_controller => '192.168.1.1',
+#  }
+#
 #
 # === Authors
 #

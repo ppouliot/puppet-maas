@@ -24,6 +24,7 @@ class maas::cluster_controller (
 #  $maas_cluster_controller_broker_passwd = $maas::params::maas_cluster_controller_broker_passwd,
 #  $maas_cluster_controller_broker_vhost  = $maas::params::maas_cluster_controller_broker_vhost,
 #  $maas_cluster_controller_logfile       = $maas::params::maas_cluster_controller_logfile,
+   $cluster_region_controller
 
 
 ) inherits maas::params {
@@ -46,7 +47,7 @@ class maas::cluster_controller (
   file_line{'maas_cluster.conf-region_controller_address':
     path   => '/etc/maas/maas_cluster.yaml',
     match  => 'MAAS_URL=http://localhost/MAAS',
-    match  => "MAAS_URL=http://${maas::cluster_region_controller}/MAAS",
+    line   => "MAAS_URL=http://${maas::cluster_region_controller}/MAAS",
   } ->
   file{'/var/lib/maas/secret':
     ensure => file,

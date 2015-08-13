@@ -1,4 +1,4 @@
-# == Class: maas::cli::import_boot_images
+# == Class: maas::cli::nodes_accept_all
 # A class to import boot-images into maas
 #
 # === Parameters
@@ -10,7 +10,7 @@
 #
 # === Examples
 #
-# class{'maas::cli::import_boot_images':}
+# class{'maas::cli::nodes_accept_all':}
 #
 # === Authors
 #
@@ -20,9 +20,9 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-class maas::cli::import_boot_images () inherits maas::params {
+class maas::cli::nodes_accept_all () inherits maas::params {
   exec{'maas-import-boot-images':
-    command     => "/usr/bin/maas ${maas::profile_name} node-groups import-boot-images",
+    command     => "/usr/bin/maas ${maas::profile_name} nodes accept-all",
     before      => Exec["logout-superuser-with-api-key-${maas::default_superuser}"],
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,

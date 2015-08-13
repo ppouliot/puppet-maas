@@ -16,6 +16,15 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
   validate_string($name)
   validate_string($password)
   validate_string($email)
+
+  case $superuser_name {
+    $maas::default_superuser:{
+      $maas_cli_cmds ='Exec["logout-superuser-with-api-key-$name"]',
+    }
+    default:{
+      $maas_cli_cmds ='Exec["logout-superuser-with-api-key-$name"]',
+    }
+  }
   ## Command to Create a SuperUser in MAAS
   exec{"create-superuser-$name":
     command   => "/usr/sbin/maas-region-admin createadmin --username=${$name} --email=${email} --password=${password}",
@@ -45,11 +54,12 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,
-    notify      => exec["logout-superuser-with-api-key-$name"],
+    notify      => Exec[ $maas_cli_cmds ],
     require     => Package['maas'],
   }
 
   if $name == $maas::default_superuser {
+    notify{'maas-import-boot-images':}
     exec{"maas-import-boot-images-run-by-user-$name":
       command     => "/usr/bin/maas ${maas::profile_name} node-groups import-boot-images",
       cwd         => '/etc/maas/.puppet',

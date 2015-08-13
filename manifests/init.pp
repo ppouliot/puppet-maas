@@ -55,6 +55,10 @@
 # [*maas_superuser_passwd*]
 #   Password for the MAAS Root Account
 #
+# [*cluster_region_controller*]
+#   IP Address of the region controller master for new cluster controller nodes.
+#   Used in the maas::cluster_controller class
+#
 # === Examples
 #
 #  class { 'maas':
@@ -79,6 +83,7 @@ class maas (
   $default_superuser          = $maas::params::default_superuser,
   $default_superuser_password = $maas::params::default_superuser_password,
   $default_superuser_email    = $maas::params::default_superuser_email,
+  $cluster_region_controller  = $maas::params::cluster_region_controller
   $manage_package             = $maas::params::manage_package,
 
 ) inherits maas::params {
@@ -100,7 +105,7 @@ class maas (
   contain 'maas::config'
   contain 'maas::hyperv_power_adapter'
 
-#  Class['maas'] -> Maas::Superuser <||>
+  Class['maas'] -> Maas::Superuser <||>
 # TODO: Create a define out of import_resources.pp
 #  Class['maas'] -> Maas::Import_resources <||>
 

@@ -30,12 +30,26 @@ class maas::cluster_controller (
 
  # The following is essentially what I used in the node definition to create a secondary cluster controller
  # There is an additional template needed.
-
+  package{'software-properties-common':
+    ensure => latest,
+  } ->
   include apt
   apt::ppa{"ppa:maas-maintainers/stable":} ->
   package{'maas-cluster-controller':
     ensure => latest,
   } ->
+  ## /etc/maas/maas_cluster.yaml
+  file{ '/etc/maas/maas_cluster.yaml':
+    ensure => present,
+#    content => template('maas/maas_cluster.yaml.erb')
+  } ->
+  file_line{'maas_cluster.conf-region_controller_address':
+    path   => '/etc/maas/maas_cluster.yaml',
+    match  => 'MAAS_URL=http://localhost/MAAS',
+    match  => "MAAS_URL=http://${maas::cluster_region_controller}/MAAS",
+
+
+  }
   file{'/var/lib/maas/secret':
     ensure => file,
     owner  => 'maas',
@@ -44,18 +58,11 @@ class maas::cluster_controller (
     source => 'puppet:///extra_files/maas/secret',
   }
 #}
-## /etc/maas/maas_cluster.yaml
 ## /etc/maas/maas-cluster-http.conf
 ## /etc/maas/maas-http.conf
 ## /etc/maas/maas_local_celeryconfig.py
 ## /etc/maas/maas_local_celeryconfig_cluster.py
 
-  ## /etc/maas/maas_cluster.yaml
-
-#  file{ '/etc/maas/maas_cluster.yaml':
-#    ensure => present,
-#    content => template('maas/maas_cluster.yaml.erb')
-#  }
 
   ## /etc/maas/maas-cluster-http.conf
 #  file{ '/etc/maas/maas-cluster-http.conf':

@@ -166,6 +166,8 @@ class maas::params {
           $default_superuser             = 'admin'
           $default_superuser_password    = 'maas'
           $default_superuser_email       = "admin@${fqdn}"
+          # Region Controller address for adding new cluster controllers
+          $cluster_region_controller     = undef
 
           $maas_api_key                  = undef
           $maas_cluster_uuid             = undef

@@ -3,5 +3,5 @@
 # `maas-provision start-cluster-controller`
 # to get the URL to the MAAS region controller's API. Normally, packaging
 # will update this file automatically but it may also be configured manually.
-MAAS_URL=<%= @maas_server_url %>
+MAAS_URL="http://<%=@maas::cluster_region_controller%>/MAAS"
 CLUSTER_UUID=<%= @maas_cluster_uuid %>

@@ -94,7 +94,7 @@ class maas (
   $default_superuser          = $maas::params::default_superuser,
   $default_superuser_password = $maas::params::default_superuser_password,
   $default_superuser_email    = $maas::params::default_superuser_email,
-  $cluster_region_controller  = $maas::params::cluster_region_controller
+  $cluster_region_controller  = $maas::params::cluster_region_controller,
   $manage_package             = $maas::params::manage_package,
 
 ) inherits maas::params {

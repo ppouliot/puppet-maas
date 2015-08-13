@@ -47,7 +47,7 @@ class maas::cluster_controller (
 #    content => template('maas/maas_cluster.yaml.erb')
   } ->
   file_line{'maas_cluster.conf-region_controller_address':
-    path   => '/etc/maas/maas_cluster.yaml',
+    path   => '/etc/maas/maas_cluster.conf',
     match  => 'MAAS_URL=http://localhost/MAAS',
     line   => "MAAS_URL=http://${maas::cluster_region_controller}/MAAS",
   } 

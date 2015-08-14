@@ -116,7 +116,7 @@ class maas (
   contain 'maas::config'
   contain 'maas::hyperv_power_adapter'
 
-  Class['maas'] -> Maas::Superuser <||>
+#  Class['maas'] -> Maas::Superuser <||>
 # TODO: Create a define out of import_resources.pp
 #  Class['maas'] -> Maas::Import_resources <||>
 

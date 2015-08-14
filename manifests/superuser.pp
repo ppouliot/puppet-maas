@@ -19,10 +19,10 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
 
   case $superuser_name {
     $maas::default_superuser:{
-      $maas_cli_cmds ='Exec["logout-superuser-with-api-key-$name"]',
+      $maas_cli_cmds ='Exec["logout-superuser-with-api-key-$name"]'
     }
     default:{
-      $maas_cli_cmds ='Exec["logout-superuser-with-api-key-$name"]',
+      $maas_cli_cmds ='Exec["logout-superuser-with-api-key-$name"]'
     }
   }
   ## Command to Create a SuperUser in MAAS

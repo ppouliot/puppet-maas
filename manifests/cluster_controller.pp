@@ -11,6 +11,7 @@
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
 class maas::cluster_controller (
+  $cluster_region_controller = $maas::cluster_region_controller
 
 #  $maas_cluster_controller_config_file   = $maas::params::maas_cluster_controller_config_file,
 #  $maas_cluster_controller_initi_file    = $maas::params::maas_cluster_controller_initi_file,
@@ -47,7 +48,7 @@ class maas::cluster_controller (
   file_line{'maas_cluster.conf-region_controller_address':
     path   => '/etc/maas/maas_cluster.conf',
     match  => 'MAAS_URL=http://localhost/MAAS',
-    line   => "MAAS_URL=http://${maas::cluster_region_controller}/MAAS",
+    line   => "MAAS_URL=http://${cluster_region_controller}/MAAS",
   } 
   file{'/var/lib/maas/secret':
     ensure => file,

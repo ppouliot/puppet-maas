@@ -17,14 +17,6 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
   validate_string($password)
   validate_string($email)
 
-  case $superuser_name {
-    $maas::default_superuser:{
-      $maas_cli_cmds ='Exec["logout-superuser-with-api-key-$name"]'
-    }
-    default:{
-      $maas_cli_cmds ='Exec["logout-superuser-with-api-key-$name"]'
-    }
-  }
   ## Command to Create a SuperUser in MAAS
   exec{"create-superuser-$name":
     command   => "/usr/sbin/maas-region-admin createadmin --username=${$name} --email=${email} --password=${password}",
@@ -54,7 +46,6 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,
-    notify      => Exec[ $maas_cli_cmds ],
     require     => Package['maas'],
   }
 
@@ -67,25 +58,24 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
       before      => Exec["logout-superuser-with-api-key-$name"],
       require     => Exec["login-superuser-with-api-key-$name"],
     }
+    exec{"maas-boot-resources-import-$name":
+      command     => "/usr/bin/maas ${maas::profile_name} boot-resources import",
+      cwd         => '/etc/maas/.puppet',
+      refreshonly => true,
+      notify      => exec["maas-nodes-accept-all-$name"],
+      logoutput   => true,
+      before      => Exec["logout-superuser-with-api-key-$name"],
+      require     => Exec["login-superuser-with-api-key-$name"],
+    }
    # NEED TO FIX 
-#    exec{"maas-boot-resources-import-$name":
-#      command     => "/usr/bin/maas ${maas::profile_name} boot-resources import",
-#      cwd         => '/etc/maas/.puppet',
-#      refreshonly => true,
-#      notify      => exec["maas-nodes-accept-all-$name"],
-#      logoutput   => true,
-#      before      => Exec["logout-superuser-with-api-key-$name"],
-#      require     => Exec["login-superuser-with-api-key-$name"],
-#    }
-   # NEED TO FIX 
-#    exec{"maas-nodes-accept-all-$name":
-#      command     => "/usr/bin/maas ${maas::profile_name} nodes accept-all",
-#      cwd         => '/etc/maas/.puppet',
-#      refreshonly => true,
-#      logoutput   => true,
-#      before      => Exec["logout-superuser-with-api-key-$name"],
-#      require     => Exec["login-superuser-with-api-key-$name"],
-#    }
+    exec{"maas-nodes-accept-all-$name":
+      command     => "/usr/bin/maas ${maas::profile_name} nodes accept-all",
+      cwd         => '/etc/maas/.puppet',
+      refreshonly => true,
+      logoutput   => true,
+      before      => Exec["logout-superuser-with-api-key-$name"],
+      require     => Exec["login-superuser-with-api-key-$name"],
+    }
   }
   ## Command to Log out profile and flush creds
   warning("superuser: ${name} logout and flush credentials!")

@@ -40,6 +40,9 @@ class maas::cluster_controller (
   package{'maas-cluster-controller':
     ensure => latest,
   } ->
+  package{'maas-dns':
+    ensure => latest,
+  } ->
   ## /etc/maas/maas_cluster.yaml
   file{ '/etc/maas/maas_cluster.conf':
     ensure => present,

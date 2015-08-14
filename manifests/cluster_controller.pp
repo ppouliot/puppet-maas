@@ -24,8 +24,6 @@ class maas::cluster_controller (
 #  $maas_cluster_controller_broker_passwd = $maas::params::maas_cluster_controller_broker_passwd,
 #  $maas_cluster_controller_broker_vhost  = $maas::params::maas_cluster_controller_broker_vhost,
 #  $maas_cluster_controller_logfile       = $maas::params::maas_cluster_controller_logfile,
-   $cluster_region_controller
-
 
 ) inherits maas::params {
 

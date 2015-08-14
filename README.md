@@ -67,6 +67,7 @@ for upgrading, you may wish to include an additional section here: Upgrading
 * `maas::config`: A placeholder class for processing
 * `maas::superuser`: Creates MAAS Administrative users
 * `maas::import_boot_images`: Imports default boot images
+* `maas::cluster_controller`: Adds addintional cluster controllers to a region controller
 
 ## Limitations
 

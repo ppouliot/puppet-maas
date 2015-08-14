@@ -38,7 +38,12 @@ class maas::cluster_controller (
     ensure => latest,
   } ->
   apt::ppa{'ppa:maas-maintainers/stable':} ->
-  package{'maas-cluster-controller':
+  package{['maas-cli',
+           'maas-cluster-controller',
+           'maas-common',
+           'maas-dhcp',
+           'python-maas-client',
+           'python-maas-provisioningserver']:
     ensure => latest,
   } ->
   ## /etc/maas/maas_cluster.yaml

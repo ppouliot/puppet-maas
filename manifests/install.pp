@@ -14,7 +14,6 @@ class maas::install {
   case $operatingsystem {
     'Ubuntu':{
 
-
       if ($maas::maas_maintainers_release) {
         include apt
         notice("Node ${::fqdn} is using the maas-maintainers ${maas::maas_maintiners_release} package repository for MAAS installation." )
@@ -54,16 +53,9 @@ class maas::install {
           password => $maas::default_superuser_password,
           email    => $maas::default_superuser_email,
           require  => Package['maas'],
-	}
-	## Create MAAS Admin users
-# 	maas::superuser{ $maas::default_adminuser1:
-#          password => $maas::default_adminuser1_password,
-#          email    => $maas::default_adminuser1_email,
-#          require  => Package['maas'],
-#        }
-	  ## import default images
-       }
-      }	
+        } 
+      }
+    }
     default:{
       fail("MAAS does not support installation on your operation system: ${::osfamily} ")
     }

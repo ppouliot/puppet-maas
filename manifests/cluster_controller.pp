@@ -40,8 +40,8 @@ class maas::cluster_controller (
   package{'maas-cluster-controller':
     ensure => latest,
   } ->
-  package{'maas-dns':
-    ensure => latest,
+  package{['maas-proxy','maas-dns','maas-region-controller-min']:
+    ensure => absent,
   } ->
   ## /etc/maas/maas_cluster.conf
   file{ '/etc/maas/maas_cluster.conf':

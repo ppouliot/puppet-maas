@@ -61,7 +61,7 @@ class maas::cluster_controller (
   file_line{'pserv.yaml-region_controller_address':
     path   => '/etc/maas/pserv.yaml',
     match  => '\ \ generator: http://localhost:5240/MAAS/api/1.0/pxeconfig/',
-    line  => "\ \ generator: http://${cluster_region_controller}:5240/MAAS/api/1.0/pxeconfig/",
+    line  => "\\ \\ generator: http://${cluster_region_controller}:5240/MAAS/api/1.0/pxeconfig/",
   } 
   file{'/var/lib/maas/secret':
     ensure => file,

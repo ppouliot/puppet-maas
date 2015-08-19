@@ -49,7 +49,7 @@ class maas::cluster_controller (
     path   => '/etc/maas/maas_cluster.conf',
     match  => 'MAAS_URL=http://localhost/MAAS',
     line   => "MAAS_URL=\"http://${cluster_region_controller}/MAAS\"",
-  } 
+  } ->
   ## /etc/maas/pserv.yaml
   file{ '/etc/maas/pserv.yaml':
     ensure => present,
@@ -59,7 +59,7 @@ class maas::cluster_controller (
     path   => '/etc/maas/pserv.yaml',
     match  => '\ \ generator: http://localhost:5240/MAAS/api/1.0/pxeconfig/',
     line  => "  generator: http://${cluster_region_controller}:5240/MAAS/api/1.0/pxeconfig/",
-  } 
+  } -> 
   file{'/var/lib/maas/secret':
     ensure => file,
     owner  => 'maas',

@@ -18,7 +18,7 @@ class maas::image_builder (
   } ->
 
   exec {'image-builder_make_install-deps':
-    command   => 'make install-dependencies && make',
+    command   => '/usr/bin/make install-dependencies && /usr/bin/make',
     cwd       => '/opt/maas-image-builder',
     logoutput => true,
     timeout   => 0,

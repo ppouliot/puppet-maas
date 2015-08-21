@@ -25,7 +25,7 @@ class maas::image_builder (
     notify    => Exec['create-centos-7-image','create-centos-6-image'],
   } ->
   exec {'create-centos-7-image':
-    command   => './bin/maas-image-builder -o centos7-amd64-root-tgz centos',
+    command   => '/opt/maas-image-builder/bin/maas-image-builder -o centos7-amd64-root-tgz centos',
     cwd       => '/opt/maas-image-builder',
     logoutput => true,
     refreshonly => true,
@@ -33,7 +33,7 @@ class maas::image_builder (
     require     => Exec[image-builder_make_install-deps],
   } ->
   exec {'create-centos-6-image':
-    command   => './bin/maas-image-builder -o centos6-amd64-root-tgz centos --edition 6',
+    command   => '/opt/maas-image-builder/bin/maas-image-builder -o centos6-amd64-root-tgz centos --edition 6',
     cwd       => '/opt/maas-image-builder',
     logoutput => true,
     refreshonly => true,

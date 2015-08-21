@@ -13,6 +13,7 @@ class maas::image_builder (
     ensure   => latest,
     provider => bzr,
     source   => 'lp:maas/maas-image-builder',
+    user     => 'maas-maintainers',
   }
 
 

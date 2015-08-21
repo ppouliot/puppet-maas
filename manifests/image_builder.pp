@@ -22,7 +22,7 @@ class maas::image_builder (
     cwd       => '/opt/maas-image-builder',
     logoutput => true,
     timeout   => 0,
-  }
+  } ->
   exec {'create-centos-7-image':
     command   => './bin/maas-image-builder -o centos7-amd64-root-tgz centos',
     cwd       => '/opt/maas-image-builder',

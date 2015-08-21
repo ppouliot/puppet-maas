@@ -4,6 +4,7 @@ class maas::image_builder (
 ) inherits params {
 
   package{['bzr',
+           'make',
            'python-tempita',
            'python-yaml',
            'python-virtualenv']:

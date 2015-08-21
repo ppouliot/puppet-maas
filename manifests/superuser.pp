@@ -50,7 +50,6 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
   }
 
   if $name == $maas::default_superuser {
-    notify{'maas-import-boot-images':}
     exec{"maas-import-boot-images-run-by-user-$name":
       command     => "/usr/bin/maas ${maas::profile_name} node-groups import-boot-images",
       cwd         => '/etc/maas/.puppet',
@@ -58,25 +57,24 @@ define maas::superuser ( $superuser_name = $name, $password, $email ) {
       before      => Exec["logout-superuser-with-api-key-$name"],
       require     => Exec["login-superuser-with-api-key-$name"],
     }
+    exec{"maas-boot-resources-import-$name":
+      command     => "/usr/bin/maas ${maas::profile_name} boot-resources import",
+      cwd         => '/etc/maas/.puppet',
+      refreshonly => true,
+      notify      => exec["maas-nodes-accept-all-$name"],
+      logoutput   => true,
+      before      => Exec["logout-superuser-with-api-key-$name"],
+      require     => Exec["login-superuser-with-api-key-$name"],
+    }
    # NEED TO FIX 
-#    exec{"maas-boot-resources-import-$name":
-#      command     => "/usr/bin/maas ${maas::profile_name} boot-resources import",
-#      cwd         => '/etc/maas/.puppet',
-#      refreshonly => true,
-#      notify      => exec["maas-nodes-accept-all-$name"],
-#      logoutput   => true,
-#      before      => Exec["logout-superuser-with-api-key-$name"],
-#      require     => Exec["login-superuser-with-api-key-$name"],
-#    }
-   # NEED TO FIX 
-#    exec{"maas-nodes-accept-all-$name":
-#      command     => "/usr/bin/maas ${maas::profile_name} nodes accept-all",
-#      cwd         => '/etc/maas/.puppet',
-#      refreshonly => true,
-#      logoutput   => true,
-#      before      => Exec["logout-superuser-with-api-key-$name"],
-#      require     => Exec["login-superuser-with-api-key-$name"],
-#    }
+    exec{"maas-nodes-accept-all-$name":
+      command     => "/usr/bin/maas ${maas::profile_name} nodes accept-all",
+      cwd         => '/etc/maas/.puppet',
+      refreshonly => true,
+      logoutput   => true,
+      before      => Exec["logout-superuser-with-api-key-$name"],
+      require     => Exec["login-superuser-with-api-key-$name"],
+    }
   }
   ## Command to Log out profile and flush creds
   warning("superuser: ${name} logout and flush credentials!")

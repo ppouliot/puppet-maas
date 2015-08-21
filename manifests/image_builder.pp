@@ -12,8 +12,7 @@ class maas::image_builder (
   vcsrepo { '/opt/maas-image-builder/':
     ensure   => latest,
     provider => bzr,
-    source   => 'lp:maas/maas-image-builder',
-    user     => 'maas-maintainers',
+    source   => 'lp:maas-image-builder',
   }
 
 

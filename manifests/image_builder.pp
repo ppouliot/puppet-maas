@@ -1,6 +1,6 @@
 # == Class: maas::image_builder
 #
-class maas::centos (
+class maas::image_builder (
 ) inherits params {
 
   package{['bzr',

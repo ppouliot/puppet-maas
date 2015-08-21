@@ -22,17 +22,18 @@ class maas::image_builder (
     cwd       => '/opt/maas-image-builder',
     logoutput => true,
     timeout   => 0,
-  } ->
-  exec {'create-centos-7-image':
-    command   => './bin/maas-image-builder -o centos7-amd64-root-tgz centos',
-    cwd       => '/opt/maas-image-builder',
-    logoutput => true,
-    timeout   => 0,
-  } ->
-  exec {'create-centos-6-image':
-    command   => './bin/maas-image-builder -o centos6-amd64-root-tgz centos --edition 6',
-    cwd       => '/opt/maas-image-builder',
-    logoutput => true,
-    timeout   => 0,
   }
+# ->
+#  exec {'create-centos-7-image':
+#    command   => './bin/maas-image-builder -o centos7-amd64-root-tgz centos',
+#    cwd       => '/opt/maas-image-builder',
+#    logoutput => true,
+#    timeout   => 0,
+#  } ->
+#  exec {'create-centos-6-image':
+#    command   => './bin/maas-image-builder -o centos6-amd64-root-tgz centos --edition 6',
+#    cwd       => '/opt/maas-image-builder',
+#    logoutput => true,
+#    timeout   => 0,
+#  }
 }

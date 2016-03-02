@@ -1,0 +1,18 @@
+#cloud-config
+
+manage-resolv-conf: true
+resolv_conf:
+  nameservers:
+    - '10.21.7.1'
+    - '10.5.1.39'
+  searchdomains:
+    - openstack.tld
+    - maas3
+  domain: maas3
+package_upgrade: true
+timezone: UTC
+disable_root: false
+runcmd:
+  - touch /root/success.txt
+  - echo 10.4.1.39 moneypenny.openstack.tld moneypenny > /etc/hosts
+  - puppet agent --debug --trace --verbose --test --waitforcert=60 --server=moneypenny.openstack.tld

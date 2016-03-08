@@ -1,7 +1,7 @@
 # == Class: maas
 #  Metal as a Service (MAAS) lets you treat physical servers
-#  like virtual machines in the cloud. Rather than having to 
-#  manage each server individually, MAAS turns your bare metal 
+#  like virtual machines in the cloud. Rather than having to
+#  manage each server individually, MAAS turns your bare metal
 #  into an elastic cloud-like resource.
 #  More information can be found here:
 #  https://maas.ubuntu.com/docs/
@@ -44,7 +44,7 @@
 #
 #
 # [*maas_packages*]
-#   Default MAAS Packages to install 
+#   Default MAAS Packages to install
 #
 # [*maas_superuser*]
 #   Default MAAS Root Username
@@ -69,7 +69,7 @@
 #
 #  Install additional cluster controllers
 #  --------------------------------------
-#  
+#
 #  class{'maas::cluster_controller':
 #    cluster_region_controller => '192.168.1.1',
 #  }
@@ -108,7 +108,7 @@ class maas (
     validate_string($maas_maintainers_release, '^(stable)$', 'This module only supports the Stable Releases')
   }
 
-  class{'maas::install':} -> 
+  class{'maas::install':} ->
   class{'maas::config':} ->
   class{'maas::hyperv_power_adapter':}
 

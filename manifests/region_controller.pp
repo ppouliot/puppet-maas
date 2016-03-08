@@ -16,10 +16,10 @@ class maas::region_controller (
   $region_controller_config_file   = $maas::params::region_controller_config_file,
   $region_controller_initi_file    = $maas::params::region_controller_initi_file,
   $region_controller_frontend_port = $maas::params::region_controller_frontend_port,
-  $region_controller_prefix        = $maas::params::region_controller_prefix, 
-  $region_controller_oops_dir      = $maas::params::region_controller_oops_dir, 
-  $region_controller_oops_reporter = $maas::params::region_controller_oops_reporter, 
-  $region_controller_broker_host   = $maas::params::region_controller_broker_host, 
+  $region_controller_prefix        = $maas::params::region_controller_prefix,
+  $region_controller_oops_dir      = $maas::params::region_controller_oops_dir,
+  $region_controller_oops_reporter = $maas::params::region_controller_oops_reporter,
+  $region_controller_broker_host   = $maas::params::region_controller_broker_host,
   $region_controller_broker_port   = $maas::params::region_controller_broker_port,
   $region_controller_broker_user   = $maas::params::region_controller_broker_user,
   $region_controller_broker_passwd = $maas::params::region_controller_broker_passwd,
@@ -27,7 +27,7 @@ class maas::region_controller (
   $region_controller_logfile       = $maas::params::region_controller_logfile,
 
 
-) inherits maas::params {
+){
 
 
 ## /etc/maas/maas_cluster.yaml
@@ -39,31 +39,31 @@ class maas::region_controller (
   ## /etc/maas/maas_cluster.yaml
 
   file{ '/etc/maas/maas_cluster.yaml':
-    ensure => present,
+    ensure  => present,
     content => template('maas/maas_cluster.yaml.erb')
   }
 
   ## /etc/maas/maas-cluster-http.conf
   file{ '/etc/maas/maas-cluster-http.conf':
-    ensure => present,
+    ensure  => present,
     content => template('maas/maas-cluster-http.conf.erb')
   }
 
   ## /etc/maas/maas-http.conf
   file{ '/etc/maas/maas-http.conf':
-    ensure => present,
+    ensure  => present,
     content => template('maas/maas-http.conf.erb')
   }
 
   ## /etc/maas/maas_local_celeryconfig.py
   file{ '/etc/maas/maas_local_celeryconfig.py':
-    ensure => present,
+    ensure  => present,
     content => template('maas/maas_local_celeryconfig.py.erb')
   }
 
   ## /etc/maas/maas_local_celeryconfig_cluster.py
   file{ '/etc/maas/maas_local_celeryconfig_cluster.py':
-    ensure => present,
+    ensure  => present,
     content => template('maas/maas_local_celeryconfig_cluster.py.erb')
   }
 

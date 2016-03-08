@@ -20,7 +20,7 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-class maas::cli::import_boot_images () inherits maas::params {
+class maas::cli::import_boot_images (){
   exec{'maas-import-boot-images':
     command     => "/usr/bin/maas ${maas::profile_name} node-groups import-boot-images",
     before      => Exec["logout-superuser-with-api-key-${maas::default_superuser}"],

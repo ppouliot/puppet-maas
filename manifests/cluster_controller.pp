@@ -16,20 +16,20 @@ class maas::cluster_controller (
 #  $maas_cluster_controller_config_file   = $maas::params::maas_cluster_controller_config_file,
 #  $maas_cluster_controller_initi_file    = $maas::params::maas_cluster_controller_initi_file,
 #  $maas_cluster_controller_frontend_port = $maas::params::maas_cluster_controller_frontend_port,
-#  $maas_cluster_controller_prefix        = $maas::params::maas_cluster_controller_prefix, 
-#  $maas_cluster_controller_oops_dir      = $maas::params::maas_cluster_controller_oops_dir, 
-#  $maas_cluster_controller_oops_reporter = $maas::params::maas_cluster_controller_oops_reporter, 
-#  $maas_cluster_controller_broker_host   = $maas::params::maas_cluster_controller_broker_host, 
+#  $maas_cluster_controller_prefix        = $maas::params::maas_cluster_controller_prefix,
+#  $maas_cluster_controller_oops_dir      = $maas::params::maas_cluster_controller_oops_dir,
+#  $maas_cluster_controller_oops_reporter = $maas::params::maas_cluster_controller_oops_reporter,
+#  $maas_cluster_controller_broker_host   = $maas::params::maas_cluster_controller_broker_host,
 #  $maas_cluster_controller_broker_port   = $maas::params::maas_cluster_controller_broker_port,
 #  $maas_cluster_controller_broker_user   = $maas::params::maas_cluster_controller_broker_user,
 #  $maas_cluster_controller_broker_passwd = $maas::params::maas_cluster_controller_broker_passwd,
 #  $maas_cluster_controller_broker_vhost  = $maas::params::maas_cluster_controller_broker_vhost,
 #  $maas_cluster_controller_logfile       = $maas::params::maas_cluster_controller_logfile,
 
-) inherits maas::params {
+){
 
- # The following is essentially what I used in the node definition to create a secondary cluster controller
- # There is an additional template needed.
+  # The following is essentially what I used in the node definition to create a secondary cluster controller
+  # There is an additional template needed.
   include apt
   include stdlib
 
@@ -58,19 +58,19 @@ class maas::cluster_controller (
   file_line{'pserv.yaml-region_controller_address':
     path   => '/etc/maas/pserv.yaml',
     match  => '\ \ generator: http://localhost:5240/MAAS/api/1.0/pxeconfig/',
-    line  => "  generator: http://${cluster_region_controller}:5240/MAAS/api/1.0/pxeconfig/",
-  } -> 
+    line   => "  generator: http://${cluster_region_controller}:5240/MAAS/api/1.0/pxeconfig/",
+  } ->
   file{'/var/lib/maas/secret':
-    ensure => file,
-    owner  => 'maas',
-    group  => 'maas',
-    mode   => '640',
-    source => 'puppet:///extra_files/maas/secret',
+    ensure  => file,
+    owner   => 'maas',
+    group   => 'maas',
+    mode    => '0640',
+    source  => 'puppet:///extra_files/maas/secret',
     require => Package['maas-cluster-controller'],
   } ->
   service {'maas-clusterd':
-    enable => true,
-    ensure => running,
+    ensure  => running,
+    enable  => true,
     require => Package['maas-cluster-controller'],
   }
 #}

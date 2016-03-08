@@ -11,7 +11,7 @@
 #   Default is currently the OpenStack Juno release
 #
 # [*maas_packages*]
-#   Default MAAS Packages to install 
+#   Default MAAS Packages to install
 #
 # [*maas_root_user*]
 #   Default MAAS Root Username
@@ -34,7 +34,7 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-class maas::admin () inherits maas::params {
+class maas::admin (){
 
 
 # MAAS Services
@@ -49,18 +49,18 @@ class maas::admin () inherits maas::params {
     ensure => present,
   }
   service {'maas-cluster-celery':
-    ensure => running,
+    ensure  => running,
     require => File['/etc/init/maas-cluster-celery.conf'],
   }
 
-### file: /etc/init/maas-region-celery.conf 
+### file: /etc/init/maas-region-celery.conf
 
   file{'/etc/init/maas-region-celery.conf':
     ensure => present,
   }
 
   service {'maas-region-celery':
-    ensure => running,
+    ensure  => running,
     require => File['/etc/init/maas-region-celery.conf'],
   }
 
@@ -69,14 +69,14 @@ class maas::admin () inherits maas::params {
   file{'/etc/init/maas-dhcp-server.conf':
     ensure => present,
   }
-  
+
   service {'maas-dhcp-server':
-    ensure => running,
+    ensure  => running,
     require => File['/etc/init/maas-dhcp-server.conf'],
   }
 
 ## maas-pserv
-### file: /etc/init/maas-pserv.conf 
+### file: /etc/init/maas-pserv.conf
   file{'/etc/init/maas-pserv.conf':
     ensure => present,
   }

@@ -11,7 +11,7 @@
 #   Default is currently the OpenStack Juno release
 #
 # [*maas_packages*]
-#   Default MAAS Packages to install 
+#   Default MAAS Packages to install
 #
 # [*maas_root_user*]
 #   Default MAAS Root Username
@@ -45,10 +45,10 @@ class maas::admin (
   $maas_api_key          = $maas::params::maas_api_key,
   $maas_server_url       = $maas::params::maas_server_url,
 
-) inherits maas::params {
+){
 
   exec{'maas-create-auth-token':
-    command   => "/usr/sbin/maas create-authorisation-token -d",
+    command   => '/usr/sbin/maas create-authorisation-token -d',
     require   => Package[$maas_packages],
     logoutput => true,
     unless    => "/usr/sbin/maas-region-admin apikey ${maas_profile_name} --username ${maas_root_user}",

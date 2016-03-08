@@ -13,7 +13,7 @@
 #   The ip address of the network
 #
 # [*param_netmask*]
-#   Network netmask 
+#   Network netmask
 #
 # [*param_vlan_tag*]
 #   Vlan Tag
@@ -36,11 +36,11 @@
 #
 define maas::network (
   $cli_command,
-  $param_ip           => undef,
-  $param_netmask      => undef,
-  $param_vlan_tag     => undef, 
-  $param_description  => undef, 
-  $param_macs         => undef, 
+  $param_ip,
+  $param_netmask,
+  $param_vlan_tag,
+  $param_description,
+  $param_macs,
 ){
   ## Maas Command to add a network
   validate_re($cli_command, '(list-connected-macs|connect-macs|read|update|disconnect-macs|delete)$', 'Valid network commands are "list-connected-macs","connect-macs","read","update","disconnect-macs","delete".')
@@ -49,18 +49,18 @@ define maas::network (
   ## Generate Maas commandi argument for network command
   case $cli_command {
     'list-connected-macs','read','delete':{
-      $command_argument = undef
+      $command_arguments = undef
     }
     'connect-macs','disconnect-macs':{
-      $command_argument = "macs=${param_macs}"
+      $command_arguments = "macs=${param_macs}"
     }
     'update':{
-      $command_argument = "ip=${param_ip} netmask=${param_netmask} vlan_tag=${param_vlan_tag} description=${param_description}",
+      $command_arguments = "ip=${param_ip} netmask=${param_netmask} vlan_tag=${param_vlan_tag} description=${param_description}",
     }
   }
   ## Maas command for network command
   exec{"maas-network-${cli_command}-${name}":
-    command     => "/usr/bin/maas ${maas::profile_name} network ${cli_command} ${name} ${command_arguments}",
+    command     => "/usr/bin/maas ${maas::profile_name} network ${cli_command} ${name} ${::command_arguments}",
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,

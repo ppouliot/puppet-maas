@@ -14,9 +14,9 @@ class maas::pserv (
 
   $maas_pserv_config_file   = $maas::params::maas_pserv_config_file,
   $maas_pserv_initi_file    = $maas::params::maas_pserv_initi_file,
-  $maas_pserv_oops_dir      = $maas::params::maas_pserv_oops_dir, 
-  $maas_pserv_oops_reporter = $maas::params::maas_pserv_oops_reporter, 
-  $maas_pserv_broker_host   = $maas::params::maas_pserv_broker_host, 
+  $maas_pserv_oops_dir      = $maas::params::maas_pserv_oops_dir,
+  $maas_pserv_oops_reporter = $maas::params::maas_pserv_oops_reporter,
+  $maas_pserv_broker_host   = $maas::params::maas_pserv_broker_host,
   $maas_pserv_broker_port   = $maas::params::maas_pserv_broker_port,
   $maas_pserv_broker_user   = $maas::params::maas_pserv_broker_user,
   $maas_pserv_broker_passwd = $maas::params::maas_pserv_broker_passwd,
@@ -26,24 +26,24 @@ class maas::pserv (
   $maas_pserv_tftp_port     = $maas::params::maas_pserv_tftp_port,
 
 
-) inherits maas::params {
+){
 
 
 ## /etc/maas/pserv.yaml
-  file{ $maas_pserv_config_file:
-    ensure => present,
+  file{ $::maas_pserv_config_file:
+    ensure  => present,
     content => template('maas/pserv.yaml.erb'),
   }
 
 ## /etc/init/maas-pserv.conf
-  file{ $maas_pserv_init_file:
-    ensure => present,
+  file{ $::maas_pserv_init_file:
+    ensure  => present,
     content => template('maas/init/maas-pserv.conf.erb'),
   }
 
   service {'maas-pserv':
     ensure  => running,
-    require => File[ $maas_pserv_config_file, $maas_pserv_init_file ],
+    require => File[ $::maas_pserv_config_file, $::maas_pserv_init_file ],
   }
 
 }

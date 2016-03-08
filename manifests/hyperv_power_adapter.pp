@@ -10,7 +10,7 @@
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
 class maas::hyperv_power_adapter (
-) inherits maas::params {
+){
   if $maas::hyperv_power_adapater {
     vcsrepo {'/usr/local/src/hyperv-power-adapter':
       ensure   => present,

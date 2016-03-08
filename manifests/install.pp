@@ -1,5 +1,5 @@
 # == Class:maas::install
-# 
+#
 # class to install an update-to-date version of maas from
 # the default package repository or the Cloud-Archive repo
 # This installs on Ubunt based distributions only.
@@ -11,7 +11,7 @@ class maas::install {
   notice("MAAS installation is occuring on node ${::fqdn}." )
 
 
-  case $operatingsystem {
+  case $::operatingsystem {
     'Ubuntu':{
 
       if ($maas::maas_maintainers_release) {
@@ -44,7 +44,7 @@ class maas::install {
           ensure => $maas::ensure,
         }
         ## A Directory for help with MAAS related command automation
-        file {"/etc/maas/.puppet/":
+        file {'/etc/maas/.puppet/':
           ensure  => directory,
           require => Package['maas'],
         }
@@ -53,7 +53,7 @@ class maas::install {
           password => $maas::default_superuser_password,
           email    => $maas::default_superuser_email,
           require  => Package['maas'],
-        } 
+        }
       }
     }
     default:{

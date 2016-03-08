@@ -20,7 +20,7 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-class maas::cli::login_superuser () inherits maas::params {
+class maas::cli::login_superuser (){
   exec{'maas-cli-login-user-name':
     command     => "/usr/bin/maas login ${maas::maas_superuser} ${maas::server_url}`/user/bin/maas-region-admin apikey ${maas::profile_name} --username ${maas::maas_superuser}`",
     before      => Exec["logout-superuser-with-api-key-${maas::maas_superuser}"],

@@ -20,7 +20,7 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-class maas::cli::nodes_accept_all () inherits maas::params {
+class maas::cli::nodes_accept_all (){
   exec{'maas-import-boot-images':
     command     => "/usr/bin/maas ${maas::profile_name} nodes accept-all",
     before      => Exec["logout-superuser-with-api-key-${maas::default_superuser}"],

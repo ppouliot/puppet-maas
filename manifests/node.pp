@@ -13,7 +13,7 @@
 #   The user_data address of the node
 #
 # [*t_user_data*]
-#   Network user_data 
+#   Network user_data
 #
 # [*p_distro_series*]
 #   Vlan Tag
@@ -37,16 +37,16 @@
 define maas::node (
   $maas_superuser,
   $cli_command,
-  $p_user_data     => undef,
-  $t_user_data     => undef,
-  $p_distro_series => undef, 
-  $t_distro_series => undef, 
-  $p_power_type    => undef, 
-  $t_power_type    => undef, 
-  $p_pt_skipcheck  => undef, 
-  $t_pt_skipcheck  => undef, 
-  $p_zone          => undef,
-  $t_zone          => undef,
+  $p_user_data,
+  $t_user_data,
+  $p_distro_series,
+  $t_distro_series,
+  $p_power_type,
+  $t_power_type,
+  $p_pt_skipcheck,
+  $t_pt_skipcheck,
+  $p_zone,
+  $t_zone,
 ){
   ## Maas Command to add a node
   validate_re($cli_command, '(start|stop|read|commission|update|details|release|delete)$', 'Valid node commands are "start","stop","read","update","details","release","delete".')
@@ -55,18 +55,18 @@ define maas::node (
   ## Generate Maas commandi argument for node command
   case $cli_command {
     'start','stop':{
-      $command_argument = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series}",
+      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series}",
     }
     'update':{
-      $command_argument = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series} :param ${p_power_type} :type ${t_power_type} :param power_t_skipcheck=${p_pt_skipcheck} :type power_t_skipcheck=${t_pt_skipcheck} :param zone=${p_zone} :type zone=${t_zone/}",
+      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series} :param ${p_power_type} :type ${t_power_type} :param power_t_skipcheck=${p_pt_skipcheck} :type power_t_skipcheck=${t_pt_skipcheck} :param zone=${p_zone} :type zone=${t_zone/}",
     }
     'commission','read','release','delete','details':{
-      $command_argument = undef
+      $command_arguments = undef
     }
   }
   ## Maas command for node command
   exec{"maas-node-${cli_command}-${name}":
-    command     => "/usr/bin/maas ${maas::profile_name} node ${cli_command} ${name} ${command_arguments}",
+    command     => "/usr/bin/maas ${maas::profile_name} node ${cli_command} ${name} ${::command_arguments}",
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,

@@ -6,4 +6,4 @@ RUN puppet module install puppetlabs-stdlib
 RUN puppet module install puppetlabs-apt
 
 RUN git clone https://github.com/ppouliot/puppet-maas /etc/puppet/modules/maas
-RUN puppet apply --debug --trace --verbose --modulepath=/etc/puppet/modules /etc/puppet/modules/maas/tests/maas_maintainers_stable_release.pp
+RUN puppet apply --debug --trace --verbose --modulepath=/etc/puppet/modules /etc/puppet/modules/maas/tests/init.pp

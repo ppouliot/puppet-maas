@@ -1,0 +1,14 @@
+p   maas                            - "Metal as a Service" is a physical cloud a
+p   maas-cli                        - MAAS client and command-line interface    
+p   maas-common                     - MAAS server common files                  
+p   maas-dhcp                       - MAAS DHCP server                          
+p   maas-dns                        - MAAS DNS server                           
+p   maas-enlist                     - MAAS enlistment tool                      
+p   maas-proxy                      - MAAS Caching Proxy                        
+p   maas-rack-controller            - Rack Controller for MAAS                  
+p   maas-region-api                 - Region controller API service for MAAS    
+p   maas-region-controller          - Region Controller for MAAS                
+v   maas-region-controller-min      -                                           
+p   python3-django-maas             - MAAS server Django web framework (Python 3
+p   python3-maas-client             - MAAS python API client (Python 3)         
+p   python3-maas-provisioningserver - MAAS server provisioning libraries (Python

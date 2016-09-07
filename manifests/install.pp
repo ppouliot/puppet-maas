@@ -7,7 +7,7 @@
 class maas::install {
   validate_string($maas::version)
   validate_re($::operatingsystem, '(^Ubuntu)$', 'This Module only works on Ubuntu based systems.')
-  validate_re($::operatingsystemrelease, '(^12.04|14.04)$', 'This Module only works on Ubuntu releases 12.04 and 14.04.')
+  validate_re($::operatingsystemrelease, '(^12.04|14.04}16.04)$', 'This Module only works on Ubuntu releases 12.04, 14.04, and 16.04.')
   notice("MAAS installation is occuring on node ${::fqdn}." )
 
 

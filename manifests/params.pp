@@ -155,73 +155,112 @@ class maas::params {
     'Ubuntu':{
       case $::operatingsystemrelease {
         '14.04':{
-          $version                       = undef
-          $ensure                        = present
-          $prerequired_packages          = undef
-          $manage_package                = true
-          $maas_maintainers_release      = undef
-          $profile_name                  = $::fqdn
-          $server_url                    = "http://${::ipaddress}/MAAS"
-          $api_version                   = '1.0'
-          $default_superuser             = 'admin'
-          $default_superuser_password    = 'maas'
-          $default_superuser_email       = "admin@${::fqdn}"
+          $maas_packages  = [
+            'python-maas-provisioningserver',
+            'maas-dhcp',
+            'maas-dns',
+            'maas-common',
+            'maas-cli',
+            'maas',
+            'maas-region-controller',
+            'maas-cluster-controller',
+            'python-django-maas',
+            'maas-region-controller-min']
+        }
+        '16.04':{
+          $maas_packages  = [
+            'maas', 
+            'maas-cli',
+            'maas-common',
+            'maas-dhcp', 
+            'maas-dns', 
+            'maas-enlist',
+            'maas-proxy', 
+            'maas-rack-controller',
+            'maas-region-api',
+            'maas-region-controller',
+            'maas-region-controller-min',
+            'python3-django-maas',
+            'python3-maas-client',
+            'python3-maas-provisioningserver',
+          ]
+        }
+        default:{
+          warning("This is currently untested on your ${::operatingsystemrelease}")
+        }
+      }
+    }
+    default:{
+      warning("This is not meant for this ${::operatingsystem}")
+    }
+  }
+  $version                       = undef
+  $ensure                        = present
+  $prerequired_packages          = undef
+  $manage_package                = true
+  $maas_maintainers_release      = undef
+  $profile_name                  = $::fqdn
+  $server_url                    = "http://${::ipaddress}/MAAS"
+  $api_version                   = '1.0'
+  $default_superuser             = 'admin'
+  $default_superuser_password    = 'maas'
+  $default_superuser_email       = "admin@${::fqdn}"
           # Region Controller address for adding new cluster controllers
-          $cluster_region_controller     = undef
+  $cluster_region_controller     = undef
 
-          $maas_api_key                  = undef
-          $maas_cluster_uuid             = undef
+  $maas_api_key                  = undef
+  $maas_cluster_uuid             = undef
 
-          $maas_root_directories   = ['/etc/maas',
+  $maas_root_directories   = ['/etc/maas',
                                       '/etc/maas/templates',
                                       '/etc/maas/preseeds',
                                       '/usr/share/maas',
                                       '/var/lib/maas']
           # Default Settings
-          $maas_debug_mode         = 'False'
-          $maas_media_root         = '/var/lib/maas/media/'
-          $maas_db_engine          = 'django.db.backends.postgresql_psycopg2'
-          $maas_db_name            = 'maasdb'
-          $maas_db_user            = 'maas'
-          $maas_db_passwd          = 'ky460LTuLfIl'
-          $maas_db_host            = 'localhost'
+  $maas_debug_mode         = 'False'
+  $maas_media_root         = '/var/lib/maas/media/'
+  $maas_db_engine          = 'django.db.backends.postgresql_psycopg2'
+  $maas_db_name            = 'maasdb'
+  $maas_db_user            = 'maas'
+  $maas_db_passwd          = 'ky460LTuLfIl'
+  $maas_db_host            = 'localhost'
 
 
-          $maas_local_celeryconfig_user   = 'maas_workers'
-          $maas_local_celeryconfig_passwd = 'I2c8Fsw14gySkiT9COSx'
-          $maas_local_celeryconfig_vhost  = '/maas_workers'
+  $maas_local_celeryconfig_user   = 'maas_workers'
+  $maas_local_celeryconfig_passwd = 'I2c8Fsw14gySkiT9COSx'
+  $maas_local_celeryconfig_vhost  = '/maas_workers'
 
 
           # MAAS TXLONGPOLL
-          $maas_txlongpoll_config_file   = '/etc/maas/txlongpoll.yaml'
-          $maas_txlongpoll_initi_file    = '/etc/init/maas-txlongpoll.conf'
-          $maas_txlongpoll_frontend_port = '5242'
-          $maas_txlongpoll_prefix        = undef
-          $maas_txlongpoll_oops_dir      = '/var/log/maas/oops'
-          $maas_txlongpoll_oops_reporter = 'maas-txlongpoll'
-          $maas_txlongpoll_broker_host   = 'localhost'
-          $maas_txlongpoll_broker_port   = '5672'
-          $maas_txlongpoll_broker_user   = 'maas_longpoll'
-          $maas_txlongpoll_broker_passwd = 'w0hAKHs8ZGUhHuAyOzge'
-          $maas_txlongpoll_broker_vhost  = '/maas_longpoll'
-          $maas_txlongpoll_logfile       = '/var/log/maas/txlongpoll.log'
+  $maas_txlongpoll_config_file   = '/etc/maas/txlongpoll.yaml'
+  $maas_txlongpoll_initi_file    = '/etc/init/maas-txlongpoll.conf'
+  $maas_txlongpoll_frontend_port = '5242'
+  $maas_txlongpoll_prefix        = undef
+  $maas_txlongpoll_oops_dir      = '/var/log/maas/oops'
+  $maas_txlongpoll_oops_reporter = 'maas-txlongpoll'
+  $maas_txlongpoll_broker_host   = 'localhost'
+  $maas_txlongpoll_broker_port   = '5672'
+  $maas_txlongpoll_broker_user   = 'maas_longpoll'
+  $maas_txlongpoll_broker_passwd = 'w0hAKHs8ZGUhHuAyOzge'
+  $maas_txlongpoll_broker_vhost  = '/maas_longpoll'
+  $maas_txlongpoll_logfile       = '/var/log/maas/txlongpoll.log'
 
           # MAAS Provisioning Server
-          $maas_pserv_config_file     = '/etc/maas/pserv.yaml'
-          $maas_pserv_initi_file      = '/etc/init/maas-pserv.conf'
-          $maas_pserv_oops_dir        = '/var/log/maas/oops'
-          $maas_pserv_oops_reporter   = 'maas-pserv'
-          $maas_pserv_broker_host     = 'localhost'
-          $maas_pserv_broker_port     = '5673'
-          $maas_pserv_broker_user     = '<current_user>'
-          $maas_pserv_broker_passwd   = 'test'
-          $maas_pserv_broker_vhost    = '/'
-          $maas_pserv_logfile         = '/var/log/maas/pserv.log'
-          $maas_pserv_resource_root   = '/var/lib/maas/boot-resources/current'
-          $maas_pserv_tftp_port       = '69'
-          $maas_boot_resource_storage = '/var/lib/maas/boot-resources/'
-          $maas_boot_resource_url     = 'http://maas.ubuntu.com/images/ephemeral-v2/releases/'
-          $maas_default_cloudimage_keyring = '/usr/share/keyrings/ubuntu-cloudimage-keyring.gpg'
+  $maas_pserv_config_file     = '/etc/maas/pserv.yaml'
+  $maas_pserv_initi_file      = '/etc/init/maas-pserv.conf'
+  $maas_pserv_oops_dir        = '/var/log/maas/oops'
+  $maas_pserv_oops_reporter   = 'maas-pserv'
+  $maas_pserv_broker_host     = 'localhost'
+  $maas_pserv_broker_port     = '5673'
+  $maas_pserv_broker_user     = '<current_user>'
+  $maas_pserv_broker_passwd   = 'test'
+  $maas_pserv_broker_vhost    = '/'
+  $maas_pserv_logfile         = '/var/log/maas/pserv.log'
+  $maas_pserv_resource_root   = '/var/lib/maas/boot-resources/current'
+  $maas_pserv_tftp_port       = '69'
+  $maas_boot_resource_storage = '/var/lib/maas/boot-resources/'
+  $maas_boot_resource_url     = 'http://maas.ubuntu.com/images/ephemeral-v2/releases/'
+  $maas_default_cloudimage_keyring = '/usr/share/keyrings/ubuntu-cloudimage-keyring.gpg'
 
           # Installed MAAS Packages
           #   maas                            - MAAS server all-in-one metapackage
@@ -236,26 +275,4 @@ class maas::params {
           # A python-maas-client              - MAAS python API client
           # A python-maas-provisioningserver  - MAAS server provisioning libraries
 
-          $maas_packages  = [
-            'python-maas-provisioningserver',
-            'maas-dhcp',
-            'maas-dns',
-            'maas-common',
-            'maas-cli',
-            'maas',
-            'maas-region-controller',
-            'maas-cluster-controller',
-            'python-django-maas',
-            'maas-region-controller-min']
-        }
-
-        default:{
-          warning("This is currently untested on your ${::operatingsystemrelease}")
-        }
-      }
-    }
-    default:{
-      warning("This is not meant for this ${::operatingsystem}")
-    }
-  }
 }

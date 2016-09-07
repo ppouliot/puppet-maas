@@ -1,0 +1,7 @@
+# WARNING: This file is managed by Puppet
+# This file is used by the cluster controller startup script:
+# `maas-provision start-cluster-controller`
+# to get the URL to the MAAS region controller's API. Normally, packaging
+# will update this file automatically but it may also be configured manually.
+cluster_uuid: <%= @maas::maas_cluster_uuid %>
+maas_url: http://<%=@maas::cluster_region_controller%>/MAAS

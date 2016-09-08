@@ -167,6 +167,7 @@ class maas::params {
             'python-django-maas',
             'maas-region-controller-min']
           $maas_region_admin = '/usr/sbin/maas-region-admin'
+          $import_boot_image_flags = 'node-groups import-boot-images'
         }
         '16.04':{
           $maas_packages  = [
@@ -186,6 +187,7 @@ class maas::params {
             'python3-maas-provisioningserver',
           ]
           $maas_region_admin = '/usr/sbin/maas-region'
+          $import_boot_image_flags = 'boot-resources import'
         }
         default:{
           warning("This is currently untested on your ${::operatingsystemrelease}")

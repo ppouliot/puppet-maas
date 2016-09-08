@@ -42,7 +42,7 @@ define maas::superuser ( $password, $email, $superuser_name = $name ) {
   ## Command to Login to the MAAS profile using the api-key
   warning("superuser: ${name} login test")
   exec{"login-superuser-with-api-key-${name}":
-    command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} `/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name}`",
+    command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} `${maas::maas_region_admin} apikey ${maas::profile_name} --username ${name}`",
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,
@@ -51,7 +51,7 @@ define maas::superuser ( $password, $email, $superuser_name = $name ) {
 
   if $name == $maas::default_superuser {
     exec{"maas-import-boot-images-run-by-user-${name}":
-      command     => "/usr/bin/maas ${maas::profile_name} node-groups import-boot-images",
+      command     => "/usr/bin/maas ${maas::profile_name} ${maas::import_boot_image_flags}",
       cwd         => '/etc/maas/.puppet',
       logoutput   => true,
       notify      => Exec["maas-boot-resources-import-${name}"],

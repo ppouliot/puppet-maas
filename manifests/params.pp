@@ -196,6 +196,7 @@ class maas::params {
       warning("This is not meant for this ${::operatingsystem}")
     }
   }
+
   $version                       = undef
   $ensure                        = present
   $prerequired_packages          = undef
@@ -207,18 +208,20 @@ class maas::params {
   $default_superuser             = 'admin'
   $default_superuser_password    = 'maas'
   $default_superuser_email       = "admin@${::fqdn}"
-          # Region Controller address for adding new cluster controllers
+  # Region Controller address for adding new cluster controllers
+
   $cluster_region_controller     = undef
 
   $maas_api_key                  = undef
   $maas_cluster_uuid             = undef
 
   $maas_root_directories   = ['/etc/maas',
-                                      '/etc/maas/templates',
-                                      '/etc/maas/preseeds',
-                                      '/usr/share/maas',
-                                      '/var/lib/maas']
-          # Default Settings
+                              '/etc/maas/templates',
+                              '/etc/maas/preseeds',
+                              '/usr/share/maas',
+                              '/var/lib/maas'
+                             ]
+  # Default Settings
   $maas_debug_mode         = 'False'
   $maas_media_root         = '/var/lib/maas/media/'
   $maas_db_engine          = 'django.db.backends.postgresql_psycopg2'
@@ -228,53 +231,8 @@ class maas::params {
   $maas_db_host            = 'localhost'
 
 
-  $maas_local_celeryconfig_user   = 'maas_workers'
-  $maas_local_celeryconfig_passwd = 'I2c8Fsw14gySkiT9COSx'
-  $maas_local_celeryconfig_vhost  = '/maas_workers'
-
-
-          # MAAS TXLONGPOLL
-  $maas_txlongpoll_config_file   = '/etc/maas/txlongpoll.yaml'
-  $maas_txlongpoll_initi_file    = '/etc/init/maas-txlongpoll.conf'
-  $maas_txlongpoll_frontend_port = '5242'
-  $maas_txlongpoll_prefix        = undef
-  $maas_txlongpoll_oops_dir      = '/var/log/maas/oops'
-  $maas_txlongpoll_oops_reporter = 'maas-txlongpoll'
-  $maas_txlongpoll_broker_host   = 'localhost'
-  $maas_txlongpoll_broker_port   = '5672'
-  $maas_txlongpoll_broker_user   = 'maas_longpoll'
-  $maas_txlongpoll_broker_passwd = 'w0hAKHs8ZGUhHuAyOzge'
-  $maas_txlongpoll_broker_vhost  = '/maas_longpoll'
-  $maas_txlongpoll_logfile       = '/var/log/maas/txlongpoll.log'
-
-          # MAAS Provisioning Server
-  $maas_pserv_config_file     = '/etc/maas/pserv.yaml'
-  $maas_pserv_initi_file      = '/etc/init/maas-pserv.conf'
-  $maas_pserv_oops_dir        = '/var/log/maas/oops'
-  $maas_pserv_oops_reporter   = 'maas-pserv'
-  $maas_pserv_broker_host     = 'localhost'
-  $maas_pserv_broker_port     = '5673'
-  $maas_pserv_broker_user     = '<current_user>'
-  $maas_pserv_broker_passwd   = 'test'
-  $maas_pserv_broker_vhost    = '/'
-  $maas_pserv_logfile         = '/var/log/maas/pserv.log'
-  $maas_pserv_resource_root   = '/var/lib/maas/boot-resources/current'
-  $maas_pserv_tftp_port       = '69'
   $maas_boot_resource_storage = '/var/lib/maas/boot-resources/'
   $maas_boot_resource_url     = 'http://maas.ubuntu.com/images/ephemeral-v2/releases/'
   $maas_default_cloudimage_keyring = '/usr/share/keyrings/ubuntu-cloudimage-keyring.gpg'
-
-          # Installed MAAS Packages
-          #   maas                            - MAAS server all-in-one metapackage
-          # A maas-cli                        - MAAS command line API tool
-          # A maas-cluster-controller         - MAAS server cluster controller
-          # A maas-common                     - MAAS server common files
-          # A maas-dhcp                       - MAAS DHCP server
-          # A maas-dns                        - MAAS DNS server
-          # A maas-region-controller          - MAAS server complete region controller
-          # A maas-region-controller-min      - MAAS Server minimum region controller
-          # A python-django-maas              - MAAS server Django web framework
-          # A python-maas-client              - MAAS python API client
-          # A python-maas-provisioningserver  - MAAS server provisioning libraries
 
 }

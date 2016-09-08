@@ -166,6 +166,7 @@ class maas::params {
             'maas-cluster-controller',
             'python-django-maas',
             'maas-region-controller-min']
+          $maas_region_admin = '/usr/sbin/maas-region-admin'
         }
         '16.04':{
           $maas_packages  = [
@@ -184,6 +185,7 @@ class maas::params {
             'python3-maas-client',
             'python3-maas-provisioningserver',
           ]
+          $maas_region_admin = '/usr/sbin/maas-region'
         }
         default:{
           warning("This is currently untested on your ${::operatingsystemrelease}")

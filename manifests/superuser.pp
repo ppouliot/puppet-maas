@@ -19,7 +19,7 @@ define maas::superuser ( $password, $email, $superuser_name = $name ) {
 
   ## Command to Create a SuperUser in MAAS
   exec{"create-superuser-${name}":
-    command   => "/usr/sbin/maas-region-admin createadmin --username=${$name} --email=${email} --password=${password}",
+    command   => "${maas::maas_region_admin} createadmin --username=${$name} --email=${email} --password=${password}",
     cwd       => '/etc/maas/.puppet/',
     logoutput => true,
     onlyif    => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",
@@ -29,7 +29,7 @@ define maas::superuser ( $password, $email, $superuser_name = $name ) {
 
   ## Command to get the MAAS User's Key
   exec{"get-api-key-superuser-account-${name}":
-    command     => "/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name} > /etc/maas/.puppet/su-${name}.maas",
+    command     => "${maas::maas_region_admin} apikey ${maas::profile_name} --username ${name} > /etc/maas/.puppet/su-${name}.maas",
     creates     => "/etc/maas/.puppet/su-${name}.maas",
     cwd         => '/etc/maas/.puppet/',
     onlyif      => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",

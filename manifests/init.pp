@@ -55,6 +55,9 @@
 # [*maas_superuser_passwd*]
 #   Password for the MAAS Root Account
 #
+# [*maas_region_admin*]
+#   Used in the maas::superuser class to allow for api changes to using maas-region over maas-region-admin 
+#
 # [*cluster_region_controller*]
 #   IP Address of the region controller master for new cluster controller nodes.
 #   Used in the maas::cluster_controller class
@@ -94,6 +97,7 @@ class maas (
   $default_superuser          = $maas::params::default_superuser,
   $default_superuser_password = $maas::params::default_superuser_password,
   $default_superuser_email    = $maas::params::default_superuser_email,
+  $maas_region_admin          = $maas::params::maas_region_admin,
   $cluster_region_controller  = $maas::params::cluster_region_controller,
   $manage_package             = $maas::params::manage_package,
 

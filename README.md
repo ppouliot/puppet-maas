@@ -19,15 +19,13 @@ Metal as a Service – MAAS – lets you treat physical servers
 like virtual machines in the cloud. Rather than having to
 manage each server individually, MAAS turns your bare metal
 into an elastic cloud-like resource.
-More information can be found here:
-  ```
-  https://maas.ubuntu.com/docs/
+More information can be found at [https://maas.ubuntu.com/docs/](https://maas.ubuntu.com/docs/)
 
-  ```
 This Puppet module deploys the MAAS packages and provides puppetized
 Administration of the MAAS Server/Cluster
 
 ## Module Description
+
 This Puppet module deploys the MAAS packages and provides puppetized
 Administration of the MAAS Server/Cluster
 
@@ -35,23 +33,30 @@ Administration of the MAAS Server/Cluster
 
 ### What maas affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* Packages
+  * maas
+* Services
+  * tbd
+* Users
+  * tbd
+* Files
+  * tbd
+
+
 
 ### Setup Requirements **OPTIONAL**
 
 If your module requires anything extra before setting up (pluginsync enabled,
 etc.), mention it here.
 
+Nothing yet.
+
 ### Beginning with maas
 
-The very basic steps needed for a user to get the module up and running.
-include maas
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For documentation on MAAS, see https://maas.ubuntu.com/docs).
+Either simply include maas and use hiera for changing params, use PE Console to include maas and put in params there
+or instanciate class maas and change params within this class (e.g. when using profiles).
+
+Make sure you to install depencency modules (e.g. apt and stdlib) as well (librarian-puppet should recognize them).
 
 ## Usage
 
@@ -75,21 +80,15 @@ for upgrading, you may wish to include an additional section here: Upgrading
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Changelog
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+Feel free to open pull requests or issues at https://github.com/ppouliot/puppet-maas
 
 ## Contributors
+
 * Peter Pouliot <peter@pouliot.net>
 
 ## Copyright and License
 
-Copyright (C) 2015 Peter J. Pouliot
+Copyright 2015 Peter J. Pouliot
 
 Peter Pouliot can be contacted at: peter@pouliot.net
 

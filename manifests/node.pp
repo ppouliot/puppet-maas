@@ -63,6 +63,9 @@ define maas::node (
     'commission','read','release','delete','details':{
       $command_arguments = undef
     }
+    default {
+      notify {"CLI command ${cli_command} not defined.":}
+    }
   }
   ## Maas command for node command
   exec{"maas-node-${cli_command}-${name}":

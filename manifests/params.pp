@@ -171,13 +171,13 @@ class maas::params {
         }
         '16.04':{
           $maas_packages  = [
-            'maas', 
+            'maas',
             'maas-cli',
             'maas-common',
-            'maas-dhcp', 
-            'maas-dns', 
+            'maas-dhcp',
+            'maas-dns',
             'maas-enlist',
-            'maas-proxy', 
+            'maas-proxy',
             'maas-rack-controller',
             'maas-region-api',
             'maas-region-controller',
@@ -221,8 +221,7 @@ class maas::params {
                               '/etc/maas/templates',
                               '/etc/maas/preseeds',
                               '/usr/share/maas',
-                              '/var/lib/maas'
-                             ]
+                              '/var/lib/maas',]
   # Default Settings
   $maas_debug_mode         = 'False'
   $maas_media_root         = '/var/lib/maas/media/'

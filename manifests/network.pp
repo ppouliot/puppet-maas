@@ -46,7 +46,7 @@ define maas::network (
   validate_re($cli_command, '(list-connected-macs|connect-macs|read|update|disconnect-macs|delete)$', 'Valid network commands are "list-connected-macs","connect-macs","read","update","disconnect-macs","delete".')
   ## Login as Maas Superuser
   notify{ "login-superuser-with-api-key-${maas::default_superuser}":} warning("Login to maas profile: ${maas::profile} with ${maas::default_superuser}") ->
-  ## Generate Maas commandi argument for network command
+  ## Generate Maas command argument for network command
   case $cli_command {
     'list-connected-macs','read','delete':{
       $command_arguments = undef
@@ -56,6 +56,9 @@ define maas::network (
     }
     'update':{
       $command_arguments = "ip=${param_ip} netmask=${param_netmask} vlan_tag=${param_vlan_tag} description=${param_description}",
+    }
+    default {
+      notify {"CLI command ${cli_command} not defined.":}
     }
   }
   ## Maas command for network command

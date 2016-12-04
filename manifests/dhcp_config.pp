@@ -57,6 +57,9 @@ define maas::dhcp_config (
     'update':{
       $command_arguments = "ip=${param_ip} netmask=${param_netmask} vlan_tag=${param_vlan_tag} description=${param_description}",
     }
+    default {
+      notify {"CLI command ${cli_command} not defined.":}
+    }
   }
   ## Maas command for dhcp_config command
   exec{"maas-dhcp_config-${cli_command}-${name}":

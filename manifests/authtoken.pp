@@ -1,4 +1,4 @@
-# == Define: maas::account
+# == Define: maas::authtoken
 #
 # Creates the mass admin user account it
 # stores that user account in
@@ -11,8 +11,10 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-define maas::account ( $password, $email ) {
-
+define maas::authtoken (
+  $password,
+  $email,
+) {
   validate_string($name)
   validate_string($password)
   validate_string($email)

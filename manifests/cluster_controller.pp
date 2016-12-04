@@ -45,26 +45,27 @@ class maas::cluster_controller (
     ensure => present,
 #    content => template('maas/maas_cluster.yaml.erb')
   } ->
-  file_line{'maas_cluster.conf-region_controller_address':
-    path   => '/etc/maas/maas_cluster.conf',
-    match  => 'MAAS_URL=http://localhost/MAAS',
-    line   => "MAAS_URL=\"http://${cluster_region_controller}/MAAS\"",
+  file_line{ 'maas_cluster.conf-region_controller_address':
+    path  => '/etc/maas/maas_cluster.conf',
+    match => 'MAAS_URL=http://localhost/MAAS',
+    line  => "MAAS_URL=\"http://${cluster_region_controller}/MAAS\"",
   } ->
   ## /etc/maas/pserv.yaml
   file{ '/etc/maas/pserv.yaml':
     ensure => present,
 #    content => template('maas/pserv.yaml.erb')
   } ->
-  file_line{'pserv.yaml-region_controller_address':
-    path   => '/etc/maas/pserv.yaml',
-    match  => '\ \ generator: http://localhost:5240/MAAS/api/1.0/pxeconfig/',
-    line   => "  generator: http://${cluster_region_controller}:5240/MAAS/api/1.0/pxeconfig/",
+  file_line{ 'pserv.yaml-region_controller_address':
+    path  => '/etc/maas/pserv.yaml',
+    match => '\ \ generator: http://localhost:5240/MAAS/api/1.0/pxeconfig/',
+    line  => "  generator: http://${cluster_region_controller}:5240/MAAS/api/1.0/pxeconfig/",
   } ->
-  file{'/var/lib/maas/secret':
+  file{ '/var/lib/maas/secret':
     ensure  => file,
     owner   => 'maas',
     group   => 'maas',
     mode    => '0640',
+    # FIXME really use /extra_files/maas/secret?
     source  => 'puppet:///extra_files/maas/secret',
     require => Package['maas-cluster-controller'],
   } ->

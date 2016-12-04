@@ -22,11 +22,11 @@
 #
 class maas::cli::login_superuser (){
   exec{'maas-cli-login-user-name':
-    command     => "/usr/bin/maas login ${maas::maas_superuser} ${maas::server_url}`/user/bin/maas-region-admin apikey ${maas::profile_name} --username ${maas::maas_superuser}`",
-    before      => Exec["logout-superuser-with-api-key-${maas::maas_superuser}"],
-    cwd         => '/etc/maas/.puppet',
+    command   => "/usr/bin/maas login ${maas::maas_superuser} ${maas::server_url}`/user/bin/maas-region-admin apikey ${maas::profile_name} --username ${maas::maas_superuser}`",
+    before    => Exec["logout-superuser-with-api-key-${maas::maas_superuser}"],
+    cwd       => '/etc/maas/.puppet',
 #    refreshonly => true,
-    logoutput   => true,
-    require     => Package['maas'],
+    logoutput => true,
+    require   => Package['maas'],
   }
 }

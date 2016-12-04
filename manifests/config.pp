@@ -1,4 +1,5 @@
-# == Class: maas::config
+# Class: maas::config
+# ===================
 #
 class maas::config {
 }

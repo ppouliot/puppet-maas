@@ -24,7 +24,7 @@
 #
 # === Examples
 #
-#  class { 'maas::admin': }
+#  class { 'maas::account': }
 #
 # === Authors
 #
@@ -34,7 +34,7 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-class maas::admin (
+class maas::account (
 
   $cloud_archive_release = $maas::params::cloud_archive_release,
   $maas_packages         = $maas::params::maas_packages,

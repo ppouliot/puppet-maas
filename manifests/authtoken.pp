@@ -1,4 +1,4 @@
-# == Define: maas::account
+# == Define: maas::authtoken
 #
 # Creates the mass admin user account it
 # stores that user account in
@@ -11,15 +11,17 @@
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-define maas::account ( $password, $email ) {
-
+define maas::authtoken (
+  $password,
+  $email,
+) {
   validate_string($name)
   validate_string($password)
   validate_string($email)
   ## Command to Create a SuperUser in MAAS
   exec{"create-authorization-token-${name}":
     command   => "/usr/sbin/maas ${maas::profile} account -d create-authorization-token",
-    cwd       => '/etc/maas/.puppet/'
+    cwd       => '/etc/maas/.puppet/',
     logoutput => true,
     unless    => "/usr/sbin/maas login ${maas::profile_name} ${maas::server_url} < /etc/maas/.puppet/su-${name}.maas ",
     notify    => Exec["get-api-key-account-account-${name}"],
@@ -27,7 +29,7 @@ define maas::account ( $password, $email ) {
   ## Command to Remove account authorization token  in MAAS
   exec{"create-authorization-token-${name}":
     command   => "/usr/sbin/maas ${maas::profile} account -d create-authorization-token",
-    cwd       => '/etc/maas/.puppet/'
+    cwd       => '/etc/maas/.puppet/',
     logoutput => true,
     unless    => "/usr/sbin/maas login ${maas::profile_name} ${maas::server_url} < /etc/maas/.puppet/su-${name}.maas ",
     notify    => Exec["get-api-key-account-account-${name}"],

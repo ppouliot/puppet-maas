@@ -1,0 +1,15 @@
+---
+#language: ruby
+#cache: bundler
+#bundler_args: --without development
+#script: "bundle exec rake validate"
+#matrix:
+#  fast_finish: true
+#  include:
+#  - rvm: 2.3.1
+language: ruby
+rvm: 2.3.1
+script: "rake validate"
+env:
+  - PUPPET_VERSION=3.8.6
+  - PUPPET_VERSION=4.7.0

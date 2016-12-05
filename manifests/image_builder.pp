@@ -1,7 +1,6 @@
 # == Class: maas::image_builder
 #
-class maas::image_builder (
-) inherits params {
+class maas::image_builder inherits maas::params {
 
   package{[
     'bzr',
@@ -13,9 +12,9 @@ class maas::image_builder (
   } ->
 
   vcsrepo { '/opt/maas-image-builder/':
-    ensure    => latest,
-    provider  => bzr,
-    source    => 'lp:maas-image-builder',
+    ensure   => latest,
+    provider => bzr,
+    source   => 'lp:maas-image-builder',
   } ->
 
   exec {'image-builder_make_install-deps':

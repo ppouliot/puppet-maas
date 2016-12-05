@@ -7,6 +7,7 @@
 #  fast_finish: true
 #  include:
 #  - rvm: 2.3.1
+language: ruby
 rvm: 2.3.1
 script: "rake validate"
 env:

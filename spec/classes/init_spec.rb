@@ -4,6 +4,7 @@ describe 'maas' do
     {
       :operatingsystem        => 'Ubuntu',
       :operatingsystemrelease => '14.04',
+	  :ipaddress              => '192.168.0.54',
     }
   end
   context 'with defaults for all parameters' do

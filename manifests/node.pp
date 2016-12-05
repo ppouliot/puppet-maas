@@ -54,16 +54,16 @@ define maas::node (
   notify{ "login-superuser-with-api-key-${maas::maas_superuser}":} warning("Login to maas profile: ${maas::profile} with ${maas::maas_superuser}") ->
   ## Generate Maas commandi argument for node command
   case $cli_command {
-    'start','stop':{
-      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series}",
+    'start','stop': {
+      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series}"
     }
-    'update':{
-      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series} :param ${p_power_type} :type ${t_power_type} :param power_t_skipcheck=${p_pt_skipcheck} :type power_t_skipcheck=${t_pt_skipcheck} :param zone=${p_zone} :type zone=${t_zone/}",
+    'update': {
+      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series} :param ${p_power_type} :type ${t_power_type} :param power_t_skipcheck=${p_pt_skipcheck} :type power_t_skipcheck=${t_pt_skipcheck} :param zone=${p_zone} :type zone=${t_zone}"
     }
-    'commission','read','release','delete','details':{
+    'commission','read','release','delete','details': {
       $command_arguments = undef
     }
-    default {
+    default: {
       notify {"CLI command ${cli_command} not defined.":}
     }
   }

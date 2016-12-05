@@ -21,7 +21,7 @@ define maas::authtoken (
   ## Command to Create a SuperUser in MAAS
   exec{"create-authorization-token-${name}":
     command   => "/usr/sbin/maas ${maas::profile} account -d create-authorization-token",
-    cwd       => '/etc/maas/.puppet/'
+    cwd       => '/etc/maas/.puppet/',
     logoutput => true,
     unless    => "/usr/sbin/maas login ${maas::profile_name} ${maas::server_url} < /etc/maas/.puppet/su-${name}.maas ",
     notify    => Exec["get-api-key-account-account-${name}"],
@@ -29,7 +29,7 @@ define maas::authtoken (
   ## Command to Remove account authorization token  in MAAS
   exec{"create-authorization-token-${name}":
     command   => "/usr/sbin/maas ${maas::profile} account -d create-authorization-token",
-    cwd       => '/etc/maas/.puppet/'
+    cwd       => '/etc/maas/.puppet/',
     logoutput => true,
     unless    => "/usr/sbin/maas login ${maas::profile_name} ${maas::server_url} < /etc/maas/.puppet/su-${name}.maas ",
     notify    => Exec["get-api-key-account-account-${name}"],

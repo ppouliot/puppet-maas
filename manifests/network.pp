@@ -48,16 +48,16 @@ define maas::network (
   notify{ "login-superuser-with-api-key-${maas::default_superuser}":} warning("Login to maas profile: ${maas::profile} with ${maas::default_superuser}") ->
   ## Generate Maas command argument for network command
   case $cli_command {
-    'list-connected-macs','read','delete':{
+    'list-connected-macs','read','delete': {
       $command_arguments = undef
     }
-    'connect-macs','disconnect-macs':{
+    'connect-macs','disconnect-macs': {
       $command_arguments = "macs=${param_macs}"
     }
-    'update':{
-      $command_arguments = "ip=${param_ip} netmask=${param_netmask} vlan_tag=${param_vlan_tag} description=${param_description}",
+    'update': {
+      $command_arguments = "ip=${param_ip} netmask=${param_netmask} vlan_tag=${param_vlan_tag} description=${param_description}"
     }
-    default {
+    default: {
       notify {"CLI command ${cli_command} not defined.":}
     }
   }

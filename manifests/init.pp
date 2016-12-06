@@ -9,62 +9,54 @@
 #  This Puppet module deploys the MAAS packages and provides puppetized
 #  Administration of the MAAS Server/Cluster
 #
-# Full description of class maas here.
-#
 # === Parameters
 #
-# Document parameters here.
+# * `version`
+# Specify a version of MAAS to install
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# * `ensure`
+# Valid options are 'present' or 'absent'
 #
-# === Variables
+# * `cloud_archive_release`
+# Release of the Cloud-archive:tools to use for maas packages
+# Default is currently the OpenStack Juno release
 #
-# [*version*]
-#   Specify a version of MAAS to install
+# * `profile_name`
+# The name with which you will later refer to this
+# remote server and credentials within this tool.
 #
-# [*ensure*]
-#   Valid options are 'present' or 'absent'
+# * `server_url`
+# The URL of the remote API, e.g. http://example.com/MAAS/
+# or http://example.com/MAAS/api/1.0/ if you wish to specify the API version.
 #
-# [*cloud_archive_release*]
-#   Release of the Cloud-archive:tools to use for maas packages
-#   Default is currently the OpenStack Juno release
+# * `api_version`
+# Version of the MAAS API to use.   Default is 1.0.
 #
-# [*profile_name*]
-#   The name with which you will later refer to this
-#   remote server and credentials within this tool.
+# * `$hyperv_power_adapter`
+# Install HyperV Power Adapter. Default is true.
 #
-# [*server_url*]
-#   The URL of the remote API, e.g. http://example.com/MAAS/
-#   or http://example.com/MAAS/api/1.0/ if you wish to specify the API version.
+# * `maas_packages`
+# Default MAAS Packages to install
 #
-# [*api_version*]
-#   Version of the MAAS API to use.   Default is 1.0.
+# * `maas_superuser`
+# Default MAAS Root Username
 #
+# * `maas_superuser_email`
+# Default MAAS Root User email address
 #
-# [*maas_packages*]
-#   Default MAAS Packages to install
+# * `maas_superuser_passwd`
+# Password for the MAAS Root Account
 #
-# [*maas_superuser*]
-#   Default MAAS Root Username
+# * `maas_region_admin`
+# Used in the maas::superuser class to allow for api changes to using maas-region over maas-region-admin 
 #
-# [*maas_superuser_email*]
-#   Default MAAS Root User email address
-#
-# [*maas_superuser_passwd*]
-#   Password for the MAAS Root Account
-#
-# [*maas_region_admin*]
-#   Used in the maas::superuser class to allow for api changes to using maas-region over maas-region-admin 
-#
-# [*import_boot_image_flags*]
-#   Used in the maas::superuser class to deal with api changes from 1.9 to 2.0 
+# * `import_boot_image_flags`
+# Used in the maas::superuser class to deal with api changes from 1.9 to 2.0 
 # 
 #
-# [*cluster_region_controller*]
-#   IP Address of the region controller master for new cluster controller nodes.
-#   Used in the maas::cluster_controller class
+# * `cluster_region_controller`
+# IP Address of the region controller master for new cluster controller nodes.
+# Used in the maas::cluster_controller class
 #
 # === Examples
 #
@@ -77,7 +69,7 @@
 #  Install additional cluster controllers
 #  --------------------------------------
 #
-#  class{'maas::cluster_controller':
+#  class{ 'maas::cluster_controller':
 #    cluster_region_controller => '192.168.1.1',
 #  }
 #
@@ -92,19 +84,20 @@
 #
 class maas (
 
-  $version                    = $maas::params::version,
-  $ensure                     = $maas::params::ensure,
-  $prerequired_packages       = $maas::params::prerequired_packages,
-  $maas_maintainers_release   = $maas::params::maas_maintainers_release,
-  $profile_name               = $maas::params::profile_name,
-  $maas_packages              = $maas::params::maas_packages,
-  $default_superuser          = $maas::params::default_superuser,
-  $default_superuser_password = $maas::params::default_superuser_password,
-  $default_superuser_email    = $maas::params::default_superuser_email,
-  $maas_region_admin          = $maas::params::maas_region_admin,
-  $import_boot_image_flags    = $maas::params::import_boot_image_flags,
-  $cluster_region_controller  = $maas::params::cluster_region_controller,
-  $manage_package             = $maas::params::manage_package,
+  $version                    = $::maas::params::version,
+  $ensure                     = $::maas::params::ensure,
+  $prerequired_packages       = $::maas::params::prerequired_packages,
+  $maas_maintainers_release   = $::maas::params::maas_maintainers_release,
+  $profile_name               = $::maas::params::profile_name,
+  $maas_packages              = $::maas::params::maas_packages,
+  $default_superuser          = $::maas::params::default_superuser,
+  $default_superuser_password = $::maas::params::default_superuser_password,
+  $default_superuser_email    = $::maas::params::default_superuser_email,
+  $maas_region_admin          = $::maas::params::maas_region_admin,
+  $import_boot_image_flags    = $::maas::params::import_boot_image_flags,
+  $cluster_region_controller  = $::maas::params::cluster_region_controller,
+  $manage_package             = $::maas::params::manage_package,
+  $hyperv_power_adapter       = $::maas::params::hyperv_power_adapter,
 
 ) inherits maas::params {
 
@@ -120,6 +113,7 @@ class maas (
   class{'maas::install':} ->
   class{'maas::config':} ->
   class{'maas::hyperv_power_adapter':}
+  # TODO maas::service
 
   contain 'maas::install'
   contain 'maas::config'

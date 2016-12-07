@@ -1,17 +1,25 @@
-# == Define: maas::superuser
+# Define: maas::superuser
+# =======================
 #
 # Creates the mass admin user account it
 # stores that user account in
 #
-# === Authors
+# Authors
+# -------
 #
 # Peter J. Pouliot <peter@pouliot.net>
 #
-# === Copyright
+# Copyright
+# ---------
 #
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
-define maas::superuser ( $password, $email, $superuser_name = $name ) {
+define maas::superuser (
+  $password,
+  $email,
+  $store_api_key = false,
+) {
+  $cmd = $::maas::params::maas_command
 
   validate_string($name)
   validate_string($password)
@@ -23,6 +31,7 @@ define maas::superuser ( $password, $email, $superuser_name = $name ) {
     cwd       => '/etc/maas/.puppet/',
     logoutput => true,
     onlyif    => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",
+    #unless    => "${maas::maas_region_admin} apikey --username ${name}",
     notify    => Exec["get-api-key-superuser-account-${name}"],
     require   => Package['maas'],
   }
@@ -86,5 +95,9 @@ define maas::superuser ( $password, $email, $superuser_name = $name ) {
     refreshonly => true,
     logoutput   => true,
     require     => Package['maas'],
+  }
+
+  if $store_api_key {
+    warn('Not yet implemented')
   }
 }

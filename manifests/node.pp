@@ -51,7 +51,8 @@ define maas::node (
   ## Maas Command to add a node
   validate_re($cli_command, '(start|stop|read|commission|update|details|release|delete)$', 'Valid node commands are "start","stop","read","update","details","release","delete".')
   ## Login as Maas Superuser
-  notify{ "login-superuser-with-api-key-${maas::maas_superuser}":} warning("Login to maas profile: ${maas::profile} with ${maas::maas_superuser}") ->
+  notify{ "login-superuser-with-api-key-${maas::maas_superuser}":}
+  warning("Login to maas profile: ${maas::profile} with ${maas::maas_superuser}")
   ## Generate Maas commandi argument for node command
   case $cli_command {
     'start','stop': {

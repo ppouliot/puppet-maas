@@ -45,7 +45,8 @@ define maas::network (
   ## Maas Command to add a network
   validate_re($cli_command, '(list-connected-macs|connect-macs|read|update|disconnect-macs|delete)$', 'Valid network commands are "list-connected-macs","connect-macs","read","update","disconnect-macs","delete".')
   ## Login as Maas Superuser
-  notify{ "login-superuser-with-api-key-${maas::default_superuser}":} warning("Login to maas profile: ${maas::profile} with ${maas::default_superuser}") ->
+  notify{ "login-superuser-with-api-key-${maas::default_superuser}":}
+  warning("Login to maas profile: ${maas::profile} with ${maas::default_superuser}")
   ## Generate Maas command argument for network command
   case $cli_command {
     'list-connected-macs','read','delete': {

@@ -45,7 +45,8 @@ define maas::dhcp_config (
   ## Maas Command to add a dhcp_config
   validate_re($cli_command, '(list-connected-macs|connect-macs|read|update|disconnect-macs|delete)$', 'Valid dhcp_config commands are "list-connected-macs","connect-macs","read","update","disconnect-macs","delete".')
   ## Login as Maas Superuser
-  notify{ "login-superuser-with-api-key-${maas::default_superuser}":} warning("Login to maas profile: ${maas::profile} with ${maas::default_superuser}") ->
+  notify { "login-superuser-with-api-key-${maas::default_superuser}": }
+  warning("Login to maas profile: ${maas::profile} with ${maas::default_superuser}")
   ## Generate Maas commandi argument for dhcp_config command
   case $cli_command {
     'list-connected-macs','read','delete': {

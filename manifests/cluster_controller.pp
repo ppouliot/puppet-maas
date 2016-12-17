@@ -66,6 +66,8 @@ class maas::cluster_controller (
     group   => 'maas',
     mode    => '0640',
     # FIXME really use /extra_files/maas/secret?
+    # maybe:
+    # source  => 'puppet:///modules/maas/extra_files/maas/secret',
     source  => 'puppet:///extra_files/maas/secret',
     require => Package['maas-cluster-controller'],
   } ->

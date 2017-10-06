@@ -1,4 +1,25 @@
+Version 0.2.0:
+
+- Merge with class content from selyx-maas. Create puppet strings compatible doku.
+- Fix classnames (account/authtoken). Disable 140 chars lint check. Fix linting issues.
+- Fix syntax error. Increase puppetversion in Gemfile to 3.8.6.
+- default in case needs colon, variable assignment doesn't need comma, end in erb template isn't needed.
+- Add simple travis-ci job, ignore Gemfile.lock, swp files and fixtures in git.
+- Add language: ruby to travis.yml
+- Move tests to examples and fix typo.
+- Increase Gem versions.
+- Add init_spec from selyx-maas
+- Add fact for ipaddress
+- Add variable for hyperv_power_adapter. Change documentation syntax to the default one for puppet strings.
+- Add variables on top of class to be more visible. Add comment regarding Ubuntu 14.04 check. Add 16.04 support to metadata.json
+
+Version 0.1.1:
+
+- fix styleguide issues
+- fix syntax issues
+
 Version 0.1.0:
 
 - initial release
 - base function (install package, manager users, manage service)
+

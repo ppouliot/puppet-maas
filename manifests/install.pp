@@ -21,7 +21,6 @@ class maas::install {
   $maas_maintainers_release   = $::maas::maas_maintainers_release
   $manage_package             = $::maas::manage_package
   $ensure                     = $::maas::ensure
-  $package_name               = $::maas::package_name
   $default_superuser          = $::maas::default_superuser
   $default_superuser_password = $::maas::default_superuser_password
   $default_superuser_email    = $::maas::default_superuser_email
@@ -48,9 +47,9 @@ class maas::install {
         }
       } else {
         if $version and $::maas::ensure != 'absent' {
-          $ensure = $version
+          $ensure = $maas::version
         } else {
-          $ensure = $::maas::ensure
+          $ensure = $maas::ensure
         }
       }
 
@@ -62,7 +61,7 @@ class maas::install {
 
       if $manage_package {
         package { 'maas':
-          ensure  => $maas::ensur,
+          ensure  => $maas::ensure,
           name    => $maaspackage,
           require => Class['apt::update'],
         } ->

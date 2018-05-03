@@ -30,7 +30,7 @@ class maas::install {
 #  validate_re($::operatingsystemrelease, '(^12.04|14.04|16.04)$', 'This Module only works on Ubuntu releases 12.04, 14.04, and 16.04.')
 
   notice("MAAS installation is occuring on node ${::fqdn}." )
-
+  include apt
 
   case $::operatingsystem {
     'Ubuntu': {
@@ -40,14 +40,13 @@ class maas::install {
 #        apt::ppa {'ppa:cloud-installer/stable': }
 #      }
       if ($maas::maas_maintainers_release) {
-        include apt
         notice("Node ${::fqdn} is using the maas-maintainers ${maas::maas_maintiners_release} package repository for MAAS installation." )
         apt::ppa{"ppa:maas-maintainers/${maas::maas_maintainers_release}":}
         if ($maas::manage_package) {
           Apt::Ppa["ppa:maas-maintainers/${maas::maas_maintainers_release}"] -> Package['maas']
         }
       } else {
-        if $maas::version and $:maas::ensure != 'absent' {
+        if $maas::version and $maas::ensure != 'absent' {
           $ensure = $maas::version
         } else {
           $ensure = $maas::ensure

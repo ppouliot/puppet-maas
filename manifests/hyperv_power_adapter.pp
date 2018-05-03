@@ -11,7 +11,7 @@
 #
 class maas::hyperv_power_adapter (
 ){
-  if $maas::hyperv_power_adapater {
+  if $maas::hyperv_power_adapater == true {
     vcsrepo {'/usr/local/src/hyperv-power-adapter':
       ensure   => present,
       provider => git,

@@ -118,7 +118,7 @@ Boolean $hyperv_power_adapter                      = $::maas::params::hyperv_pow
 ) inherits maas::params {
 
 # validate_string($version)
-  validate_re($::operatingsystem, '(^Ubuntu)$', 'This Module only works on Ubuntu based systems.')
+#  validate_re($::operatingsystem, '(^Ubuntu)$', 'This Module only works on Ubuntu based systems.')
 if $::operatingsystem {		
     assert_type(Pattern[/(^Ubuntu)$/], $::operatingsystem) |$a, $b| {		
       fail translate(('This Module only works on Ubuntu based systems.'))		

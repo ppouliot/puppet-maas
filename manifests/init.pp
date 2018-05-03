@@ -100,26 +100,37 @@
 #
 class maas (
 
-  $version                    = $::maas::params::version,
-  $ensure                     = $::maas::params::ensure,
-  $prerequired_packages       = $::maas::params::prerequired_packages,
-  $maas_maintainers_release   = $::maas::params::maas_maintainers_release,
-  $profile_name               = $::maas::params::profile_name,
-  $maas_packages              = $::maas::params::maas_packages,
-  $default_superuser          = $::maas::params::default_superuser,
-  $default_superuser_password = $::maas::params::default_superuser_password,
-  $default_superuser_email    = $::maas::params::default_superuser_email,
-  $maas_region_admin          = $::maas::params::maas_region_admin,
-  $import_boot_image_flags    = $::maas::params::import_boot_image_flags,
-  $cluster_region_controller  = $::maas::params::cluster_region_controller,
-  $manage_package             = $::maas::params::manage_package,
-  $hyperv_power_adapter       = $::maas::params::hyperv_power_adapter,
+Optional[String] $version                          = $::maas::params::version,
+String $ensure                                     = $::maas::params::ensure,
+Variant[Array[String], Hash] $prerequired_packages = $::maas::params::prerequired_packages,
+Optional[String] $maas_maintainers_release         = $::maas::params::maas_maintainers_release,
+Optional[String] $profile_name                     = $::maas::params::profile_name,
+Variant[Array[String], Hash] $maas_packages        = $::maas::params::maas_packages,
+String $default_superuser                          = $::maas::params::default_superuser,
+String $default_superuser_password                 = $::maas::params::default_superuser_password,
+String $default_superuser_email                    = $::maas::params::default_superuser_email,
+String $maas_region_admin                          = $::maas::params::maas_region_admin,
+String $import_boot_image_flags                    = $::maas::params::import_boot_image_flags,
+String $cluster_region_controller                  = $::maas::params::cluster_region_controller,
+Boolean $manage_package                            = $::maas::params::manage_package,
+Boolean $hyperv_power_adapter                      = $::maas::params::hyperv_power_adapter,
 
 ) inherits maas::params {
 
-  validate_string($version)
-  validate_re($::operatingsystem, '(^Ubuntu)$', 'This Module only works on Ubuntu based systems.')
-  validate_re($::operatingsystemrelease, '(^12.04|14.04|16.04)$', 'This Module only works on Ubuntu releases 12.04, 14.04 and 16.04.')
+# validate_string($version)
+# validate_re($::operatingsystem, '(^Ubuntu)$', 'This Module only works on Ubuntu based systems.')
+  if $::operatingsystem {
+    assert_type(Pattern[/(^Ubuntu)$/], $::operatingsystem) |$a| {
+      fail translate(('This Module only works on Ubuntu based systems.'))
+    }
+  }
+  if $::operatingsystemrelease {
+    assert_type(Pattern[/(^12.04|14.04|16.04)$/], $operatingsystemrelease) |$a, $b, $c| {
+      fail translate (('This Module only works on Ubuntu releases 12.04, 14.04 and 16.04.'))
+    }
+  }
+  
+# validate_re($::operatingsystemrelease, '(^12.04|14.04|16.04)$', 'This Module only works on Ubuntu releases 12.04, 14.04 and 16.04.')
   notice("MAAS on node ${::fqdn} is managed by the maas puppet module." )
 
   if ($maas_maintainers_release) {

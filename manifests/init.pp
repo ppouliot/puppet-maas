@@ -111,7 +111,7 @@ String $default_superuser_password                 = $::maas::params::default_su
 String $default_superuser_email                    = $::maas::params::default_superuser_email,
 String $maas_region_admin                          = $::maas::params::maas_region_admin,
 String $import_boot_image_flags                    = $::maas::params::import_boot_image_flags,
-String $cluster_region_controller                  = $::maas::params::cluster_region_controller,
+Optional[String] $cluster_region_controller        = $::maas::params::cluster_region_controller,
 Boolean $manage_package                            = $::maas::params::manage_package,
 Boolean $hyperv_power_adapter                      = $::maas::params::hyperv_power_adapter,
 

@@ -17,17 +17,18 @@
 # FIXME undef
 #
 class maas::install {
-  $version                    = $::maas::version
-  $maas_maintainers_release   = $::maas::maas_maintainers_release
-  $manage_package             = $::maas::manage_package
-  $ensure                     = $::maas::ensure
-  $default_superuser          = $::maas::default_superuser
-  $default_superuser_password = $::maas::default_superuser_password
-  $default_superuser_email    = $::maas::default_superuser_email
+#  $version                    = $::maas::version
+#  $maas_maintainers_release   = $::maas::maas_maintainers_release
+#  $manage_package             = $::maas::manage_package
+#  $ensure                     = $::maas::ensure
+#  $default_superuser          = $::maas::default_superuser
+#  $default_superuser_password = $::maas::default_superuser_password
+#  $default_superuser_email    = $::maas::default_superuser_email
 
-  validate_string($version)
-  validate_re($::operatingsystem, '(^Ubuntu)$', 'This Module only works on Ubuntu based systems.')
-  validate_re($::operatingsystemrelease, '(^12.04|14.04|16.04)$', 'This Module only works on Ubuntu releases 12.04, 14.04, and 16.04.')
+#  validate_string($version)
+#  validate_re($::operatingsystem, '(^Ubuntu)$', 'This Module only works on Ubuntu based systems.')
+#  validate_re($::operatingsystemrelease, '(^12.04|14.04|16.04)$', 'This Module only works on Ubuntu releases 12.04, 14.04, and 16.04.')
+
   notice("MAAS installation is occuring on node ${::fqdn}." )
 
 
@@ -38,28 +39,28 @@ class maas::install {
 #      if $::operatingsystemrelease == '14.04' {
 #        apt::ppa {'ppa:cloud-installer/stable': }
 #      }
-      if ($maas_maintainers_release) {
+      if ($maas::maas_maintainers_release) {
         include apt
         notice("Node ${::fqdn} is using the maas-maintainers ${maas::maas_maintiners_release} package repository for MAAS installation." )
-        apt::ppa{"ppa:maas-maintainers/${maas_maintainers_release}":}
-        if ($manage_package) {
-          Apt::Ppa["ppa:maas-maintainers/${maas_maintainers_release}"] -> Package['maas']
+        apt::ppa{"ppa:maas-maintainers/${maas::maas_maintainers_release}":}
+        if ($maas::manage_package) {
+          Apt::Ppa["ppa:maas-maintainers/${maas::maas_maintainers_release}"] -> Package['maas']
         }
       } else {
-        if $version and $::maas::ensure != 'absent' {
+        if $maas::version and $:maas::ensure != 'absent' {
           $ensure = $maas::version
         } else {
           $ensure = $maas::ensure
         }
       }
 
-      if $version {
+      if $maas::version {
         $maaspackage = "${package_name}-${version}"
       } else {
         $maaspackage = $package_name
       }
 
-      if $manage_package {
+      if $maas::manage_package {
         package { 'maas':
           ensure  => $maas::ensure,
           name    => $maaspackage,
@@ -74,9 +75,9 @@ class maas::install {
           require => Package['maas'],
         }
         ## Create MAAS Superuser
-        maas::superuser{ $default_superuser:
-          password => $default_superuser_password,
-          email    => $default_superuser_email,
+        maas::superuser{ $maas::default_superuser:
+          password => $maas::default_superuser_password,
+          email    => $maas::default_superuser_email,
           require  => Package['maas'],
         }
       }

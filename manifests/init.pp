@@ -139,7 +139,9 @@ if $::operatingsystem {
 
   class{'maas::install':} ->
   class{'maas::config':} ->
-  class{'maas::hyperv_power_adapter':}
+  if $maas::hyperv_power_adapter == 'true' {
+    class{'maas::hyperv_power_adapter':}
+  }
   # TODO maas::service
 
   contain 'maas::install'

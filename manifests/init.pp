@@ -102,7 +102,7 @@ class maas (
 
 Optional[String] $version                          = $::maas::params::version,
 String $ensure                                     = $::maas::params::ensure,
-Variant[Array[String], Hash] $prerequired_packages = $::maas::params::prerequired_packages,
+# Variant[Array[String], Hash] $prerequired_packages = $::maas::params::prerequired_packages,
 Optional[String] $maas_maintainers_release         = $::maas::params::maas_maintainers_release,
 Optional[String] $profile_name                     = $::maas::params::profile_name,
 Variant[Array[String], Hash] $maas_packages        = $::maas::params::maas_packages,

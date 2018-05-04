@@ -217,7 +217,7 @@ class maas::params {
 
   $cluster_region_controller       = undef
 
-  $hyperv_power_adapter            = true
+  $hyperv_power_adapter            = false
 
   $maas_api_key                    = undef
   $maas_cluster_uuid               = undef

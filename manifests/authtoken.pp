@@ -12,12 +12,9 @@
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
 define maas::authtoken (
-  $password,
-  $email,
+  String $password,
+  String $email,
 ) {
-  validate_string($name)
-  validate_string($password)
-  validate_string($email)
   ## Command to Create a SuperUser in MAAS
   exec{"create-authorization-token-${name}":
     command   => "/usr/sbin/maas ${maas::profile} account -d create-authorization-token",

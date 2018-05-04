@@ -1,6 +1,6 @@
 {
   "name": "ppouliot-maas",
-  "version": "0.2.0",
+"version": "0.2.1",
   "author": "Peter J. Pouliot <peter@pouliot.net>",
   "summary": "A puppet module to install and configure Ubuntu MAAS (Metal-As-A-Service)",
   "license": "Apache-2.0",

@@ -54,9 +54,9 @@ class maas::install {
       }
 
       if $maas::version {
-        $maaspackage = "${maas::package_name}-${version}"
+        $maaspackage = "${package_name}-${maas::version}"
       } else {
-        $maaspackage = $maas::package_name
+        $maaspackage = $package_name
       }
 
       if $maas::manage_package {

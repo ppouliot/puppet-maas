@@ -15,7 +15,7 @@ class maas::hyperv_power_adapter (
     ensure   => present,
     provider => git,
     source   => 'https://github.com/gabriel-samfira/hyperv-power-adapter.git'
-  }
+  } ->
   exec{'install-hyperv-power-adapater':
     command => '/usr/local/src/hyperv-power-adapater/install-adapater.sh',
     cwd     => '/usr/local/src',

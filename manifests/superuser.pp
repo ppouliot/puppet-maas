@@ -15,15 +15,13 @@
 # Copyright 2015 Peter J. Pouliot <peter@pouliot.net>, unless otherwise noted.
 #
 define maas::superuser (
-  $password,
-  $email,
-  $store_api_key = false,
+  String $password,
+  String $email,
+  Boolean $store_api_key = false,
 ) {
   $cmd = $::maas::params::maas_command
 
-  validate_string($name)
-  validate_string($password)
-  validate_string($email)
+  is_email_address($email)
 
   ## Command to Create a SuperUser in MAAS
   exec{"create-superuser-${name}":

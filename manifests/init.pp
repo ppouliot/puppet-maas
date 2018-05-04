@@ -106,6 +106,7 @@ String $ensure                                     = $::maas::params::ensure,
 Optional[String] $maas_maintainers_release         = $::maas::params::maas_maintainers_release,
 Optional[String] $profile_name                     = $::maas::params::profile_name,
 Variant[Array[String], Hash] $maas_packages        = $::maas::params::maas_packages,
+# String $package_name                               = $::maas::params::package_name,
 String $default_superuser                          = $::maas::params::default_superuser,
 String $default_superuser_password                 = $::maas::params::default_superuser_password,
 String $default_superuser_email                    = $::maas::params::default_superuser_email,
@@ -118,8 +119,7 @@ Boolean $hyperv_power_adapter                      = $::maas::params::hyperv_pow
 ) inherits maas::params {
 
 # validate_string($version)
-#  validate_re($::operatingsystem, '(^Ubuntu)$', 'This Module only works on Ubuntu based systems.')
-if $::operatingsystem {		
+  if $::operatingsystem {		
     assert_type(Pattern[/(^Ubuntu)$/], $::operatingsystem) |$a, $b| {		
       fail translate(('This Module only works on Ubuntu based systems.'))		
     }		
@@ -135,12 +135,17 @@ if $::operatingsystem {
 
   if ($maas_maintainers_release) {
     validate_string($maas_maintainers_release, '^(stable)$', 'This module only supports the Stable Releases')
+    assert_type(Pattern[/(^stable)$/], $maas_maintainers_relesease) |$a, $b| {
+      fail translate (('This Module only supports the Maas Maintainers "Stable" release.'))
+    }
   }
 
   class{'maas::install':} ->
-  class{'maas::config':} ->
-  if $maas::hyperv_power_adapter == 'true' {
-    class{'maas::hyperv_power_adapter':}
+  class{'maas::config':} 
+  if $maas::hyperv_power_adapter == true {
+    class{'maas::hyperv_power_adapter':
+      require => Class['maas::config'],
+    }
   }
   # TODO maas::service
 

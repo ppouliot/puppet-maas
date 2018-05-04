@@ -1,6 +1,5 @@
 forge "http://forge.puppetlabs.com"
 
-# Voxpupuli Modules
 #mod 'puppet/staging', :latest
 mod 'puppetlabs/apt', :latest
 #mod 'puppetlabs/concat', :latest

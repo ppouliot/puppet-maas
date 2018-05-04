@@ -205,6 +205,7 @@ class maas::params {
   $ensure                          = present
   $prerequired_packages            = undef
   $manage_package                  = true
+  $package_name                    = 'maas'
   $maas_maintainers_release        = undef
   $profile_name                    = $::fqdn
   $server_url                      = "http://${::ipaddress}/MAAS"

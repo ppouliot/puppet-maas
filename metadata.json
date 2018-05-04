@@ -30,7 +30,7 @@
         "16.04"
       ]
     }
-  ]
+  ],
   "requirements": [
     {
       "name": "puppet",

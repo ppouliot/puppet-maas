@@ -136,7 +136,7 @@ Boolean $hyperv_power_adapter                      = $::maas::params::hyperv_pow
   if ($maas_maintainers_release) {
     validate_string($maas_maintainers_release, '^(stable)$', 'This module only supports the Stable Releases')
     assert_type(Pattern[/(^stable)$/], $maas_maintainers_relesease) |$a, $b| {
-      fail translate (('This Module only supports the Maas Maintainers "Stable" release.'))
+      fail('This Module only supports the Maas Maintainers "Stable" release.')
     }
   }
 

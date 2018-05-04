@@ -9,6 +9,10 @@
   "issues_url": "https://github.com/ppouliot/puppet-maas/issues",
   "dependencies": [
     {
+      "name": "puppetlabs-vcsrepo",
+      "version_requirement": ">= 2.3.0"
+    },
+    {
       "name": "puppetlabs-stdlib",
       "version_requirement": ">= 4.25.1"
     },

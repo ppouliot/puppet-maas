@@ -130,12 +130,10 @@ Boolean $hyperv_power_adapter                      = $::maas::params::hyperv_pow
     }
   }
   
-# validate_re($::operatingsystemrelease, '(^12.04|14.04|16.04)$', 'This Module only works on Ubuntu releases 12.04, 14.04 and 16.04.')
   notice("MAAS on node ${::fqdn} is managed by the maas puppet module." )
 
-  if ($maas_maintainers_release) {
-    validate_string($maas_maintainers_release, '^(stable)$', 'This module only supports the Stable Releases')
-    assert_type(Pattern[/(^stable)$/], $maas_maintainers_relesease) |$a, $b| {
+  if ($maas::maas_maintainers_release) {
+    assert_type(Pattern[/(^stable)$/], $maas_maintainers_release) |$a, $b| {
       fail('This Module only supports the Maas Maintainers "Stable" release.')
     }
   }

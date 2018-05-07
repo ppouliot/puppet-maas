@@ -23,6 +23,29 @@ define maas::superuser (
 
   is_email_address($email)
 
+  case $::operatingsystem {
+    'Ubuntu': {
+      case $::operatingsystemrelease {
+        '14.04': {
+          $get_apikey_for_superuser_cmd = "${maas::maas_region_admin} apikey ${maas::profile_name} --username ${name}"
+        }
+        '16.04': {
+          $get_apikey_for_superuser_cmd = "${maas::maas_region_admin} apikey --username ${name}"
+        }
+        '18.04': {
+          $get_apikey_for_superuser_cmd = "${maas::maas_region_admin} apikey --username ${name}"
+        }
+        default: {
+          warning("This is currently untested on your ${::operatingsystemrelease}")
+        }
+      }
+    }
+    default: {
+      warning("This is not meant for this ${::operatingsystem}")
+    }
+  }
+
+
   ## Command to Create a SuperUser in MAAS
   exec{"create-superuser-${name}":
     command   => "${maas::maas_region_admin} createadmin --username=${$name} --email=${email} --password=${password}",
@@ -36,7 +59,9 @@ define maas::superuser (
 
   ## Command to get the MAAS User's Key
   exec{"get-api-key-superuser-account-${name}":
-    command     => "${maas::maas_region_admin} apikey ${maas::profile_name} --username ${name} > /etc/maas/.puppet/su-${name}.maas",
+# API Changed from 14.04 -> 16.04
+#   command     => "${maas::maas_region_admin} apikey ${maas::profile_name} --username ${name} > /etc/maas/.puppet/su-${name}.maas",
+    command     => "${get_apikey_for_superuser_cmd} > /etc/maas/.puppet/su-${name}.maas",
     creates     => "/etc/maas/.puppet/su-${name}.maas",
     cwd         => '/etc/maas/.puppet/',
     onlyif      => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",

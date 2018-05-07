@@ -37,19 +37,23 @@
 define maas::node (
   $maas_superuser,
   $cli_command,
-  $p_user_data,
-  $t_user_data,
-  $p_distro_series,
-  $t_distro_series,
-  $p_power_type,
-  $t_power_type,
-  $p_pt_skipcheck,
-  $t_pt_skipcheck,
-  $p_zone,
-  $t_zone,
+  String $p_user_data,
+  String $t_user_data,
+  String $p_distro_series,
+  String $t_distro_series,
+  String $p_power_type,
+  String $t_power_type,
+  String $p_pt_skipcheck,
+  String $t_pt_skipcheck,
+  String $p_zone,
+  String $t_zone,
 ){
   ## Maas Command to add a node
-  validate_re($cli_command, '(start|stop|read|commission|update|details|release|delete)$', 'Valid node commands are "start","stop","read","update","details","release","delete".')
+  if $cli_command {
+    assert_type(Pattern[/(^(start|stop|read|commission|update|details|release|delete)$/], $cli_command) |$a, $b| {
+      fail('Valid node commands are "start","stop","read","update","details","release","delete".')
+    }
+  }
   ## Login as Maas Superuser
   notify{ "login-superuser-with-api-key-${maas::maas_superuser}":}
   warning("Login to maas profile: ${maas::profile} with ${maas::maas_superuser}")

@@ -28,12 +28,15 @@ define maas::superuser (
       case $::operatingsystemrelease {
         '14.04': {
           $get_apikey_for_superuser_cmd = "${maas::maas_region_admin} apikey ${maas::profile_name} --username ${name}"
+          $m_nodes                      = 'nodes'
         }
         '16.04': {
           $get_apikey_for_superuser_cmd = "${maas::maas_region_admin} apikey --username ${name}"
+          $m_nodes                      = 'machines'
         }
         '18.04': {
           $get_apikey_for_superuser_cmd = "${maas::maas_region_admin} apikey --username ${name}"
+          $m_nodes                      = 'machines'
         }
         default: {
           warning("This is currently untested on your ${::operatingsystemrelease}")
@@ -102,8 +105,9 @@ define maas::superuser (
       require     => Exec["login-superuser-with-api-key-${name}"],
     }
     # NEED TO FIX
+    # Commission All nodes in Ready State
     exec{"maas-nodes-accept-all-${name}":
-      command     => "/usr/bin/maas ${maas::profile_name} nodes accept-all",
+      command     => "/usr/bin/maas ${maas::profile_name} ${m_nodes} accept-all",
       cwd         => '/etc/maas/.puppet',
       refreshonly => true,
       logoutput   => true,

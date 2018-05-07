@@ -75,7 +75,8 @@ define maas::superuser (
   warning("superuser: ${name} login test")
   exec{"login-superuser-with-api-key-${name}":
     # FIXME raplace backticks ` with $(...)
-    command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} `${maas::maas_region_admin} apikey ${maas::profile_name} --username ${name}`",
+#   command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} `${maas::maas_region_admin} apikey ${maas::profile_name} --username ${name}`",
+    command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} `${get_apikey_for_superuser_cmd}`",
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,

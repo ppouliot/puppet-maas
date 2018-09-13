@@ -191,6 +191,25 @@ class maas::params {
           $maas_region_admin       = '/usr/sbin/maas-region'
           $import_boot_image_flags = 'boot-resources import'
         }
+        '18.04': {
+          $maas_packages = [
+            'maas',
+            'maas-cli',
+            'maas-common',
+            'maas-dhcp',
+            'maas-dns',
+            'maas-proxy',
+            'maas-rack-controller',
+            'maas-region-api',
+            'maas-region-controller',
+            'python3-django-maas',
+            'python3-maas-client',
+            'python3-maas-provisioningserver',
+          ]
+          $maas_command            = 'maas'
+          $maas_region_admin       = '/usr/sbin/maas-region'
+          $import_boot_image_flags = 'init'
+        }
         default: {
           warning("This is currently untested on your ${::operatingsystemrelease}")
         }

@@ -121,12 +121,12 @@ Boolean $hyperv_power_adapter                      = $::maas::params::hyperv_pow
 # validate_string($version)
   if $::operatingsystem {		
     assert_type(Pattern[/(^Ubuntu)$/], $::operatingsystem) |$a, $b| {		
-      fail translate(('This Module only works on Ubuntu based systems.'))		
+      fail('This Module only works on Ubuntu based systems.')
     }		
   }
   if $::operatingsystemrelease {
-    assert_type(Pattern[/(^12.04|14.04|16.04)$/], $operatingsystemrelease) |$a, $b| {
-      fail translate (('This Module only works on Ubuntu releases 12.04, 14.04 and 16.04.'))
+    assert_type(Pattern[/(^12.04|14.04|16.04|18.04)$/], $operatingsystemrelease) |$a, $b| {
+      fail('This Module only works on Ubuntu releases 12.04, 14.04, 16.04 and 18.04.')
     }
   }
   

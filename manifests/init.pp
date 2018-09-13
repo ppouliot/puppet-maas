@@ -115,6 +115,8 @@ String $import_boot_image_flags                    = $::maas::params::import_boo
 Optional[String] $cluster_region_controller        = $::maas::params::cluster_region_controller,
 Boolean $manage_package                            = $::maas::params::manage_package,
 Boolean $hyperv_power_adapter                      = $::maas::params::hyperv_power_adapter,
+String $get_apikey_for_superuser_cmd               = $::maas::params::get_apikey_for_superuser_cmd
+String $m_nodes                                    = $::maas::params::m_nodes
 
 ) inherits maas::params {
 

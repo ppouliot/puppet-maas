@@ -169,6 +169,8 @@ class maas::params {
           $maas_command            = 'maas-region-admin'
           $maas_region_admin       = '/usr/sbin/maas-region-admin'
           $import_boot_image_flags = 'node-groups import-boot-images'
+          $get_apikey_for_superuser_cmd = "${maas::maas_region_admin} apikey ${maas::profile_name} --username ${name}"
+          $m_nodes                      = 'nodes'
         }
         '16.04': {
           $maas_packages = [
@@ -190,6 +192,8 @@ class maas::params {
           $maas_command            = 'maas'
           $maas_region_admin       = '/usr/sbin/maas-region'
           $import_boot_image_flags = 'boot-resources import'
+          $get_apikey_for_superuser_cmd = "${maas::maas_region_admin} apikey --username ${name}"
+          $m_nodes                      = 'machines'
         }
         '18.04': {
           $maas_packages = [
@@ -208,7 +212,8 @@ class maas::params {
           ]
           $maas_command            = 'maas'
           $maas_region_admin       = '/usr/sbin/maas-region'
-          $import_boot_image_flags = 'init'
+          $get_apikey_for_superuser_cmd = undef
+          $m_nodes                 = 'machines'
         }
         default: {
           warning("This is currently untested on your ${::operatingsystemrelease}")

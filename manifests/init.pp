@@ -120,7 +120,6 @@ String $m_nodes                                    = $::maas::params::m_nodes,
 
 ) inherits maas::params {
 
-# validate_string($version)
   if $::operatingsystem {		
     assert_type(Pattern[/(^Ubuntu)$/], $::operatingsystem) |$a, $b| {		
       fail('This Module only works on Ubuntu based systems.')

@@ -1,0 +1,14 @@
+fixtures:
+  symlinks:
+    maas: "#{source_dir}"
+  forge_modules:
+    apt: 'puppetlabs-apt'
+    concat: 'puppetlabs-concat'
+    dummy_service: 'puppetlabs-dummy_service'
+    stdlib: 'puppetlabs-stdlib'
+    translate: 'puppetlabs-translate'
+    vcsrepo: 'puppetlabs-vcsrepo'
+symlinks:
+  maas: "#{source_dir}"
+  repositories:
+

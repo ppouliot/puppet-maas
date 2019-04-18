@@ -38,7 +38,7 @@ class maas::install {
       }
 
       if $maas::version {
-        $maaspackage = "${package_name}-${maas::version}"
+        $maaspackage = "${::package_name}-${::maas::version}"
       } else {
         $maaspackage = $maas::package_name
       }
@@ -48,8 +48,8 @@ class maas::install {
           ensure  => $maas::ensure,
           name    => $maaspackage,
           require => Class['apt::update'],
-        } ->
-        package{['maas-dhcp','maas-dns']:
+        }
+->      package{['maas-dhcp','maas-dns']:
           ensure => $maas::ensure,
         }
         ## A Directory for help with MAAS related command automation

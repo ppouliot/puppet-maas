@@ -43,7 +43,7 @@ define maas::dhcp_config (
   $param_macs,
 ){
   ## Maas Command to add a dhcp_config
-  validate_re($cli_command, '(list-connected-macs|connect-macs|read|update|disconnect-macs|delete)$', 'Valid dhcp_config commands are "list-connected-macs","connect-macs","read","update","disconnect-macs","delete".')
+  validate_re($cli_command, '(list-connected-macs|connect-macs|read|update|disconnect-macs|delete)$', 'Valid dhcp_config commands are "list-connected-macs","connect-macs","read","update","disconnect-macs","delete".') # lint:ignore:140chars
   ## Login as Maas Superuser
   notify { "login-superuser-with-api-key-${maas::default_superuser}": }
   warning("Login to maas profile: ${maas::profile} with ${maas::default_superuser}")
@@ -65,12 +65,11 @@ define maas::dhcp_config (
   ## Maas command for dhcp_config command
   exec{ "maas-dhcp_config-${cli_command}-${name}":
     command     => "/usr/bin/maas ${maas::profile_name} dhcp_config ${cli_command} ${name} ${::command_arguments}",
-    #maas-provision generate-dhcp-config --subnet 10.6.1.0 --interface eth0 --subnet-mask 255.255.255.0 --broadcast-ip 10.6.1.0 --ntp-server 91.189.94.4 --domain-name maas --router-ip 10.6.1.254 --ip-range-low 10.6.1.41 --ip-range-high 10.6.1.81 --dns-servers 10.5.1.39 --omapi-key omapi_key
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,
     before      => Exec["logout-superuser-with-api-key-${maas::superuser}"],
     require     => Exec["login-superuser-with-api-key-${maas::superuser}"],
-  } ->
-  notify{ "logout-superuser-with-api-key-${maas::default_superuser}":} warning("Logging Out maas superuser ${maas::default_superuser}")
+  }
+->notify{ "logout-superuser-with-api-key-${maas::default_superuser}":} warning("Logging Out maas superuser ${maas::default_superuser}")
 }

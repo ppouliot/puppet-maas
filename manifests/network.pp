@@ -43,7 +43,7 @@ define maas::network (
   $param_macs,
 ){
   ## Maas Command to add a network
-  validate_re($cli_command, '(list-connected-macs|connect-macs|read|update|disconnect-macs|delete)$', 'Valid network commands are "list-connected-macs","connect-macs","read","update","disconnect-macs","delete".')
+  validate_re($cli_command, '(list-connected-macs|connect-macs|read|update|disconnect-macs|delete)$', 'Valid network commands are "list-connected-macs","connect-macs","read","update","disconnect-macs","delete".') # lint:ignore:140chars
   ## Login as Maas Superuser
   notify{ "login-superuser-with-api-key-${maas::default_superuser}":}
   warning("Login to maas profile: ${maas::profile} with ${maas::default_superuser}")
@@ -70,6 +70,6 @@ define maas::network (
     logoutput   => true,
     before      => Exec["logout-superuser-with-api-key-${maas::superuser}"],
     require     => Exec["login-superuser-with-api-key-${maas::superuser}"],
-  } ->
-  notify{ "logout-superuser-with-api-key-${maas::default_superuser}":} warning("Logging Out maas superuser ${maas::default_superuser}")
+  }
+->notify{ "logout-superuser-with-api-key-${maas::default_superuser}":} warning("Logging Out maas superuser ${maas::default_superuser}")
 }

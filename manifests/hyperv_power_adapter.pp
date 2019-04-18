@@ -18,8 +18,8 @@ class maas::hyperv_power_adapter (
       source   => 'https://github.com/gabriel-samfira/hyperv-power-adapter.git',
       require  => Package['maas'],
       notify   => Exec['install-hyperv-power-adapater'],
-    } ->
-    exec{'install-hyperv-power-adapater':
+    }
+->  exec{'install-hyperv-power-adapater':
       command     => '/usr/local/src/hyperv-power-adapter/install-adapter.sh',
       cwd         => '/usr/local/src',
       onlyif      => '/usr/bin/test ! -f /etc/maas/templates/power/wsmancmd.py',

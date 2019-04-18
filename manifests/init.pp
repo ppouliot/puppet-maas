@@ -101,7 +101,7 @@ Optional[String] $version                          = undef,
 String $ensure                                     = present,
 Optional[String] $maas_release_ppa                 = undef,
 Optional[String] $profile_name                     = 'admin',
-Variant[Array[String], Hash] $maas_packages        = [ 'maas', 'maas-cli', 'maas-common', 'maas-dhcp', 'maas-dns', 'maas-proxy', 'maas-rack-controller', 'maas-region-api', 'maas-region-controller', 'python3-django-maas', 'python3-maas-client', 'python3-maas-provisioningserver' ],
+Variant[Array[String], Hash] $maas_packages        = [ 'maas', 'maas-cli', 'maas-common', 'maas-dhcp', 'maas-dns', 'maas-proxy', 'maas-rack-controller', 'maas-region-api', 'maas-region-controller', 'python3-django-maas', 'python3-maas-client', 'python3-maas-provisioningserver' ], # lint:ignore:140chars
 String $package_name                               = 'maas',
 String $server_url                                 = 'http://localhost:5240/MAAS/api/2.0',
 String $default_superuser                          = 'admin',
@@ -112,27 +112,27 @@ Boolean $manage_package                            = true,
 Boolean $hyperv_power_adapter                      = false,
 ){
 
-  if $::operatingsystem {		
-    assert_type(Pattern[/(^Ubuntu)$/], $::operatingsystem) |$a, $b| {		
+  if $::operatingsystem {
+    assert_type(Pattern[/(^Ubuntu)$/], $::operatingsystem) |$a, $b| {
       fail('This Module only works on Ubuntu based systems.')
-    }		
-  }
-  if $::operatingsystemrelease {
-    assert_type(Pattern[/(^12.04|14.04|16.04|18.04)$/], $operatingsystemrelease) |$a, $b| {
-      fail('This Module only works on Ubuntu releases 12.04, 14.04, 16.04 and 18.04.')
     }
   }
-  
+  if $::operatingsystemrelease {
+    assert_type(Pattern[/(^12.04|14.04|16.04|18.04)$/], $::operatingsystemrelease) |$a, $b| {
+      fail('This Module only works on Ubuntu releases 14.04, 16.04 and 18.04.')
+    }
+  }
+
   notice("MAAS on node ${::fqdn} is managed by the maas puppet module." )
 
   if ($maas::maas_release_ppa) {
     assert_type(Pattern[/(^stable|next)$/], $maas_release_ppa) |$a, $b| {
-      fail('This Module only supports the Maas Maintainers "Stable" release.')
+      fail('This Module supports the Maas "Stable" and "Next" releases.')
     }
   }
 
-  class{'maas::install':} ->
-  class{'maas::config':} 
+  class{'maas::install':}
+->class{'maas::config':}
   if $maas::hyperv_power_adapter == true {
     class{'maas::hyperv_power_adapter':
       require => Class['maas::config'],

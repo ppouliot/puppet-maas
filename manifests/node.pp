@@ -50,7 +50,7 @@ define maas::node (
 ){
   ## Maas Command to add a node
   if $cli_command {
-    assert_type(Pattern[/(^(start|stop|read|commission|update|details|release|delete)$/], $cli_command) |$a, $b| {
+    assert_type(Pattern[/(^start|stop|read|commission|update|details|release|delete)$/], $cli_command) |$a, $b| {
       fail('Valid node commands are "start","stop","read","update","details","release","delete".')
     }
   }
@@ -60,10 +60,10 @@ define maas::node (
   ## Generate Maas commandi argument for node command
   case $cli_command {
     'start','stop': {
-      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series}"
+      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series}" # lint:ignore:140chars
     }
     'update': {
-      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series} :param ${p_power_type} :type ${t_power_type} :param power_t_skipcheck=${p_pt_skipcheck} :type power_t_skipcheck=${t_pt_skipcheck} :param zone=${p_zone} :type zone=${t_zone}"
+      $command_arguments = ":param user_data=${p_user_data} :type user_data=${t_user_data} :param distro_series=${p_distro_series} :type distro_series=${t_distro_series} :param ${p_power_type} :type ${t_power_type} :param power_t_skipcheck=${p_pt_skipcheck} :type power_t_skipcheck=${t_pt_skipcheck} :param zone=${p_zone} :type zone=${t_zone}" # lint:ignore:140chars
     }
     'commission','read','release','delete','details': {
       $command_arguments = undef
@@ -80,6 +80,6 @@ define maas::node (
     logoutput   => true,
     before      => Exec["logout-superuser-with-api-key-${maas::superuser}"],
     require     => Exec["login-superuser-with-api-key-${maas::superuser}"],
-  } ->
-  notify{ "logout-superuser-with-api-key-${maas::maas_superuser}":} warning("Logging Out maas superuser ${maas::maas_superuser}")
+  }
+->notify{ "logout-superuser-with-api-key-${maas::maas_superuser}":} warning("Logging Out maas superuser ${maas::maas_superuser}")
 }

@@ -37,7 +37,7 @@ define maas::superuser (
 
           ## Command to get the MAAS User's Key
           exec{"get-api-key-superuser-account-${name}":
-            command     => "/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name} > /etc/maas/.puppet/su-${name}.maas",
+            command     => "/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name} > /etc/maas/.puppet/su-${name}.maas", # lint:ignore:140chars
             creates     => "/etc/maas/.puppet/su-${name}.maas",
             cwd         => '/etc/maas/.puppet/',
             onlyif      => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",
@@ -50,7 +50,7 @@ define maas::superuser (
           ## Command to Login to the MAAS profile using the api-key
           warning("superuser: ${name} login test")
           exec{"login-superuser-with-api-key-${name}":
-            command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} $(/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name})",
+            command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} $(/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name})", # lint:ignore:140chars
             cwd         => '/etc/maas/.puppet',
             refreshonly => true,
             logoutput   => true,

@@ -110,7 +110,7 @@ define maas::superuser (
             logoutput => true,
             onlyif    => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",
             unless    => "/usr/sbin/maas-region apikey --username ${name}",
-            #notify    => Exec["get-api-key-superuser-account-${name}"],
+            notify    => Exec["get-api-key-superuser-account-${name}"],
             require   => Package['maas'],
           }
           ## Command to get the MAAS User's Key

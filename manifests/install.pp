@@ -11,23 +11,11 @@
 # * `maas_superuser`
 # * `maas_superuser_email`
 # * `maas_superuser_passwd`
-# * `maas_maintainers_release`
+# * `maas_release_ppa`
 # * `manage_package`
 # * `package_name`
-# FIXME undef
-#
-class maas::install {
-#  $version                    = $::maas::version
-#  $maas_maintainers_release   = $::maas::maas_maintainers_release
-#  $manage_package             = $::maas::manage_package
-#  $ensure                     = $::maas::ensure
-#  $default_superuser          = $::maas::default_superuser
-#  $default_superuser_password = $::maas::default_superuser_password
-#  $default_superuser_email    = $::maas::default_superuser_email
 
-#  validate_string($version)
-#  validate_re($::operatingsystem, '(^Ubuntu)$', 'This Module only works on Ubuntu based systems.')
-#  validate_re($::operatingsystemrelease, '(^12.04|14.04|16.04)$', 'This Module only works on Ubuntu releases 12.04, 14.04, and 16.04.')
+class maas::install {
 
   notice("MAAS installation is occuring on node ${::fqdn}." )
   include apt
@@ -35,15 +23,11 @@ class maas::install {
   case $::operatingsystem {
     'Ubuntu': {
 
-#      from selyx-maas:
-#      if $::operatingsystemrelease == '14.04' {
-#        apt::ppa {'ppa:cloud-installer/stable': }
-#      }
-      if ($maas::maas_maintainers_release) {
-        notice("Node ${::fqdn} is using the maas-maintainers ${maas::maas_maintiners_release} package repository for MAAS installation." )
-        apt::ppa{"ppa:maas-maintainers/${maas::maas_maintainers_release}":}
+      if ($maas::maas_release_ppa) {
+        notice("Node ${::fqdn} is using the maas-maintainers ${maas::maas_release_ppa} package repository for MAAS installation." )
+        apt::ppa{"ppa:maas/${maas::maas_release_ppa}":}
         if ($maas::manage_package) {
-          Apt::Ppa["ppa:maas-maintainers/${maas::maas_maintainers_release}"] -> Package['maas']
+          Apt::Ppa["ppa:maas/${maas::maas_release_ppa}"] -> Package['maas']
         }
       } else {
         if $maas::version and $maas::ensure != 'absent' {

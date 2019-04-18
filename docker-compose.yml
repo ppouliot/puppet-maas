@@ -1,15 +1,8 @@
 version: '3'
 services:
   maas1:
-    image: "${USERNAME}/${IMAGE}-trusty:${VERSION}"
+    image: "${USERNAME}/${IMAGE}:${VERSION}"
     container_name: ipam1
     build:
       context: .
-      dockerfile: Dockerfile.trusty
-
-  maas2:
-    image: "${USERNAME}/${IMAGE}-xenial:${VERSION}"
-    container_name: ipam1
-    build:
-      context: .
-      dockerfile: Dockerfile.xenial
+      dockerfile: Dockerfile

@@ -20,7 +20,8 @@ Vagrant.configure("2") do |config|
     v.customize ["modifyvm", :id, "--memory", "2048"]
     v.linked_clone = true
   end
-  config.puppet_install.puppet_version = :latest
+  # config.puppet_install.puppet_version = :latest
+  config.puppet_install.puppet_version = "5.5.7"
   config.vm.provision "shell", inline: "/opt/puppetlabs/puppet/bin/gem install r10k hiera-eyaml"
   config.vm.provision "shell", inline: "apt-get update -y && apt-get -y install rsync curl wget git"
   config.vm.provision "shell", inline: "curl -o /etc/puppetlabs/code/environments/production/Puppetfile https://raw.githubusercontent.com/ppouliot/puppet-maas/master/Puppetfile"
@@ -37,7 +38,9 @@ Vagrant.configure("2") do |config|
 #    config.vm.box = "ubuntu/xenial64"
 #   config.vm.box = "ubuntu/trusty64"
     v.vm.hostname = "maas.contoso.ltd"
-    v.vm.network "private_network", ip: "192.168.0.3"
+#   v.vm.network "private_network", ip: "192.168.0.3"
+#    v.vm.network "public_network"
+    v.vm.network "forwarded_port", guest: 5420, host: 5420
   end
 
 end

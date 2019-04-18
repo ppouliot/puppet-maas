@@ -49,9 +49,6 @@
 # * `maas_superuser_passwd`
 # Password for the MAAS Root Account
 #
-# * `maas_region_admin`
-# Used in the maas::superuser class to allow for api changes to using maas-region over maas-region-admin 
-#
 # * `import_boot_image_flags`
 # Used in the maas::superuser class to deal with api changes from 1.9 to 2.0 
 # 
@@ -63,8 +60,8 @@
 # * `manage_package`
 # Wheter to manage packages or not
 #
-# * `maas_maintainers_release`
-# PPA maas-maintainers release, currently only stable is supported
+# * `maas_release_ppa`
+# PPA for maas release, stable or next are supported.
 #
 # * `package_name`
 # Name of maas package to install
@@ -100,25 +97,20 @@
 #
 class maas (
 
-Optional[String] $version                          = $::maas::params::version,
-String $ensure                                     = $::maas::params::ensure,
-# Variant[Array[String], Hash] $prerequired_packages = $::maas::params::prerequired_packages,
-Optional[String] $maas_maintainers_release         = $::maas::params::maas_maintainers_release,
-Optional[String] $profile_name                     = $::maas::params::profile_name,
-Variant[Array[String], Hash] $maas_packages        = $::maas::params::maas_packages,
-String $package_name                               = $::maas::params::package_name,
-String $default_superuser                          = $::maas::params::default_superuser,
-String $default_superuser_password                 = $::maas::params::default_superuser_password,
-String $default_superuser_email                    = $::maas::params::default_superuser_email,
-String $maas_region_admin                          = $::maas::params::maas_region_admin,
-String $import_boot_image_flags                    = $::maas::params::import_boot_image_flags,
-Optional[String] $cluster_region_controller        = $::maas::params::cluster_region_controller,
-Boolean $manage_package                            = $::maas::params::manage_package,
-Boolean $hyperv_power_adapter                      = $::maas::params::hyperv_power_adapter,
-String $get_apikey_for_superuser_cmd               = $::maas::params::get_apikey_for_superuser_cmd,
-String $m_nodes                                    = $::maas::params::m_nodes,
-
-) inherits maas::params {
+Optional[String] $version                          = undef,
+String $ensure                                     = present,
+Optional[String] $maas_release_ppa                 = undef,
+Optional[String] $profile_name                     = 'admin',
+Variant[Array[String], Hash] $maas_packages        = [ 'maas', 'maas-cli', 'maas-common', 'maas-dhcp', 'maas-dns', 'maas-proxy', 'maas-rack-controller', 'maas-region-api', 'maas-region-controller', 'python3-django-maas', 'python3-maas-client', 'python3-maas-provisioningserver' ],
+String $package_name                               = 'maas',
+String $server_url                                 = 'http://localhost:5240/MAAS',
+String $default_superuser                          = 'admin',
+String $default_superuser_password                 = 'maasadmin',
+String $default_superuser_email                    = "admin@${::fqdn}",
+Optional[String] $cluster_region_controller        = undef,
+Boolean $manage_package                            = true,
+Boolean $hyperv_power_adapter                      = false,
+){
 
   if $::operatingsystem {		
     assert_type(Pattern[/(^Ubuntu)$/], $::operatingsystem) |$a, $b| {		
@@ -133,8 +125,8 @@ String $m_nodes                                    = $::maas::params::m_nodes,
   
   notice("MAAS on node ${::fqdn} is managed by the maas puppet module." )
 
-  if ($maas::maas_maintainers_release) {
-    assert_type(Pattern[/(^stable)$/], $maas_maintainers_release) |$a, $b| {
+  if ($maas::maas_release_ppa) {
+    assert_type(Pattern[/(^stable|next)$/], $maas_release_ppa) |$a, $b| {
       fail('This Module only supports the Maas Maintainers "Stable" release.')
     }
   }

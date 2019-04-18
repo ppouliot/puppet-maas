@@ -103,7 +103,7 @@ Optional[String] $maas_release_ppa                 = undef,
 Optional[String] $profile_name                     = 'admin',
 #Variant[Array[String], Hash] $maas_packages, 
 String $package_name                               = 'maas',
-String $server_url                                 = 'http://localhost:5240/MAAS/api/2.0',
+#String $server_url                                 = 'http://localhost:5240/MAAS/api/2.0',
 String $default_superuser                          = 'admin',
 String $default_superuser_password                 = 'maasadmin',
 String $default_superuser_email                    = "admin@${::fqdn}",
@@ -147,6 +147,7 @@ Boolean $hyperv_power_adapter                      = false,
             'python-django-maas',
             'maas-region-controller-min',
           ]
+          $server_url = 'http://localhost/MAAS'
         }
         '16.04': {
           $maas_packages = [
@@ -165,6 +166,7 @@ Boolean $hyperv_power_adapter                      = false,
             'python3-maas-client',
             'python3-maas-provisioningserver',
           ]
+          $server_url = 'http://localhost:5240/MAAS'
         }
         '18.04', default: {
           $maas_packages = [
@@ -181,6 +183,7 @@ Boolean $hyperv_power_adapter                      = false,
             'python3-maas-client',
             'python3-maas-provisioningserver',
           ]
+          $server_url = 'http://localhost:5240/MAAS/api/2.0'
         }
       }
     }

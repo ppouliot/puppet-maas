@@ -26,11 +26,11 @@ define maas::superuser (
         '12.04','14.04': {
           ## Command to Create a SuperUser in MAAS
           exec{"create-superuser-${name}":
-            command   => "${maas::maas_region_admin} createadmin --username=${$name} --email=${email} --password=${password}",
+            command   => "/usr/sbin/maas-region-admin createadmin --username=${$name} --email=${email} --password=${password}",
             cwd       => '/etc/maas/.puppet/',
             logoutput => true,
             onlyif    => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",
-            #unless    => "${maas::maas_region_admin} apikey --username ${name}",
+            unless    => "/usr/sbin/maas-region-admin  apikey --username ${name}",
             notify    => Exec["get-api-key-superuser-account-${name}"],
             require   => Package['maas'],
           }

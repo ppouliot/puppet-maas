@@ -1,6 +1,6 @@
 # == Class: maas::image_builder
 #
-class maas::image_builder inherits maas::params {
+class maas::image_builder {
 
   package{[
     'bzr',

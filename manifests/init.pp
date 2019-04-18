@@ -49,12 +49,8 @@
 # * `maas_superuser_passwd`
 # Password for the MAAS Root Account
 #
-# * `import_boot_image_flags`
-# Used in the maas::superuser class to deal with api changes from 1.9 to 2.0 
-# 
-#
 # * `cluster_region_controller`
-# IP Address of the region controller master for new cluster controller nodes.
+# IP Address of the region controller master for new rack (formerly cluster) controller nodes.
 # Used in the maas::cluster_controller class
 #
 # * `manage_package`
@@ -205,7 +201,7 @@ Boolean $hyperv_power_adapter                      = false,
   contain 'maas::config'
   contain 'maas::hyperv_power_adapter'
 
-  Class['maas'] -> Maas::Superuser <||>
+#  Class['maas'] -> Maas::Superuser <||>
 # TODO: Create a define out of import_resources.pp
 #  Class['maas'] -> Maas::Import_resources <||>
 

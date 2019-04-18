@@ -1,5 +1,6 @@
 # == Class: maas::image_builder
-#
+# references: 
+# https://www.cryingcloud.com/blog/2018/09/17/creating-a-custom-rhel-image-for-maas
 class maas::image_builder {
 
   package{[

@@ -34,8 +34,8 @@ Vagrant.configure("2") do |config|
 #  config.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet apply --debug --trace --verbose --modulepath=/etc/puppetlabs/code/modules:/etc/puppetlabs/code/environments/production/modules:/etc/puppetlabs/code/modules /etc/puppetlabs/code/modules/maas/examples/maas_maintainers_stable_release.pp"
 
   config.vm.define "maas" do |v|
-    config.vm.box = "ubuntu/bionic64"
-#    config.vm.box = "ubuntu/xenial64"
+#    config.vm.box = "ubuntu/bionic64"
+    config.vm.box = "ubuntu/xenial64"
 #   config.vm.box = "ubuntu/trusty64"
     v.vm.hostname = "maas.contoso.ltd"
 #   v.vm.network "private_network", ip: "192.168.0.3"

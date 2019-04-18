@@ -101,7 +101,7 @@ Optional[String] $version                          = undef,
 String $ensure                                     = present,
 Optional[String] $maas_release_ppa                 = undef,
 Optional[String] $profile_name                     = 'admin',
-Variant[Array[String], Hash] $maas_packages        = [ 'maas', 'maas-cli', 'maas-common', 'maas-dhcp', 'maas-dns', 'maas-proxy', 'maas-rack-controller', 'maas-region-api', 'maas-region-controller', 'python3-django-maas', 'python3-maas-client', 'python3-maas-provisioningserver' ], # lint:ignore:140chars
+#Variant[Array[String], Hash] $maas_packages, 
 String $package_name                               = 'maas',
 String $server_url                                 = 'http://localhost:5240/MAAS/api/2.0',
 String $default_superuser                          = 'admin',
@@ -128,6 +128,61 @@ Boolean $hyperv_power_adapter                      = false,
   if ($maas::maas_release_ppa) {
     assert_type(Pattern[/(^stable|next)$/], $maas_release_ppa) |$a, $b| {
       fail('This Module supports the Maas "Stable" and "Next" releases.')
+    }
+  }
+
+  case $::operatingsystem {
+    'Ubuntu': {
+      case $::operatingsystemrelease {
+        '14.04': {
+          $maas_packages  = [
+            'python-maas-provisioningserver',
+            'maas-dhcp',
+            'maas-dns',
+            'maas-common',
+            'maas-cli',
+            'maas',
+            'maas-region-controller',
+            'maas-cluster-controller',
+            'python-django-maas',
+            'maas-region-controller-min',
+          ]
+        }
+        '16.04': {
+          $maas_packages = [
+            'maas',
+            'maas-cli',
+            'maas-common',
+            'maas-dhcp',
+            'maas-dns',
+            'maas-enlist',
+            'maas-proxy',
+            'maas-rack-controller',
+            'maas-region-api',
+            'maas-region-controller',
+            'maas-region-controller-min',
+            'python3-django-maas',
+            'python3-maas-client',
+            'python3-maas-provisioningserver',
+          ]
+        }
+        '18.04', default: {
+          $maas_packages = [
+            'maas',
+            'maas-cli',
+            'maas-common',
+            'maas-dhcp',
+            'maas-dns',
+            'maas-proxy',
+            'maas-rack-controller',
+            'maas-region-api',
+            'maas-region-controller',
+            'python3-django-maas',
+            'python3-maas-client',
+            'python3-maas-provisioningserver',
+          ]
+        }
+      }
     }
   }
 

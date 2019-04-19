@@ -237,7 +237,10 @@ define maas::superuser (
               command     => "/usr/bin/maas ${name} boot-resources import",
               cwd         => '/etc/maas/.puppet',
               refreshonly => true,
-              notify      => Exec["maas-set-config-completed-intro-true-${name}"],
+              notify      => [
+                Exec["maas-set-config-completed-intro-true-${name}"],
+                Exec["maas-nodes-accept-all-${name}"],
+              ],
               logoutput   => true,
               before      => Exec["logout-superuser-with-api-key-${name}"],
               require     => Exec["login-superuser-with-api-key-${name}"],
@@ -248,7 +251,6 @@ define maas::superuser (
               cwd         => '/etc/maas/.puppet',
               logoutput   => true,
               refreshonly => true,
-              notify      => Exec["maas-sshkey-import-id-${name}"],
               before      => Exec["logout-superuser-with-api-key-${name}"],
               require     => Exec["login-superuser-with-api-key-${name}"],
             }
@@ -257,9 +259,7 @@ define maas::superuser (
               exec{"maas-sshkey-import-id-${name}":
                 command     => "/usr/bin/maas ${name} sshkeys import ${maas::default_superuser_sshkey}",
                 cwd         => '/etc/maas/.puppet',
-                refreshonly => true,
                 logoutput   => true,
-                notify      => Exec["maas-nodes-accept-all-${name}"],
                 before      => Exec["logout-superuser-with-api-key-${name}"],
                 require     => Exec["login-superuser-with-api-key-${name}"],
               }

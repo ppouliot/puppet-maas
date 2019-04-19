@@ -64,8 +64,7 @@ Make sure you to install depencency modules (e.g. apt and stdlib) as well (libra
   class{'maas':}
   ```
 
-## Reference
-### Classes
+## Classes
 * `maas`: Main Class
 * `maas::params`: Sets the defaults for the maas module parameters
 * `maas::install`: Installs the MAAS package
@@ -73,6 +72,10 @@ Make sure you to install depencency modules (e.g. apt and stdlib) as well (libra
 * `maas::superuser`: Creates MAAS Administrative users
 * `maas::import_boot_images`: Imports default boot images
 * `maas::cluster_controller`: Adds addintional cluster controllers to a region controller
+
+## Resources
+
+ * [https://github.com/CanonicalLtd/maas-docs/blob/master/en/installconfig-checklist.md](https://github.com/CanonicalLtd/maas-docs/blob/master/en/installconfig-checklist.md)
 
 ## Limitations
 

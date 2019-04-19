@@ -58,9 +58,13 @@ class maas::install {
           require => Package['maas'],
         }
         ## Create MAAS Superuser
+        notice("default_superuser: ${::maas::default_superuser}")
+        notice("default_superuser_email: ${::maas::default_superuser_email}")
+        notice("default_superuser_sshkey: ${::maas::default_superuser_sshkey}")
         maas::superuser{ $maas::default_superuser:
           password => $maas::default_superuser_password,
           email    => $maas::default_superuser_email,
+          sshkey   => $maas::default_superuser_sshkey,
           require  => Package['maas'],
         }
       }

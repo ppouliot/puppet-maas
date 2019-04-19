@@ -29,18 +29,33 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: "curl -o /etc/puppetlabs/puppet/hiera.yaml https://raw.githubusercontent.com/ppouliot/puppet-maas/master/files/hiera/hiera.yaml"
   config.vm.provision "shell", inline: "cd /etc/puppetlabs/code/environments/production && /opt/puppetlabs/puppet/bin/r10k puppetfile install --verbose DEBUG2"
   config.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet module list --tree"
-  config.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet apply --debug --trace --verbose --modulepath=/etc/puppetlabs/code/modules:/etc/puppetlabs/code/environments/production/modules:/etc/puppetlabs/code/modules /etc/puppetlabs/code/modules/maas/examples/init.pp"
-# This will test the upstream maas maintainter release
-#  config.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet apply --debug --trace --verbose --modulepath=/etc/puppetlabs/code/modules:/etc/puppetlabs/code/environments/production/modules:/etc/puppetlabs/code/modules /etc/puppetlabs/code/modules/maas/examples/maas_maintainers_stable_release.pp"
 
+# Basic Installation
+# This will pass will install maas from the shipped distribution packages 
+# This is the target supported platform for working w/ the module and older maas apis.
+  config.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet apply --debug --trace --verbose --modulepath=/etc/puppetlabs/code/modules:/etc/puppetlabs/code/environments/production/modules:/etc/puppetlabs/code/modules /etc/puppetlabs/code/modules/maas/examples/init.pp"
+
+# PPA MAAS/Stable  Installation
+# This will test the upstream maas ppa:maas/stable 
+# Comment the basic install line above to install.
+#  config.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet apply --debug --trace --verbose --modulepath=/etc/puppetlabs/code/modules:/etc/puppetlabs/code/environments/production/modules:/etc/puppetlabs/code/modules /etc/puppetlabs/code/modules/maas/examples/ppa_stable.pp"
+
+# PPA MAAS/Next Installation
+# This will test the upstream maas ppa:maas/next
+# The basi install line will need to be commented out to use this..
+#  config.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet apply --debug --trace --verbose --modulepath=/etc/puppetlabs/code/modules:/etc/puppetlabs/code/environments/production/modules:/etc/puppetlabs/code/modules /etc/puppetlabs/code/modules/maas/examples/ppa_next.pp"
+
+  # Configure the VM Instances
   config.vm.define "maas" do |v|
     config.vm.box = "ubuntu/bionic64"
-#    config.vm.box = "ubuntu/xenial64"
+#   config.vm.box = "ubuntu/xenial64"
 #   config.vm.box = "ubuntu/trusty64"
     v.vm.hostname = "maas.contoso.ltd"
 #   v.vm.network "private_network", ip: "192.168.0.3"
-#    v.vm.network "public_network"
-    v.vm.network "forwarded_port", guest: 5420, host: 5420
+#   v.vm.network "public_network"
+#
+    # Maps to Possible MAAS Ports
+    v.vm.network "forwarded_port", guest: 5240, host: 5240
+    v.vm.network "forwarded_port", guest: 80, host: 8080
   end
-
 end

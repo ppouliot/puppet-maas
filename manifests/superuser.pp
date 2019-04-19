@@ -17,9 +17,13 @@
 define maas::superuser (
           String $password,
           String $email,
+          Variant[Undef, String] $sshkey = undef,
           Boolean $store_api_key = false,
 ) {
   is_email_address($email)
+  if $sshkey {
+    $ssh_import = "--ssh-import=${sshkey}"
+  }
   case $::operatingsystem {
     'Ubuntu': {
       case $::operatingsystemrelease {
@@ -37,7 +41,7 @@ define maas::superuser (
 
           ## Command to get the MAAS User's Key
           exec{"get-api-key-superuser-account-${name}":
-            command     => "/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name} > /etc/maas/.puppet/su-${name}.maas", # lint:ignore:140chars
+            command     => "/usr/sbin/maas-region-admin apikey ${name} --username ${name} > /etc/maas/.puppet/su-${name}.maas", # lint:ignore:140chars
             creates     => "/etc/maas/.puppet/su-${name}.maas",
             cwd         => '/etc/maas/.puppet/',
             onlyif      => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",
@@ -50,7 +54,7 @@ define maas::superuser (
           ## Command to Login to the MAAS profile using the api-key
           warning("superuser: ${name} login test")
           exec{"login-superuser-with-api-key-${name}":
-            command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} $(/usr/sbin/maas-region-admin apikey ${maas::profile_name} --username ${name})", # lint:ignore:140chars
+            command     => "/usr/bin/maas login ${name} ${maas::server_url} $(/usr/sbin/maas-region-admin apikey ${name} --username ${name})", # lint:ignore:140chars
             cwd         => '/etc/maas/.puppet',
             refreshonly => true,
             logoutput   => true,
@@ -60,7 +64,7 @@ define maas::superuser (
           if $name == $maas::default_superuser {
 
             exec{"maas-import-boot-images-run-by-user-${name}":
-              command   => "/usr/bin/maas ${maas::profile_name} node-groups import-boot-images",
+              command   => "/usr/bin/maas ${name} node-groups import-boot-images",
               cwd       => '/etc/maas/.puppet',
               logoutput => true,
               notify    => Exec["maas-boot-resources-import-${name}"],
@@ -68,7 +72,7 @@ define maas::superuser (
               require   => Exec["login-superuser-with-api-key-${name}"],
             }
             exec{"maas-boot-resources-import-${name}":
-              command     => "/usr/bin/maas ${maas::profile_name} boot-resources import",
+              command     => "/usr/bin/maas ${name} boot-resources import",
               cwd         => '/etc/maas/.puppet',
               refreshonly => true,
               notify      => Exec["maas-nodes-accept-all-${name}"],
@@ -78,7 +82,7 @@ define maas::superuser (
             }
             # Commission All Nodes in Ready State
             exec{"maas-nodes-accept-all-${name}":
-              command     => "/usr/bin/maas ${maas::profile_name} nodes accept-all",
+              command     => "/usr/bin/maas ${name} nodes accept-all",
               cwd         => '/etc/maas/.puppet',
               refreshonly => true,
               logoutput   => true,
@@ -127,7 +131,7 @@ define maas::superuser (
           ## Command to Login to the MAAS profile using the api-key
           warning("superuser: ${name} login test")
           exec{"login-superuser-with-api-key-${name}":
-            command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} $(/usr/bin/maas apikey --username ${name})",
+            command     => "/usr/bin/maas login ${name} ${maas::server_url} $(/usr/bin/maas apikey --username ${name})",
             cwd         => '/etc/maas/.puppet',
             refreshonly => true,
             logoutput   => true,
@@ -136,7 +140,7 @@ define maas::superuser (
           if $name == $maas::default_superuser {
 
             exec{"maas-import-boot-images-run-by-user-${name}":
-              command   => "/usr/bin/maas ${maas::profile_name} boot-resources read",
+              command   => "/usr/bin/maas ${name} boot-resources read",
               cwd       => '/etc/maas/.puppet',
               logoutput => true,
               notify    => Exec["maas-boot-resources-import-${name}"],
@@ -144,7 +148,7 @@ define maas::superuser (
               require   => Exec["login-superuser-with-api-key-${name}"],
             }
             exec{"maas-boot-resources-import-${name}":
-              command     => "/usr/bin/maas ${maas::profile_name} boot-resources import",
+              command     => "/usr/bin/maas ${name} boot-resources import",
               cwd         => '/etc/maas/.puppet',
               refreshonly => true,
               notify      => Exec["maas-nodes-accept-all-${name}"],
@@ -154,7 +158,7 @@ define maas::superuser (
             }
             # Commission All Nodes in Ready State
             exec{"maas-nodes-accept-all-${name}":
-              command     => "/usr/bin/maas ${maas::profile_name} machines accept-all",
+              command     => "/usr/bin/maas ${name} machines accept-all",
               cwd         => '/etc/maas/.puppet',
               refreshonly => true,
               logoutput   => true,
@@ -180,7 +184,7 @@ define maas::superuser (
           ## MAAS Init Command to Create a SuperUser in MAAS
           exec{"init-and-create-superuser-${name}":
             # command   => "/usr/sbin/maas-region createsuperuser --username=${$name} --email=${email}",
-            command   => "/usr/bin/maas createadmin --username=${name} --email=${email} --password=${password}",
+            command   => "/usr/bin/maas createadmin --username=${name} --email=${email} --password=${password} ${ssh_import}",
             cwd       => '/etc/maas/.puppet/',
             logoutput => true,
             onlyif    => "/usr/bin/test ! -f /etc/maas/.puppet/su-${name}.maas",
@@ -202,37 +206,72 @@ define maas::superuser (
           ## Command to Login to the MAAS profile using the api-key
           warning("superuser: ${name} login test")
           exec{"login-superuser-with-api-key-${name}":
-            command     => "/usr/bin/maas login ${maas::profile_name} ${maas::server_url} $(/usr/bin/maas apikey --username ${name})",
+            command     => "/usr/bin/maas login ${name} ${maas::server_url} $(/usr/bin/maas apikey --username ${name})",
             cwd         => '/etc/maas/.puppet',
             refreshonly => true,
             logoutput   => true,
             require     => Package['maas'],
           }
           if $name == $maas::default_superuser {
-
+            # Configure DNS Forwardwers
+            if $maas::dns {
+              exec{"maas-set-config-upstream-dns-${name}":
+                command   => "/usr/bin/maas ${name} maas set-config name=upstream_dns value=${maas::dns}",
+                cwd       => '/etc/maas/.puppet',
+                logoutput => true,
+                before    => Exec["logout-superuser-with-api-key-${name}"],
+                require   => Exec["login-superuser-with-api-key-${name}"],
+              }
+            }
+            # Read boot images
             exec{"maas-import-boot-images-run-by-user-${name}":
-              command   => "/usr/bin/maas ${maas::profile_name} boot-resources read",
+              command   => "/usr/bin/maas ${name} boot-resources read",
               cwd       => '/etc/maas/.puppet',
               logoutput => true,
               notify    => Exec["maas-boot-resources-import-${name}"],
               before    => Exec["logout-superuser-with-api-key-${name}"],
               require   => Exec["login-superuser-with-api-key-${name}"],
             }
+            # Import boot resources
             exec{"maas-boot-resources-import-${name}":
-              command     => "/usr/bin/maas ${maas::profile_name} boot-resources import",
+              command     => "/usr/bin/maas ${name} boot-resources import",
               cwd         => '/etc/maas/.puppet',
               refreshonly => true,
-              notify      => Exec["maas-nodes-accept-all-${name}"],
+              notify      => Exec["maas-set-config-completed-intro-true-${name}"],
               logoutput   => true,
               before      => Exec["logout-superuser-with-api-key-${name}"],
               require     => Exec["login-superuser-with-api-key-${name}"],
             }
+            # Set config intro to competed
+            exec{"maas-set-config-completed-intro-true-${name}":
+              command     => "/usr/bin/maas ${name} maas set-config name=completed_intro value=true",
+              cwd         => '/etc/maas/.puppet',
+              logoutput   => true,
+              refreshonly => true,
+              notify      => Exec["maas-sshkey-import-id-${name}"],
+              before      => Exec["logout-superuser-with-api-key-${name}"],
+              require     => Exec["login-superuser-with-api-key-${name}"],
+            }
+            # Import the maas super user key
+            if $maas::default_superuser_sshkey {
+              exec{"maas-sshkey-import-id-${name}":
+                command     => "/usr/bin/maas ${name} sshkeys import ${maas::default_superuser_sshkey}",
+                cwd         => '/etc/maas/.puppet',
+                refreshonly => true,
+                logoutput   => true,
+                notify      => Exec["maas-nodes-accept-all-${name}"],
+                before      => Exec["logout-superuser-with-api-key-${name}"],
+                require     => Exec["login-superuser-with-api-key-${name}"],
+              }
+            }
             # Commission All Nodes in Ready State
             exec{"maas-nodes-accept-all-${name}":
-              command     => "/usr/bin/maas ${maas::profile_name} machines accept-all",
+              command     => "/usr/bin/maas ${name} machines accept-all",
               cwd         => '/etc/maas/.puppet',
               refreshonly => true,
               logoutput   => true,
+              notify      => Exec["logout-superuser-with-api-key-${name}"],
+              #notify      => Exec["maas-set-config-completed-intro-true-${name}"],
               before      => Exec["logout-superuser-with-api-key-${name}"],
               require     => Exec["login-superuser-with-api-key-${name}"],
             }

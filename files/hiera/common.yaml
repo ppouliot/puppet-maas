@@ -1,0 +1,11 @@
+---
+maas_super_users:
+  -  superuser2:
+       passwd: "superuser2"
+       email: "superuser2@contoso.tld"
+  -  superuser4:
+       passwd: "superuser4"
+       email: "superuser2@contoso.tld"
+  -  superuser3:
+       passwd: "superuser4"
+       email: "superuser4@contoso.tld"

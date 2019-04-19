@@ -53,14 +53,14 @@ define maas::pod (
   warning("Login to maas profile: ${maas::profile} with ${maas::default_superuser}")
   ## Generate Maas command argument for network command
   case $cli_command {
-    'create','compose','read','delete': {
+    'create','read','delete': {
       $command_arguments = undef
     }
     'compose': {
       $command_arguments = "pod_id=${param_pod_id}"
     }
     'update': {
-      $command_arguments = "ip=${param_ip} netmask=${param_netmask} vlan_tag=${param_vlan_tag} description=${param_description}"
+      $command_arguments = "ip=${::param_ip} netmask=${::param_netmask} vlan_tag=${::param_vlan_tag} description=$::{param_description}"
     }
     default: {
       notify {"CLI command ${cli_command} not defined.":}
@@ -68,7 +68,9 @@ define maas::pod (
   }
   ## Maas command for network command
   exec{"maas-network-${cli_command}-${name}":
-    command     => "/usr/bin/maas ${maas::profile_name} network ${cli_command} ${name} ${::command_arguments}",
+    command     => "/usr/bin/maas ${maas::profile_name} pod ${cli_command} ${name} ${::command_arguments}",
+    maas admin pods create -d type=virsh power_address=qemu+ssh://peter@10.1.1.178/system power_pass='R0b!nQu!v3r$'
+
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,

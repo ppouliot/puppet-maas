@@ -32,7 +32,7 @@
 # or http://example.com/MAAS/api/1.0/ if you wish to specify the API version.
 #
 # * `api_version`
-# Version of the MAAS API to use.   Default is 1.0.
+# Version of the MAAS API to use.   Default is 2.0.
 #
 # * `hyperv_power_adapter`
 # Install HyperV Power Adapter. Default is true.
@@ -103,6 +103,8 @@ String $package_name                               = 'maas',
 String $default_superuser                          = 'admin',
 String $default_superuser_password                 = 'maasadmin',
 String $default_superuser_email                    = "admin@${::fqdn}",
+Optional[String] $dns                              = '1.1.1.1',
+Variant[Undef, String] $default_superuser_sshkey   = undef,
 Optional[String] $cluster_region_controller        = undef,
 Boolean $manage_package                            = true,
 Boolean $hyperv_power_adapter                      = false,
@@ -201,7 +203,7 @@ Boolean $hyperv_power_adapter                      = false,
   contain 'maas::config'
   contain 'maas::hyperv_power_adapter'
 
-#  Class['maas'] -> Maas::Superuser <||>
+#  Class['maas'] -> Maas::Superusers <||>
 # TODO: Create a define out of import_resources.pp
 #  Class['maas'] -> Maas::Import_resources <||>
 

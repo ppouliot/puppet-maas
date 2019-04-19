@@ -9,5 +9,16 @@
 # Learn more about module testing here:
 # https://docs.puppet.com/guides/tests_smoke.html
 #
-include ::maas
+#include ::maas
+class{'maas':
+# hyperv_power_adapter => true,
+  default_superuser_sshkey => 'gh:ppouliot',
+}
 notify {"maas_secret: ${facts['maas_secret']}":}
+maas::superuser { 'superuser1':
+  password => 'superuser',
+  email    => "superuser1@${::fqdn}",
+}
+class{'maas::cert_server':
+  ensure => latest,
+}

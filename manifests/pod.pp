@@ -69,8 +69,6 @@ define maas::pod (
   ## Maas command for network command
   exec{"maas-network-${cli_command}-${name}":
     command     => "/usr/bin/maas ${maas::profile_name} pod ${cli_command} ${name} ${::command_arguments}",
-    maas admin pods create -d type=virsh power_address=qemu+ssh://peter@10.1.1.178/system power_pass='R0b!nQu!v3r$'
-
     cwd         => '/etc/maas/.puppet',
     refreshonly => true,
     logoutput   => true,

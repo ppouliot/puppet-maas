@@ -1,7 +1,9 @@
 # puppet-maas
-A puppet module for deploying and managing Canonicals
+
+A puppet module for deploying and managing [MaaS](http://maas.io)
+
 (This is unaffiliated with [MaaS.io](http://maas.io) or [Canonical](http://canonical.com) )
- [MaaS](http://maas.io)
+
 ![MaaS](https://assets.ubuntu.com/v1/5f3d3c45-maas-logo-cropped.svg)
 
 #### Table of Contents

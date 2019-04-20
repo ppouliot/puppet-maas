@@ -60,7 +60,7 @@ cd puppet-maas && vagrant up
 
 
 
-### Setup Requirements **OPTIONAL**
+### Setup Requirements
 
 * Ubuntu 12.04
 * Ubuntu 14.04

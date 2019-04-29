@@ -10,19 +10,17 @@ describe 'maas' do
       is_virtual: false,
     }
   end
-  #let(:params) { { maas_release_ppa: 'stable' } }
-
 
   on_supported_os.reject { |_, f| f[:os]['family'] == 'Solaris' }.each do |os, f|
     context "on #{os}" do
       let(:facts) do
         f.merge(super())
       end
-      context 'with default params' do 
 
-      # this is the simplest test possible to make sure the Puppet code compiles
+      context 'with default params' do
+        # this is the simplest test possible to make sure the Puppet code compiles
         it { is_expected.to compile }
-      # same as above except it will test all the dependencies
+        # same as above except it will test all the dependencies
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('maas::install') }
         it { is_expected.to contain_class('maas::config') }
@@ -65,14 +63,14 @@ describe 'maas' do
       end
       describe 'hyperv_power_adapter' do
         let(:params) { { hyperv_power_adapter: true } }
- 
-        it { is_expected.to contain_class('maas::hyperv_power_adapter') } 
+
+        it { is_expected.to contain_class('maas::hyperv_power_adapter') }
       end
       describe 'default_superuser_sshkey' do
         let(:params) { { default_superuser_sshkey: '~/.ssh/id_rsa' } }
-        
+
         it { is_expected.to contain_maas__superuser('admin').with_sshkey('~/.ssh/id_rsa') }
       end
-    end 
+    end
   end
 end

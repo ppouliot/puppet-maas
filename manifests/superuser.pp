@@ -23,7 +23,9 @@ define maas::superuser (
   is_email_address($email)
   if $sshkey {
     $ssh_import = "--ssh-import=${sshkey}"
-  }
+  } else {
+    $ssh_import = ""
+  } 
   case $::operatingsystem {
     'Ubuntu': {
       case $::operatingsystemrelease {

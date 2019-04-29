@@ -8,17 +8,18 @@ class maas::image_builder {
     'make',
     'python-tempita',
     'python-yaml',
-    'python-virtualenv']:
-    ensure    => latest
+    'python-virtualenv',
+  ]:
+    ensure => 'latest'
   }
 
-->vcsrepo { '/opt/maas-image-builder/':
-    ensure   => latest,
-    provider => bzr,
+->vcsrepo { '/opt/maas-image-builder':
+    ensure   => 'latest',
+    provider => 'bzr',
     # Original Source"
     # source   => 'lp:maas-image-builder',
     # Fork/Branch from https://code.launchpad.net/~ltrager/maas-image-builder/update_ks
-    source   => 'lp:~ltrager/maas-image-builder/update_ks'
+    source   => 'lp:~ltrager/maas-image-builder/update_ks',
   }
 
 ->exec {'image-builder_make_install-deps':
@@ -28,7 +29,7 @@ class maas::image_builder {
     logoutput => true,
     timeout   => 0,
     onlyif    => '/usr/bin/test ! -f /opt/maas-image-builder/bin/maas-image-builder',
-#    notify    => Exec['create-centos-7-image','create-centos-6-image'],
+#   notify    => Exec['create-centos-7-image','create-centos-6-image'],
   }
 #
 #  exec {'create-centos-7-image':

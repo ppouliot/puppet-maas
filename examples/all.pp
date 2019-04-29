@@ -22,3 +22,5 @@ maas::superuser { 'superuser1':
 class{'maas::cert_server':
   ensure => latest,
 }
+
+include maas::image_builder

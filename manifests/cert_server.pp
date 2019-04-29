@@ -24,8 +24,11 @@
 # * `package_name`
 
 class maas::cert_server (
-  $ensure  = present,
-  $version = undef,
+  String $ensure  = present,
+  Optional[String] $version = undef,
+  String $package_name = 'maas-cert-server',
+  Boolean $manage_package = true,
+
 ){
 
   notice("MAAS installation is occuring on node ${::fqdn}." )
@@ -35,7 +38,7 @@ class maas::cert_server (
     'Ubuntu': {
       notice("Node ${::fqdn} is using the maas ppa:hardware-certification/public package repository for MAAS Cert Server installation." )
       apt::ppa{'ppa:hardware-certification/public':}
-      if ($maas::manage_package) {
+      if ($manage_package) {
         Apt::Ppa['ppa:hardware-certification/public'] -> Package['maas-cert-server']
       }
       if $version and $ensure != 'absent' {
@@ -43,9 +46,9 @@ class maas::cert_server (
       }
 
       if $version {
-        $maascertserverpackage = "${::package_name}-${::version}"
+        $maascertserverpackage = "${package_name}-${version}"
       } else {
-        $maascertserverpackage = $::package_name
+        $maascertserverpackage = $package_name
       }
 
       package { 'maas-cert-server':

@@ -16,6 +16,9 @@ describe 'Maas::Superuser', type: :define do
 
       it { is_expected.to compile }
       it { is_expected.to compile.with_all_deps }
+      it { is_expected.to contain_maas__superuser('namevar') }
+      it { is_expected.not_to raise_error }
+
     end
   end
 end

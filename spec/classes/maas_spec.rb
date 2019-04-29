@@ -1,4 +1,5 @@
 require 'spec_helper'
+
 describe 'maas' do
   let(:title) { 'maas' }
   let(:node) { 'maas.contoso.ltd' }
@@ -65,6 +66,23 @@ describe 'maas' do
         let(:params) { { hyperv_power_adapter: true } }
 
         it { is_expected.to contain_class('maas::hyperv_power_adapter') }
+        it {
+          is_expected.to contain_vcsrepo('/usr/local/src/hyperv-power-adapter')
+            .with_ensure('present')
+            .with_provider('git')
+            .with_source('https://github.com/gabriel-samfira/hyperv-power-adapter.git')
+            .with_notify('Exec[install-hyperv-power-adapater]')
+            .that_requires('Package[maas]')
+        }
+        it {
+          is_expected.to contain_exec('install-hyperv-power-adapater')
+            .with_command('/usr/local/src/hyperv-power-adapter/install-adapter.sh')
+            .with_cwd('/usr/local/src')
+            .with_onlyif('/usr/bin/test ! -f /etc/maas/templates/power/wsmancmd.py')
+            .with_logoutput(true)
+            .with_refreshonly(true)
+            .that_requires('Vcsrepo[/usr/local/src/hyperv-power-adapter]')
+        }
       end
       describe 'default_superuser_sshkey' do
         let(:params) { { default_superuser_sshkey: '~/.ssh/id_rsa' } }

@@ -25,14 +25,10 @@ describe 'maas::cert_server' do
       end
 
       context 'with default params' do
-        # this is the simplest test possible to make sure the Puppet code compiles
         it { is_expected.to compile }
-        # same as above except it will test all the dependencies
         it { is_expected.to compile.with_all_deps }
-       
         it { is_expected.to contain_class('apt') }
         it { is_expected.to contain_apt__ppa('ppa:hardware-certification/public') }
-
         it { is_expected.to contain_package('maas-cert-server').that_requires('Class[maas]').that_requires('Class[apt::update]') }
         it { is_expected.not_to raise_error }
       end

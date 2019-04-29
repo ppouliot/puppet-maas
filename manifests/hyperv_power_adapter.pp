@@ -1,4 +1,4 @@
-# == Define: maas::hyperv_power_adapter
+# == class: maas::hyperv_power_adapter
 # Get the source of the Hyper-V Power Adapter
 #
 # === Authors
@@ -15,7 +15,10 @@ class maas::hyperv_power_adapter (
     vcsrepo {'/usr/local/src/hyperv-power-adapter':
       ensure   => present,
       provider => git,
-      source   => 'https://github.com/gabriel-samfira/hyperv-power-adapter.git',
+      # Original Source
+      # source   => 'https://github.com/gabriel-samfira/hyperv-power-adapter.git',
+      # Andrei Bacos's changes for 2.2/2.3
+      source   => 'https://github.com/andreibacos/hyperv-power-adapter.git',
       require  => Package['maas'],
       notify   => Exec['install-hyperv-power-adapater'],
     }

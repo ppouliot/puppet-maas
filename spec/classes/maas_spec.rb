@@ -70,7 +70,7 @@ describe 'maas' do
           is_expected.to contain_vcsrepo('/usr/local/src/hyperv-power-adapter')
             .with_ensure('present')
             .with_provider('git')
-            .with_source('https://github.com/gabriel-samfira/hyperv-power-adapter.git')
+            .with_source('https://github.com/andreibacos/hyperv-power-adapter.git')
             .with_notify('Exec[install-hyperv-power-adapater]')
             .that_requires('Package[maas]')
         }

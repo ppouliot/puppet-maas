@@ -257,11 +257,11 @@ define maas::superuser (
             # Import the maas super user key
             if $maas::default_superuser_sshkey {
               exec{"maas-sshkey-import-id-${name}":
-                command     => "/usr/bin/maas ${name} sshkeys import ${maas::default_superuser_sshkey}",
-                cwd         => '/etc/maas/.puppet',
-                logoutput   => true,
-                before      => Exec["logout-superuser-with-api-key-${name}"],
-                require     => Exec["login-superuser-with-api-key-${name}"],
+                command   => "/usr/bin/maas ${name} sshkeys import ${maas::default_superuser_sshkey}",
+                cwd       => '/etc/maas/.puppet',
+                logoutput => true,
+                before    => Exec["logout-superuser-with-api-key-${name}"],
+                require   => Exec["login-superuser-with-api-key-${name}"],
               }
             }
             # Commission All Nodes in Ready State
@@ -271,7 +271,7 @@ define maas::superuser (
               refreshonly => true,
               logoutput   => true,
               notify      => Exec["logout-superuser-with-api-key-${name}"],
-              #notify      => Exec["maas-set-config-completed-intro-true-${name}"],
+              #notify     => Exec["maas-set-config-completed-intro-true-${name}"],
               before      => Exec["logout-superuser-with-api-key-${name}"],
               require     => Exec["login-superuser-with-api-key-${name}"],
             }

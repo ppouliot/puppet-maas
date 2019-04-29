@@ -23,7 +23,7 @@ class maas::install {
   case $::operatingsystem {
     'Ubuntu': {
 
-      if ($maas::maas_release_ppa) {
+      if ($maas::maas_release_ppa){
         notice("Node ${::fqdn} is using the maas-maintainers ${maas::maas_release_ppa} package repository for MAAS installation." )
         apt::ppa{"ppa:maas/${maas::maas_release_ppa}":}
         if ($maas::manage_package) {
